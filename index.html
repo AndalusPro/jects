@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andalus Projects | Professionele Bouw en Renovatie</title>
+    <title>Andalus Projects | Meesters in Renovatie & Bouw</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -15,76 +15,63 @@
         .text-brand-orange { color: #f37321; }
         .border-brand-orange { border-color: #f37321; }
         
+        /* Password Overlay */
         #login-overlay {
-            position: fixed;
-            inset: 0;
-            background: #1a1a1a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+            position: fixed; inset: 0; background: #1a1a1a;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 10000; transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
         }
 
         .hero-gradient {
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            min-height: 100vh;
+            background-size: cover; background-position: center; min-height: 100vh;
         }
 
-        /* Floating Contact Buttons */
-        .floating-contact {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 9999;
+        /* Detail Layer (Modal) */
+        #detail-layer {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            z-index: 9999; display: none; align-items: center; justify-content: center;
+            backdrop-filter: blur(15px); padding: 20px;
         }
 
-        .float-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 24px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
+        .floating-whatsapp {
+            position: fixed; bottom: 30px; right: 30px; z-index: 9000;
         }
 
-        .float-btn:hover { transform: scale(1.1); }
-        .bg-whatsapp { background-color: #25D366; }
-        .bg-phone { background-color: #f37321; }
-
-        .service-card { transition: all 0.4s ease; overflow: hidden; border-bottom: 4px solid transparent; }
-        .service-card:hover { transform: translateY(-10px); border-bottom-color: #f37321; }
+        .service-card { cursor: pointer; transition: all 0.4s ease; overflow: hidden; background: white; border-radius: 24px; }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
 
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s all ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: #f37321; border-radius: 10px; }
     </style>
 </head>
 <body class="bg-gray-50 overflow-x-hidden">
 
-    <div class="floating-contact">
-        <a href="https://wa.me/32483404778" target="_blank" class="float-btn bg-whatsapp animate__animated animate__pulse animate__infinite">
+    <div class="floating-whatsapp">
+        <a href="https://wa.me/32483404778" target="_blank" class="w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center text-white text-3xl shadow-2xl animate__animated animate__pulse animate__infinite">
             <i class="fab fa-whatsapp"></i>
-        </a>
-        <a href="tel:+32483404778" class="float-btn bg-phone">
-            <i class="fas fa-phone-alt"></i>
         </a>
     </div>
 
     <div id="login-overlay">
         <div class="bg-white/10 p-10 rounded-3xl backdrop-blur-xl border border-orange-500/30 w-full max-w-md text-center mx-4">
-            <h2 class="text-white text-3xl font-bold mb-6 tracking-tighter uppercase">ANDALUS <span class="text-brand-orange">PROJECTS</span></h2>
+            <h2 class="text-white text-3xl font-bold mb-6 tracking-tighter uppercase tracking-widest">ANDALUS <span class="text-brand-orange">PROJECTS</span></h2>
             <input type="password" id="sitePassword" class="w-full p-4 bg-transparent border-2 border-brand-orange rounded-xl text-white text-center outline-none mb-4" placeholder="Wachtwoord">
-            <button onclick="unlockSite()" class="w-full bg-brand-orange text-white py-4 rounded-xl font-bold hover:bg-orange-600 transition">Toegang krijgen</button>
+            <button onclick="unlockSite()" class="w-full bg-brand-orange text-white py-4 rounded-xl font-bold hover:bg-orange-600 transition shadow-lg">Toegang krijgen</button>
             <p id="error-msg" class="text-red-500 mt-4 hidden text-sm italic">Onjuist wachtwoord!</p>
+        </div>
+    </div>
+
+    <div id="detail-layer" onclick="closeDetails()">
+        <div class="bg-white rounded-[2.5rem] w-full max-w-3xl p-8 md:p-12 relative overflow-y-auto max-h-[90vh] shadow-2xl" onclick="event.stopPropagation()">
+            <button onclick="closeDetails()" class="absolute top-6 right-6 text-gray-400 hover:text-brand-orange text-3xl transition">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="modal-content" class="animate__animated animate__fadeIn">
+                </div>
         </div>
     </div>
 
@@ -92,15 +79,14 @@
         <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md text-white border-b border-white/10">
             <div class="container mx-auto px-6 py-4 flex justify-between items-center">
                 <div class="flex items-center gap-3">
-                    <div class="bg-brand-orange p-2 rounded-lg">
-                        <i class="fas fa-hammer text-white text-xl"></i>
-                    </div>
-                    <span class="font-black text-xl tracking-tighter uppercase">Andalus <span class="text-brand-orange">Projects</span></span>
+                    <div class="bg-brand-orange p-2 rounded-lg"><i class="fas fa-hammer text-white"></i></div>
+                    <span class="font-black text-xl tracking-tighter uppercase">ANDALUS <span class="text-brand-orange">PROJECTS</span></span>
                 </div>
-                <div class="hidden md:flex items-center gap-8">
-                    <a href="#home" class="hover:text-brand-orange transition font-medium">Home</a>
-                    <a href="#services" class="hover:text-brand-orange transition font-medium">Diensten</a>
-                    <a href="#contact" class="bg-brand-orange px-6 py-2 rounded-full font-bold hover:bg-orange-600 transition">Contact</a>
+                <div class="hidden md:flex items-center gap-8 font-bold text-sm uppercase tracking-widest">
+                    <a href="#home" class="hover:text-brand-orange">Home</a>
+                    <a href="#about" class="hover:text-brand-orange">Over Ons</a>
+                    <a href="#services" class="hover:text-brand-orange">Diensten</a>
+                    <a href="#contact" class="bg-brand-orange px-6 py-2 rounded-full text-white">Offerte</a>
                 </div>
             </div>
         </nav>
@@ -108,62 +94,102 @@
         <section id="home" class="hero-gradient flex items-center px-6">
             <div class="container mx-auto">
                 <div class="max-w-4xl">
-                    <div class="inline-block bg-brand-orange text-white px-6 py-2 rounded-full font-bold mb-6 animate__animated animate__fadeInDown">
-                        ✨ Geef uw huis een nieuw leven!
-                    </div>
-                    <h1 class="text-5xl md:text-8xl font-black text-white leading-none mb-6">
-                        PROFESSIONELE <br>
-                        <span class="text-brand-orange">RENOVATIE</span>
+                    <h1 class="text-6xl md:text-9xl font-black text-white leading-tight mb-6 animate__animated animate__fadeInLeft">
+                        VAKMANSCHAP <br><span class="text-brand-orange italic">ZONDER</span> GRENZEN
                     </h1>
-                    <p class="text-gray-300 text-xl max-w-2xl mb-10 leading-relaxed">
-                        Wij leveren hoogwaardige diensten voor uw woning. Van strak stucwerk tot luxe visgraat vloeren, wij staan garant voor Belgisch vakmanschap.
+                    <p class="text-gray-300 text-xl md:text-2xl max-w-2xl mb-10 leading-relaxed">
+                        Andalus Projects transformeert uw visie in realiteit met meer dan 20 jaar ervaring in hoogwaardige renovaties.
                     </p>
                     <div class="flex flex-wrap gap-4">
-                        <a href="#services" class="bg-brand-orange text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-white hover:text-orange-600 transition shadow-xl">Onze Diensten</a>
-                        <a href="tel:+32483404778" class="bg-white/10 backdrop-blur text-white border border-white/20 px-10 py-4 rounded-xl font-bold text-lg hover:bg-white/20 transition">Direct Bellen</a>
+                        <a href="#services" class="bg-brand-orange text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white hover:text-orange-600 transition shadow-2xl">Onze Diensten</a>
+                        <a href="https://wa.me/32483404778" class="bg-white/10 backdrop-blur text-white border border-white/20 px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/20 transition">Stuur WhatsApp</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="services" class="py-24 bg-white">
+        <section id="about" class="py-24 bg-white reveal">
             <div class="container mx-auto px-6">
-                <div class="text-center mb-16 reveal">
-                    <h2 class="text-brand-orange font-bold uppercase tracking-widest mb-2">Onze Expertise</h2>
-                    <p class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">Vakkundige Diensten</p>
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="relative">
+                        <div class="absolute -top-4 -left-4 w-24 h-24 bg-brand-orange rounded-full opacity-20"></div>
+                        <h2 class="text-brand-orange font-bold uppercase tracking-widest mb-4">Onze Historie</h2>
+                        <h3 class="text-4xl md:text-6xl font-black text-zinc-950 mb-8 leading-tight">Meer dan 20 jaar <br>ervaring.</h3>
+                        <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                            Wij zijn een professioneel bouw- en renovatiebedrijf met meer dan **20 jaar ervaring** in de sector. Wij zijn gespecialiseerd in diverse vakgebieden, waaronder stucwerk, schilderwerk, vloeren en tegelwerken.
+                        </p>
+                        <p class="text-gray-600 text-lg leading-relaxed mb-8">
+                            Klanttevredenheid staat bij ons centraal. Wij streven altijd naar betrouwbaarheid, duidelijke communicatie en een professionele aanpak. Toewijding en ernst in ons werk vormen de basis van alles wat wij doen.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 p-10 rounded-[2rem] border-b-8 border-brand-orange shadow-lg">
+                            <i class="fas fa-trophy text-4xl text-brand-orange mb-4"></i>
+                            <h4 class="text-2xl font-black mb-2 italic">Kwaliteit</h4>
+                            <p class="text-gray-500">Hoogste normen in technische expertise.</p>
+                        </div>
+                        <div class="bg-zinc-900 p-10 rounded-[2rem] text-white shadow-lg">
+                            <i class="fas fa-users text-4xl text-brand-orange mb-4"></i>
+                            <h4 class="text-2xl font-black mb-2 italic">Klantgericht</h4>
+                            <p class="text-gray-400">Uw visie, onze uitvoering.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="py-24 bg-gray-100">
+            <div class="container mx-auto px-6 mb-16 text-center reveal">
+                <h2 class="text-5xl md:text-7xl font-black text-zinc-900">DIEN<span class="text-brand-orange">STEN</span></h2>
+                <p class="text-gray-500 mt-4 font-bold uppercase tracking-widest">Klik voor alle details per vakgebied</p>
+            </div>
+            
+            <div class="container mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div onclick="openDetails('badkamer')" class="service-card reveal">
+                    <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?q=80&w=800" class="w-full h-64 object-cover">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-black mb-2">Badkamerrenovatie</h3>
+                        <p class="text-gray-500 text-sm">Compleet van A tot Z.</p>
+                    </div>
                 </div>
 
-                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="service-card bg-gray-50 rounded-3xl reveal">
-                        <img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?q=80&w=800" alt="Tegelwerk" class="w-full h-56 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2">Tegelwerk</h3>
-                            <p class="text-gray-600 text-sm">Nauwkeurige plaatsing voor badkamers en keukens.</p>
-                        </div>
+                <div onclick="openDetails('tegelwerk')" class="service-card reveal">
+                    <img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?q=80&w=800" class="w-full h-64 object-cover">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-black mb-2">Tegelwerken</h3>
+                        <p class="text-gray-500 text-sm">Kwaliteit en precisie.</p>
                     </div>
+                </div>
 
-                    <div class="service-card bg-gray-50 rounded-3xl reveal">
-                        <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=800" alt="Stucwerk" class="w-full h-56 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2">Stucwerk</h3>
-                            <p class="text-gray-600 text-sm">Perfect gladde wanden voor een moderne uitstraling.</p>
-                        </div>
+                <div onclick="openDetails('stucwerk')" class="service-card reveal">
+                    <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=800" class="w-full h-64 object-cover">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-black mb-2">Stucwerk</h3>
+                        <p class="text-gray-500 text-sm">Strakke en duurzame afwerking.</p>
                     </div>
+                </div>
 
-                    <div class="service-card bg-gray-50 rounded-3xl reveal">
-                        <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=800" alt="Schilderwerk" class="w-full h-56 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2">Schilderwerk</h3>
-                            <p class="text-gray-600 text-sm">Frisse en duurzame afwerking, zowel binnen als buiten.</p>
-                        </div>
+                <div onclick="openDetails('schilderwerk')" class="service-card reveal">
+                    <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=800" class="w-full h-64 object-cover">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-black mb-2">Schilderwerk</h3>
+                        <p class="text-gray-500 text-sm">Perfectie voor binnen en buiten.</p>
                     </div>
+                </div>
 
-                    <div class="service-card bg-gray-50 rounded-3xl reveal">
-                        <img src="https://images.unsplash.com/photo-1581850518616-cee81f77a8be?q=80&w=800" alt="Vloeren" class="w-full h-56 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2">Vloerplaatsing</h3>
-                            <p class="text-gray-600 text-sm">Specialist in laminaat, PVC en luxe visgraat.</p>
-                        </div>
+                <div onclick="openDetails('vloeren')" class="service-card reveal">
+                    <img src="https://images.unsplash.com/photo-1581850518616-cee81f77a8be?q=80&w=800" class="w-full h-64 object-cover">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-black mb-2">Vloerplaatsing</h3>
+                        <p class="text-gray-500 text-sm">Laminaat, Visgraat & PVC.</p>
+                    </div>
+                </div>
+
+                <div onclick="openDetails('reiniging')" class="service-card reveal">
+                    <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=800" class="w-full h-64 object-cover">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-black mb-2">Reinigingsdiensten</h3>
+                        <p class="text-gray-500 text-sm">Bouw, tuinen en gebouwen.</p>
                     </div>
                 </div>
             </div>
@@ -171,46 +197,122 @@
 
         <section id="contact" class="py-24 bg-zinc-950 text-white reveal">
             <div class="container mx-auto px-6 text-center">
-                <div class="bg-zinc-900 rounded-[3rem] p-12 border border-white/5 flex flex-col items-center">
-                    <h2 class="text-4xl md:text-5xl font-black mb-4">Start uw project <span class="text-brand-orange">vandaag</span></h2>
-                    <p class="text-gray-400 mb-10 max-w-xl">Bel ons of stuur een bericht voor een gratis offerte op locatie.</p>
-                    
-                    <div class="flex flex-col md:flex-row gap-8 w-full justify-center items-center">
-                        <a href="tel:+32483404778" class="text-2xl font-bold hover:text-brand-orange transition flex items-center gap-4">
-                            <i class="fas fa-phone-alt bg-brand-orange p-4 rounded-2xl text-white"></i>
-                            +32 483 404 778
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-5xl md:text-7xl font-black mb-10 leading-tight">REGEER UW <span class="text-brand-orange">RENOVATIE.</span></h2>
+                    <p class="text-gray-400 text-xl mb-12">Neem vandaag nog contact op voor een vrijblijvende offerte en professioneel advies.</p>
+                    <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+                        <a href="tel:+32483404778" class="flex items-center gap-4 bg-white/5 border border-white/10 px-8 py-6 rounded-3xl hover:border-brand-orange transition-all">
+                            <i class="fas fa-phone-alt text-brand-orange text-2xl"></i>
+                            <span class="text-2xl font-bold">+32 483 404 778</span>
                         </a>
-                        <a href="mailto:Andalusprojects1@gmail.com" class="text-xl font-semibold text-gray-300 hover:text-brand-orange transition flex items-center gap-4">
-                            <i class="fas fa-envelope bg-white/10 p-4 rounded-2xl text-white"></i>
-                            Andalusprojects1@gmail.com
+                        <a href="mailto:Andalusprojects1@gmail.com" class="flex items-center gap-4 bg-white/5 border border-white/10 px-8 py-6 rounded-3xl hover:border-brand-orange transition-all">
+                            <i class="fas fa-envelope text-brand-orange text-2xl"></i>
+                            <span class="text-xl font-bold">Andalusprojects1@gmail.com</span>
                         </a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <footer class="py-10 text-center text-gray-500 bg-white">
-            <p>&copy; 2026 Andalus Projects - Meester in Renovatie</p>
+        <footer class="py-12 bg-white text-center text-gray-400 font-bold uppercase tracking-widest text-sm">
+            <p>&copy; 2026 Andalus Projects - Meesters in het vak</p>
         </footer>
     </div>
 
     <script>
+        // De Data voor de Unieke Laag (Modal Content)
+        const servicesData = {
+            badkamer: {
+                title: "Badkamerrenovatie – Modern & Op Maat",
+                desc: "Wilt u uw badkamer volledig vernieuwen? Wij bieden professionele badkamerrenovaties van A tot Z, volledig afgestemd op uw wensen en budget. Van sloopwerk en leidingen tot de laatste afwerking.",
+                items: ["Volledige badkamerrenovatie", "Tegelwerk en waterdichting", "Installatie sanitair (douche, toilet, wastafel)", "Stuc- en schilderwerk", "Moderne en luxe afwerking"],
+                pros: ["Service van A tot Z", "Hoogwaardige materialen", "Waterdichte afwerking", "Advies op maat"]
+            },
+            tegelwerk: {
+                title: "Professionele Tegelwerken",
+                desc: "Op zoek naar een ervaren vakman voor het plaatsen van tegels? Wij bieden hoogwaardige tegelwerken voor badkamers, keukens, vloeren en terrassen.",
+                items: ["Wand- en vloertegels", "Terrasaanleg", "Mozaïek en decortegels", "Renovatie of nieuwbouw"],
+                pros: ["Vakkundige plaatsing", "Duurzame materialen", "Strakke afwerking", "Scherpe prijzen"]
+            },
+            stucwerk: {
+                title: "Strak Stucwerk",
+                desc: "Wij zorgen voor gladde, strakke oppervlakken die klaar zijn voor schilderwerk. Vakmanschap en oog voor detail staan centraal.",
+                items: ["Glad pleisterwerk", "Sierpleister", "Nieuwbouw projecten", "Renovatie muren & plafonds"],
+                pros: ["Strakke oppervlakken", "Duurzaam resultaat", "Nauwkeurige uitvoering", "Betaalbaar"]
+            },
+            schilderwerk: {
+                title: "Schilderwerk Binnen & Buiten",
+                desc: "Geef uw woning een frisse uitstraling. Wij besteden veel aandacht aan voorbereiding, zoals schuren, reinigen en gronden.",
+                items: ["Binnenschilderwerk", "Buitenschilderwerk", "Houtwerk & kozijnen", "Grondige voorbereiding"],
+                pros: ["Egale afwerking", "Topkwaliteit verf", "Snelle service", "Betrouwbaar"]
+            },
+            vloeren: {
+                title: "Laminaat, Visgraat & PVC",
+                desc: "Specialist in stijlvolle en duurzame vloeren voor zowel woningen als commerciële ruimtes.",
+                items: ["Laminaat: Slijtvast & warm", "Visgraat: Luxe & tijdloos", "PVC: Waterbestendig & stil"],
+                pros: ["Perfecte ondergrond", "Nauwkeurige plaatsing", "Oplossingen op maat", "Hoogwaardige materialen"]
+            },
+            reiniging: {
+                title: "Reinigingsdiensten",
+                desc: "Professionele reiniging voor bouw, tuinen en gebouwen. Wij zorgen dat alles direct klaar is voor gebruik.",
+                items: ["Eindschoonmaak na bouw", "Tuinreiniging (bladeren/afval)", "Reiniging van trappenhallen", "Paden en doorgangen"],
+                pros: ["Grondige aanpak", "Snel & efficiënt", "Flexibel inzetbaar", "Particulier & Bedrijf"]
+            }
+        };
+
+        // Functies voor de Modal
+        function openDetails(id) {
+            const data = servicesData[id];
+            const modal = document.getElementById('detail-layer');
+            const content = document.getElementById('modal-content');
+            
+            content.innerHTML = `
+                <h2 class="text-4xl font-black mb-6 text-zinc-900 border-b-4 border-brand-orange inline-block pb-2 uppercase italic">${data.title}</h2>
+                <p class="text-gray-600 mb-10 text-xl leading-relaxed">${data.desc}</p>
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div>
+                        <h4 class="font-black text-brand-orange mb-6 text-sm uppercase tracking-tighter">Onze Diensten:</h4>
+                        <ul class="space-y-4">
+                            ${data.items.map(i => `<li class="flex items-center gap-3 font-bold text-gray-800"><i class="fas fa-arrow-right text-brand-orange text-xs"></i> ${i}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="bg-zinc-50 p-8 rounded-[2rem] border border-zinc-200">
+                        <h4 class="font-black text-zinc-950 mb-6 text-sm uppercase tracking-tighter">Uw Voordelen:</h4>
+                        <ul class="space-y-4">
+                            ${data.pros.map(i => `<li class="flex items-center gap-3 text-green-600 font-black"><i class="fas fa-check-circle"></i> ${i}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-12">
+                    <a href="https://wa.me/32483404778" class="block text-center bg-brand-orange text-white py-5 rounded-2xl font-black text-xl hover:scale-105 transition shadow-xl">Direct een offerte via WhatsApp</a>
+                </div>
+            `;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDetails() {
+            document.getElementById('detail-layer').style.display = 'none';
+            document.body.style.overflowY = 'auto';
+        }
+
+        // Password Check
         function unlockSite() {
             const pass = document.getElementById('sitePassword').value;
-            const overlay = document.getElementById('login-overlay');
             if (pass === "Andalus2024") {
-                overlay.style.transform = "translateY(-100%)";
+                document.getElementById('login-overlay').style.transform = "translateY(-100%)";
                 document.body.style.overflowY = "auto";
-                setTimeout(() => { overlay.style.display = "none"; }, 800);
+                setTimeout(() => document.getElementById('login-overlay').style.display = 'none', 800);
             } else {
                 document.getElementById('error-msg').classList.remove('hidden');
                 document.getElementById('sitePassword').classList.add('animate__animated', 'animate__headShake', 'border-red-500');
-                setTimeout(() => { document.getElementById('sitePassword').classList.remove('animate__headShake'); }, 500);
+                setTimeout(() => document.getElementById('sitePassword').classList.remove('animate__headShake'), 500);
             }
         }
 
         document.getElementById('sitePassword').addEventListener('keypress', (e) => { if (e.key === 'Enter') unlockSite(); });
 
+        // Scroll Reveals
         function reveal() {
             document.querySelectorAll(".reveal").forEach(el => {
                 if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add("active");
