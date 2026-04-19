@@ -7,12 +7,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Swiper CSS for Slideshow -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
     <style>
         body {
             font-family: 'Poppins', sans-serif;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
         .bg-brand-orange { background-color: #f37321; }
         .text-brand-orange { color: #f37321; }
@@ -24,32 +26,71 @@
             background-position: center;
         }
 
-        .logo-svg {
-            width: 60px;
-            height: 60px;
+        /* Coming Soon Overlay */
+        #coming-soon {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #2d3436;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            transition: opacity 1s ease-out, visibility 1s;
         }
 
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #f37321;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-top: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .logo-svg { width: 60px; height: 60px; }
+
         /* Swiper Customization */
-        .swiper-button-next, .swiper-button-prev {
-            color: #f37321 !important;
-        }
-        .swiper-pagination-bullet-active {
-            background: #f37321 !important;
-        }
-        .slide-img {
-            height: 500px;
-            object-fit: cover;
-            width: 100%;
-        }
+        .swiper-button-next, .swiper-button-prev { color: #f37321 !important; }
+        .swiper-pagination-bullet-active { background: #f37321 !important; }
+        .slide-img { height: 500px; object-fit: cover; width: 100%; }
+
+        /* Smooth reveal for sections */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body class="bg-gray-50">
 
-    <!-- Navbar -->
+    <div id="coming-soon">
+        <div class="text-center animate__animated animate__fadeInDown">
+            <svg class="logo-svg mx-auto mb-4" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                <path d="M256 40L40 220v252h140V330h152v142h140V220L256 40z" fill="#f37321"/>
+            </svg>
+            <h1 class="text-3xl font-bold mb-2">Andalus Projects</h1>
+            <p class="text-brand-orange tracking-widest uppercase text-sm">Binnenkort Beschikbaar</p>
+            <div class="mt-6 flex flex-col items-center">
+                <p class="text-gray-400 text-sm mb-4">We bereiden iets geweldigs voor...</p>
+                <button onclick="enterSite()" class="px-8 py-3 bg-brand-orange text-white rounded-full font-bold hover:bg-orange-600 transition animate__animated animate__pulse animate__infinite">
+                    Bekijk Preview
+                </button>
+            </div>
+        </div>
+    </div>
+
     <nav class="bg-brand-dark text-white sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <!-- Inline Logo SVG based on your image -->
                 <svg class="logo-svg" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                     <path d="M256 40L40 220v252h140V330h152v142h140V220L256 40z" fill="#f37321"/>
                     <rect x="360" y="260" width="30" height="30" fill="white"/>
@@ -71,26 +112,23 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero-gradient h-[70vh] flex items-center relative text-white">
+    <section id="home" class="hero-gradient h-[80vh] flex items-center relative text-white">
         <div class="container mx-auto px-6 text-center md:text-left">
-            <h2 class="text-brand-orange font-bold text-xl md:text-2xl mb-2 uppercase tracking-widest">Professionele Bouw</h2>
-            <h1 class="text-4xl md:text-7xl font-extrabold mb-6 leading-tight">EN RENOVATIEDIENSTEN</h1>
-            <div class="inline-flex items-center bg-brand-orange text-white px-8 py-4 rounded-full text-lg font-bold shadow-2xl transform hover:scale-105 transition">
+            <h2 class="text-brand-orange font-bold text-xl md:text-2xl mb-2 uppercase tracking-widest animate__animated animate__fadeInLeft">Professionele Bouw</h2>
+            <h1 class="text-4xl md:text-7xl font-extrabold mb-6 leading-tight animate__animated animate__fadeInLeft animate__delay-1s">EN RENOVATIEDIENSTEN</h1>
+            <div class="inline-flex items-center bg-brand-orange text-white px-8 py-4 rounded-full text-lg font-bold shadow-2xl transform hover:scale-105 transition animate__animated animate__zoomIn animate__delay-2s cursor-pointer">
                 Geef uw huis een nieuw leven!
             </div>
         </div>
     </section>
 
-    <!-- Services & Slideshow Section -->
-    <section id="services" class="py-20 bg-white">
+    <section id="services" class="py-20 bg-white reveal">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
                 <h3 class="text-brand-orange font-bold tracking-widest uppercase mb-2">Onze Expertise</h3>
                 <h2 class="text-4xl font-bold text-brand-dark">Service Categorieën</h2>
             </div>
 
-            <!-- Slideshow Container -->
             <div class="swiper mySwiper rounded-3xl overflow-hidden shadow-2xl mb-16">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide relative">
@@ -105,85 +143,88 @@
                             <h4 class="text-2xl font-bold">Badkamer Renovatie</h4>
                         </div>
                     </div>
-                    <div class="swiper-slide relative">
-                        <img src="https://images.unsplash.com/photo-1588854337236-6889d631faa8?auto=format&fit=crop&w=1200&q=80" class="slide-img" alt="Schilderwerk">
-                        <div class="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black text-white">
-                            <h4 class="text-2xl font-bold">Schilderwerk</h4>
-                        </div>
-                    </div>
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-pagination"></div>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-                <div class="p-6 bg-gray-50 rounded-2xl border-l-4 border-brand-orange font-bold text-brand-dark">Tegelwerk</div>
-                <div class="p-6 bg-gray-50 rounded-2xl border-l-4 border-brand-orange font-bold text-brand-dark">Schoonmaken</div>
-                <div class="p-6 bg-gray-50 rounded-2xl border-l-4 border-brand-orange font-bold text-brand-dark">Laminaat leggen</div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-8 bg-gray-50 rounded-2xl border-l-8 border-brand-orange font-bold text-brand-dark shadow-sm hover:shadow-md transition cursor-default">Tegelwerk</div>
+                <div class="p-8 bg-gray-50 rounded-2xl border-l-8 border-brand-orange font-bold text-brand-dark shadow-sm hover:shadow-md transition cursor-default">Schoonmaken</div>
+                <div class="p-8 bg-gray-50 rounded-2xl border-l-8 border-brand-orange font-bold text-brand-dark shadow-sm hover:shadow-md transition cursor-default">Laminaat leggen</div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-brand-dark text-white">
+    <section id="contact" class="py-20 bg-brand-dark text-white reveal">
         <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
             <div>
                 <h2 class="text-4xl font-bold mb-8 italic">"Droomt u van een mooi en modern huis?"</h2>
                 <div class="space-y-6">
-                    <div class="flex items-center space-x-4">
-                        <i class="fas fa-phone-alt text-brand-orange text-2xl w-8 text-center"></i>
+                    <div class="flex items-center space-x-4 group">
+                        <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center group-hover:bg-brand-orange transition">
+                            <i class="fas fa-phone-alt text-white"></i>
+                        </div>
                         <span class="text-lg font-semibold">+32 483 404 778</span>
                     </div>
-                    <div class="flex items-center space-x-4">
-                        <i class="fas fa-envelope text-brand-orange text-2xl w-8 text-center"></i>
+                    <div class="flex items-center space-x-4 group">
+                        <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center group-hover:bg-brand-orange transition">
+                            <i class="fas fa-envelope text-white"></i>
+                        </div>
                         <span class="text-lg font-semibold">Andalusprojects1@gmail.com</span>
-                    </div>
-                    <div class="flex items-center space-x-4">
-                        <i class="fab fa-instagram text-brand-orange text-2xl w-8 text-center"></i>
-                        <span class="text-lg font-semibold">Andalus.Projects</span>
                     </div>
                 </div>
             </div>
-            <div class="bg-white p-8 rounded-3xl text-center">
-                <p class="text-brand-dark font-bold mb-6 text-xl">VRAAG VANDAAG NOG UW GRATIS OFFERTE AAN</p>
-                <div class="inline-block p-4 border-4 border-brand-orange rounded-2xl">
-                    <i class="fas fa-qrcode text-9xl text-brand-dark"></i>
+            <div class="bg-white p-10 rounded-3xl text-center text-brand-dark shadow-2xl">
+                <p class="font-bold mb-6 text-xl">VRAAG VANDAAG NOG UW GRATIS OFFERTE AAN</p>
+                <div class="inline-block p-4 border-4 border-brand-orange rounded-2xl mb-4">
+                    <i class="fas fa-qrcode text-9xl"></i>
                 </div>
-                <p class="mt-4 text-gray-500 font-bold">SCAN ME</p>
+                <p class="text-gray-500 font-bold animate__animated animate__pulse animate__infinite">SCAN ME</p>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-black text-white py-10 border-t border-gray-800">
+    <footer class="bg-black text-white py-10">
         <div class="container mx-auto px-6 text-center">
-            <div class="mb-6">
-                <p class="text-brand-orange font-bold text-lg mb-2">Andalus Projects</p>
-                <p class="text-gray-500 text-sm italic">Created by Medbunz</p>
-            </div>
-            <p class="text-xs text-gray-600 tracking-widest uppercase">&copy; 2024. Alle rechten voorbehouden.</p>
+            <p class="text-brand-orange font-bold text-lg mb-2">Andalus Projects</p>
+            <p class="text-xs text-gray-600 tracking-widest uppercase">&copy; 2024. Created by Medbunz. Alle rechten voorbehouden.</p>
         </div>
     </footer>
 
-    <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
+        // 1. Entry Function to hide Coming Soon
+        function enterSite() {
+            const overlay = document.getElementById('coming-soon');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.visibility = 'hidden';
+            }, 1000);
+        }
+
+        // 2. Initialize Swiper
         var swiper = new Swiper(".mySwiper", {
             loop: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
+            autoplay: { delay: 3500, disableOnInteraction: false },
+            pagination: { el: ".swiper-pagination", clickable: true },
+            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
         });
+
+        // 3. Scroll Reveal Animation Logic
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
     </script>
 </body>
 </html>
