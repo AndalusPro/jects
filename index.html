@@ -13,145 +13,186 @@
         :root { 
             scroll-behavior: smooth; 
             --brand-orange: #f37321;
+            --transition-speed: 0.5s;
+            /* Default Light Mode Colors */
+            --bg-body: #f9fafb; 
+            --text-main: #111; 
+            --card-bg: #ffffff;
+            --nav-text: #ffffff; /* Default for glass header on hero */
         }
 
-        /* قفل النسخ والاختيار */
+        /* Logic for Dark Mode */
+        body.dark-theme {
+            --bg-body: #0a0a0a; 
+            --text-main: #f9fafb; 
+            --card-bg: #1a1a1a;
+        }
+
         body { 
-            user-select: none; -webkit-user-select: none; 
+            user-select: none; 
+            -webkit-user-select: none; 
             font-family: 'Poppins', sans-serif; 
             margin: 0; padding: 0;
             overflow-x: hidden;
-            overflow-y: hidden;
-            transition: background-color 0.5s, color 0.5s;
+            overflow-y: hidden; /* Locked until intro finishes */
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            transition: background-color var(--transition-speed), color var(--transition-speed);
         }
 
-        /* إصلاح خطوط القائمة (Hamburger Menu) */
-        .menu-btn-fixed {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 5px;
-        }
-        .menu-line {
-            width: 28px;
-            height: 3px;
-            background-color: var(--brand-orange);
-            border-radius: 10px;
-            transition: 0.3s;
-        }
-
-        /* الوضع المظلم والنهاري التلقائي */
-        @media (prefers-color-scheme: light) {
-            :root { --bg-body: #f9fafb; --text-main: #111; }
-            body { background-color: var(--bg-body); color: var(--text-main); }
-            #services { background-color: #f3f4f6; }
-        }
-        @media (prefers-color-scheme: dark) {
-            :root { --bg-body: #0a0a0a; --text-main: #f9fafb; }
-            body { background-color: var(--bg-body); color: var(--text-main); }
-            #services { background-color: #0f0f0f !important; }
-            .service-card { background: #1a1a1a !important; border: 1px solid #333; }
-            footer { background: #0a0a0a !important; border-top: 1px solid #222; }
-        }
-
-        /* واجهة الترحيب */
-        #intro-screen {
-            position: fixed; inset: 0; z-index: 10000;
-            background: #111;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: transform 1s cubic-bezier(1, 0, 0, 1);
-        }
-        .loading-bar { width: 200px; height: 2px; background: rgba(255,255,255,0.1); margin: 25px 0; overflow: hidden; border-radius: 10px; }
-        .loading-fill { height: 100%; width: 0%; background: var(--brand-orange); animation: fill 2s ease-in-out forwards; }
-        @keyframes fill { to { width: 100%; } }
-
-        .start-btn { opacity: 0; transform: translateY(20px); transition: 0.5s ease 1.8s; background: var(--brand-orange); color: white; padding: 10px 30px; border-radius: 50px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 0.8rem; }
-        .start-btn.visible { opacity: 1; transform: translateY(0); }
-        .intro-finish { transform: translateY(-100%); pointer-events: none; }
-
-        /* الهيدر الزجاجي */
+        /* Fix Header Text Visibility */
         .glass-header {
-            background: rgba(20, 20, 20, 0.75) !important;
+            background: rgba(20, 20, 20, 0.8) !important;
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* القائمة الجانبية المصلحة */
+        /* Light Theme Header Overrides */
+        body:not(.dark-theme) .glass-header {
+            background: rgba(255, 255, 255, 0.8) !important;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        body:not(.dark-theme) .nav-link, 
+        body:not(.dark-theme) .nav-logo-text { color: #111 !important; }
+
+        /* --- Intro Screen --- */
+        #intro-screen {
+            position: fixed; inset: 0; z-index: 10000;
+            background: #111;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: transform 1s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+        .intro-logo {
+            width: 120px; filter: drop-shadow(0 0 15px rgba(243, 115, 33, 0.4));
+            animation: pulse-logo 2s ease-in-out infinite alternate;
+        }
+        @keyframes pulse-logo { from { transform: scale(1); } to { transform: scale(1.1); } }
+        
+        .loading-bar {
+            width: 200px; height: 2px; background: rgba(255,255,255,0.1);
+            margin: 25px 0; overflow: hidden; border-radius: 10px;
+        }
+        .loading-fill {
+            height: 100%; width: 0%; background: var(--brand-orange);
+            animation: fill 2s ease-in-out forwards;
+        }
+        @keyframes fill { to { width: 100%; } }
+
+        .start-btn {
+            opacity: 0; transform: translateY(20px);
+            transition: all 0.5s ease 1.8s;
+            background: var(--brand-orange); color: white;
+            padding: 10px 30px; border-radius: 50px; font-weight: 900;
+            cursor: pointer; text-transform: uppercase; font-size: 0.8rem;
+        }
+        .start-btn.visible { opacity: 1; transform: translateY(0); }
+        .intro-finish { transform: translateY(-100%); pointer-events: none; }
+
+        /* --- Cards & Content --- */
+        .service-card { background: var(--card-bg); overflow: hidden; }
+        .service-card:hover { transform: translateY(-12px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        #detail-layer {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            z-index: 9999; display: none; align-items: center; justify-content: center;
+            backdrop-filter: blur(12px); padding: 15px;
+        }
+        .modal-container { 
+            width: 100%; max-width: 700px; background: var(--card-bg); 
+            border-radius: 2rem; padding: 2.5rem; position: relative; color: var(--text-main);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920');
+            background-size: cover; background-position: center;
+            min-height: 100vh; display: flex; align-items: center;
+        }
+
         #mobile-menu {
             position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
             background: rgba(0,0,0,0.98); backdrop-filter: blur(20px);
-            z-index: 9500; transition: 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+            z-index: 9500; transition: 0.6s cubic-bezier(0.7, 0, 0.3, 1);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
         #mobile-menu.active { right: 0; }
-        .m-link { font-size: 2.2rem; font-weight: 900; color: white; margin: 15px 0; font-style: italic; text-transform: uppercase; }
+        .m-link { font-size: 2.2rem; font-weight: 900; color: white; margin: 15px 0; text-transform: uppercase; }
 
-        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s all ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        
-        #detail-layer { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: none; align-items: center; justify-content: center; backdrop-filter: blur(12px); padding: 15px; }
-        .modal-container { width: 100%; max-width: 700px; max-height: 85vh; overflow-y: auto; background: white; border-radius: 2rem; padding: 2rem; position: relative; color: #111; }
-        @media (prefers-color-scheme: dark) { .modal-container { background: #1a1a1a; color: #fff; } }
-
-        .service-card { transition: 0.4s ease; cursor: pointer; background: white; border-radius: 2rem; overflow: hidden; }
-        .service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
         .container-custom { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 25px; }
     </style>
 </head>
-<body oncontextmenu="return false;">
-
+<body oncontextmenu="return false;" class="dark-theme"> 
+    
     <div id="intro-screen">
-        <img src="https://andalus-projects.com/Logo.png" style="width: 120px;" class="animate-pulse">
+        <img src="https://andalus-projects.com/Logo.png" class="intro-logo">
         <div class="loading-bar"><div class="loading-fill"></div></div>
         <div id="start-trigger" class="start-btn" onclick="removeIntro()">Start Project</div>
     </div>
 
     <div id="mobile-menu">
-        <button onclick="toggleMenu()" class="absolute top-8 right-8 text-white text-4xl"><i class="fas fa-times"></i></button>
-        <a href="https://andalus-projects.com/overons.html" onclick="toggleMenu()" class="m-link">Over Ons</a>
-        <a href="#services" onclick="toggleMenu()" class="m-link">Diensten</a>
+        <button onclick="toggleMenu()" class="absolute top-8 right-8 text-white text-3xl"><i class="fas fa-times"></i></button>
+        <a href="https://andalus-projects.com/overons.html" onclick="toggleMenu()" class="m-link hover:text-brand-orange">Over Ons</a>
+        <a href="#services" onclick="toggleMenu()" class="m-link hover:text-brand-orange">Diensten</a>
         <a href="#contact" onclick="toggleMenu()" class="m-link text-brand-orange">Contact</a>
+    </div>
+
+    <div class="floating-whatsapp fixed bottom-6 right-6 z-[9000]">
+        <a href="https://wa.me/32483404778" target="_blank" class="w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center text-white text-3xl shadow-2xl animate__animated animate__pulse animate__infinite">
+            <i class="fab fa-whatsapp"></i>
+        </a>
     </div>
 
     <div id="detail-layer" onclick="closeDetails()">
         <div class="modal-container" onclick="event.stopPropagation()">
-            <button onclick="closeDetails()" class="absolute top-6 right-6 text-gray-400 hover:text-brand-orange text-3xl"><i class="fas fa-times"></i></button>
-            <div id="modal-content" class="animate__animated animate__fadeInUp"></div>
+            <button onclick="closeDetails()" class="absolute top-6 right-6 text-gray-400 hover:text-brand-orange text-3xl">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="modal-content" class="animate__animated animate__zoomIn"></div>
         </div>
     </div>
 
     <div id="main-content">
-        <nav class="fixed top-0 w-full z-50 glass-header text-white">
+        <nav class="fixed top-0 w-full z-50 glass-header transition-all duration-500">
             <div class="container-custom py-5 flex justify-between items-center">
-                <a href="#" class="flex items-center gap-3">
-                    <img src="https://andalus-projects.com/Logo.png" alt="Logo" class="h-10">
-                    <span class="font-black text-lg md:text-xl tracking-tighter uppercase italic">ANDALUS <span class="text-brand-orange">PROJECTS</span></span>
+                <a href="#" class="flex items-center gap-3 group">
+                    <img src="https://andalus-projects.com/Logo.png" alt="Logo" class="h-10 group-hover:scale-110 transition">
+                    <span class="nav-logo-text font-black text-lg md:text-xl tracking-tighter uppercase italic text-white">ANDALUS <span class="text-brand-orange">PROJECTS</span></span>
                 </a>
                 
-                <div class="hidden md:flex gap-8 text-[11px] font-bold uppercase tracking-widest">
-                    <a href="https://andalus-projects.com/overons.html" class="hover:text-brand-orange transition">Over Ons</a>
-                    <a href="#services" class="hover:text-brand-orange transition">Diensten</a>
-                    <a href="#contact" class="text-brand-orange underline underline-offset-4">Contact</a>
+                <div class="hidden md:flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest">
+                    <a href="https://andalus-projects.com/overons.html" class="nav-link text-white hover:text-brand-orange transition">Over Ons</a>
+                    <a href="#services" class="nav-link text-white hover:text-brand-orange transition">Diensten</a>
+                    
+                    <button onclick="toggleTheme()" class="nav-link text-white text-lg hover:text-brand-orange transition-transform hover:scale-110" id="theme-btn">
+                        <i class="fas fa-sun" id="theme-icon"></i>
+                    </button>
+
+                    <a href="#contact" class="bg-brand-orange px-5 py-2.5 rounded-xl hover:scale-110 transition text-white shadow-lg">Contact</a>
                 </div>
 
-                <div class="md:hidden menu-btn-fixed" onclick="toggleMenu()">
-                    <div class="menu-line"></div>
-                    <div class="menu-line" style="width: 20px; align-self: flex-end;"></div>
-                    <div class="menu-line"></div>
-                </div>
+                <button onclick="toggleMenu()" class="md:hidden text-3xl text-brand-orange">
+                    <i class="fas fa-bars-staggered"></i>
+                </button>
             </div>
         </nav>
 
-        <section id="home" class="relative min-h-screen flex items-center" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920'); background-size: cover; background-position: center;">
+        <section id="home" class="hero-gradient">
             <div class="container-custom">
                 <div class="max-w-3xl">
-                    <div class="inline-block bg-brand-orange text-[10px] font-black px-5 py-2 rounded-full text-white mb-8 animate__animated animate__fadeInDown uppercase italic">Est. 2004 | Expert Renovatie</div>
-                    <h1 class="text-5xl md:text-8xl font-black text-white leading-[1] mb-8 uppercase tracking-tighter italic">Meester in <br><span class="text-brand-orange">Vakmanschap</span></h1>
-                    <p class="text-gray-300 text-lg md:text-2xl mb-10 leading-relaxed max-w-xl font-light">Al meer dan 20 jaar bouwen wij aan dromen. Van strakke badkamers tot luxe visgraat vloeren.</p>
-                    <div class="flex flex-col sm:row gap-5">
+                    <div class="inline-block bg-brand-orange text-[10px] font-black px-5 py-2 rounded-full text-white mb-8 animate__animated animate__fadeInLeft uppercase italic">Est. 2004 | Expert Renovatie</div>
+                    <h1 class="text-5xl md:text-8xl font-black text-white leading-[1] mb-8 uppercase tracking-tighter italic">
+                        Meester in <br><span class="text-brand-orange">Vakmanschap</span>
+                    </h1>
+                    <p class="text-gray-300 text-lg md:text-2xl mb-10 leading-relaxed max-w-xl font-light">
+                        Al meer dan 20 jaar bouwen wij aan dromen. Van strakke badkamers tot luxe visgraat vloeren.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-5">
                         <a href="#services" class="bg-brand-orange text-white px-10 py-5 rounded-2xl font-black text-center hover:scale-105 transition shadow-2xl text-base uppercase">BEKIJK DIENSTEN</a>
+                        <a href="https://wa.me/32483404778" class="bg-white/10 text-white border border-white/20 px-10 py-5 rounded-2xl font-black text-center hover:bg-white/20 transition text-base uppercase backdrop-blur-sm">WHATSAPP</a>
                     </div>
                 </div>
             </div>
@@ -161,63 +202,118 @@
             <div class="container-custom">
                 <div class="text-center mb-16 reveal">
                     <h2 class="text-4xl md:text-6xl font-black uppercase italic">Onze <span class="text-brand-orange">Diensten</span></h2>
-                    <p class="text-gray-400 mt-4 text-sm font-bold uppercase tracking-widest">Excellence in every detail</p>
+                    <p class="text-gray-400 mt-4 text-sm font-bold uppercase tracking-[0.3em]">Excellence in every detail</p>
                 </div>
+                
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div onclick="openDetails('badkamer')" class="service-card reveal">
+                    <div onclick="openDetails('badkamer')" class="service-card reveal rounded-3xl shadow-xl cursor-pointer">
                         <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?q=80&w=600" class="w-full h-56 object-cover">
                         <div class="p-8 text-center"><h3 class="text-xl font-black uppercase italic">Badkamerrenovatie</h3></div>
                     </div>
-                    <div onclick="openDetails('tegelwerk')" class="service-card reveal">
+                    <div onclick="openDetails('tegelwerk')" class="service-card reveal rounded-3xl shadow-xl cursor-pointer">
                         <img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?q=80&w=600" class="w-full h-56 object-cover">
                         <div class="p-8 text-center"><h3 class="text-xl font-black uppercase italic">Tegelwerken</h3></div>
                     </div>
-                    <div onclick="openDetails('stucwerk')" class="service-card reveal">
+                    <div onclick="openDetails('stucwerk')" class="service-card reveal rounded-3xl shadow-xl cursor-pointer">
                         <img src="https://andalus-projects.com/image1.jpg" class="w-full h-56 object-cover">
                         <div class="p-8 text-center"><h3 class="text-xl font-black uppercase italic">Stucwerk</h3></div>
+                    </div>
+                    <div onclick="openDetails('schilderwerk')" class="service-card reveal rounded-3xl shadow-xl cursor-pointer">
+                        <img src="https://andalus-projects.com/image2.jpeg" class="w-full h-56 object-cover">
+                        <div class="p-8 text-center"><h3 class="text-xl font-black uppercase italic">Schilderwerk</h3></div>
+                    </div>
+                    <div onclick="openDetails('vloeren')" class="service-card reveal rounded-3xl shadow-xl cursor-pointer">
+                        <img src="https://andalus-projects.com/images3.jpg" class="w-full h-56 object-cover">
+                        <div class="p-8 text-center"><h3 class="text-xl font-black uppercase italic">Vloerplaatsing</h3></div>
+                    </div>
+                    <div onclick="openDetails('reiniging')" class="service-card reveal rounded-3xl shadow-xl cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=600" class="w-full h-56 object-cover">
+                        <div class="p-8 text-center"><h3 class="text-xl font-black uppercase italic">Reiniging</h3></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <footer class="py-12 bg-white text-center text-gray-400 font-bold uppercase tracking-[0.4em] text-[10px]">
+        <section id="contact" class="py-20 bg-black text-white text-center">
+            <div class="container-custom">
+                <h2 class="text-4xl md:text-6xl font-black mb-10 uppercase italic">Klaar voor <span class="text-brand-orange">verandering?</span></h2>
+                <a href="tel:+32483404778" class="inline-flex items-center gap-5 bg-white/5 border border-white/10 p-6 md:p-8 rounded-3xl hover:border-brand-orange transition-all hover:scale-105 group">
+                    <i class="fas fa-phone-alt text-brand-orange text-3xl group-hover:rotate-12"></i>
+                    <span class="font-black text-2xl md:text-4xl tracking-tighter">+32 483 404 778</span>
+                </a>
+            </div>
+        </section>
+
+        <footer class="py-12 text-center text-gray-400 font-bold uppercase tracking-[0.4em] text-[10px]">
             <p>&copy; 2026 Andalus Projects - Belgium Luxury Renovatie</p>
         </footer>
     </div>
 
     <script>
-        // Intro Control
+        // Disable Keyboard Shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 'u' || e.key === 'a')) e.preventDefault();
+        });
+
+        // Theme Toggle Logic
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+
+        // Intro Screen
         setTimeout(() => { document.getElementById('start-trigger').classList.add('visible'); }, 2000);
         function removeIntro() {
             document.getElementById('intro-screen').classList.add('intro-finish');
             document.body.style.overflowY = 'auto';
-            setTimeout(reveal, 500);
+            setTimeout(reveal, 600);
         }
 
-        // Menu Toggle
+        // Mobile Menu
         function toggleMenu() {
             document.getElementById('mobile-menu').classList.toggle('active');
         }
 
-        // Details Modal
+        // Services Logic
         const servicesData = {
-            badkamer: { title: "Badkamerrenovatie", desc: "Complete vernieuwing van A tot Z.", items: ["Sanitair", "Waterdicht", "Design"] },
-            tegelwerk: { title: "Tegelwerken", desc: "Nauwkeurige plaatsing.", items: ["Natuursteen", "Keramiek"] },
-            stucwerk: { title: "Stucwerk", desc: "Gladde wanden.", items: ["Pleisterwerk", "Reparaties"] }
+            badkamer: { title: "Badkamerrenovatie", desc: "Complete vernieuwing van A tot Z. Sloopwerk, leidingen, sanitair en luxe afwerking.", items: ["Sanitair installatie", "Waterdicht maken", "Design afwerking"] },
+            tegelwerk: { title: "Tegelwerken", desc: "Nauwkeurige plaatsing voor wanden en vloeren, keukens en badkamers.", items: ["Keramisch & Natuursteen", "Badkamers", "Terrassen"] },
+            stucwerk: { title: "Stucwerk", desc: "Gladde wanden en plafonds voor een moderne en frisse look.", items: ["Glad pleisterwerk", "Sierpleister", "Muurreparaties"] },
+            schilderwerk: { title: "Schilderwerk", desc: "Hoogwaardige schilderwerken voor binnen en buiten.", items: ["Binnenschilderwerk", "Buitenschilderwerk", "Kozijnen & Deuren"] },
+            vloeren: { title: "Vloerplaatsing", desc: "Specialist in Laminaat, Visgraat en PVC vloeren.", items: ["Laminaat & PVC", "Luxe Visgraat", "Egalisatie"] },
+            reiniging: { title: "Reiniging", desc: "Grondige bouwschoonmaak of onderhoud.", items: ["Eindschoonmaak bouw", "Tuinonderhoud", "Gemeenschappelijke ruimtes"] }
         };
 
         function openDetails(id) {
             const data = servicesData[id];
-            document.getElementById('modal-content').innerHTML = `<h2 class="text-3xl font-black mb-5 uppercase italic border-b-8 border-brand-orange inline-block">${data.title}</h2><p class="mb-8 text-lg">${data.desc}</p><a href="https://wa.me/32483404778" class="block bg-brand-orange text-white py-5 rounded-2xl font-black text-center uppercase">Vraag een offerte</a>`;
+            document.getElementById('modal-content').innerHTML = `
+                <h2 class="text-3xl font-black mb-5 uppercase italic border-b-8 border-brand-orange inline-block">${data.title}</h2>
+                <p class="mb-8 text-lg leading-relaxed font-medium">${data.desc}</p>
+                <div class="grid gap-4 mb-10">
+                    ${data.items.map(i => `<div class="flex items-center gap-4 font-bold text-sm bg-black/5 dark:bg-white/5 p-4 rounded-2xl"><i class="fas fa-check-circle text-brand-orange"></i> ${i}</div>`).join('')}
+                </div>
+                <a href="https://wa.me/32483404778" class="block bg-brand-orange text-white py-5 rounded-2xl font-black text-center shadow-xl hover:brightness-110 transition uppercase tracking-widest">Vraag een offerte</a>
+            `;
             document.getElementById('detail-layer').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
 
-        function closeDetails() { document.getElementById('detail-layer').style.display = 'none'; document.body.style.overflowY = 'auto'; }
+        function closeDetails() {
+            document.getElementById('detail-layer').style.display = 'none';
+            document.body.style.overflowY = 'auto';
+        }
 
         function reveal() {
             document.querySelectorAll(".reveal").forEach(el => {
-                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add("active");
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) el.classList.add("active");
             });
         }
         window.addEventListener("scroll", reveal);
