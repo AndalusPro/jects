@@ -12,6 +12,23 @@
     <style>
         :root { scroll-behavior: smooth; }
 
+        /* iOS 26 Glassmorphism Core */
+        .glass-ui {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            transition: all 0.4s cubic-bezier(0.15, 0.83, 0.66, 1);
+        }
+
         /* قفل النسخ وتحديد النص */
         * {
             -webkit-user-select: none;
@@ -23,86 +40,75 @@
 
         body { 
             font-family: 'Poppins', sans-serif; 
-            background-color: #f9fafb; 
+            background-color: #f0f2f5; 
             overflow-x: hidden; 
             width: 100%; margin: 0; padding: 0;
-            overflow-y: hidden; /* مغلق حتى الضغط على دخول */
+            overflow-y: hidden;
         }
         
-        /* واجهة الترحيب الاحترافية */
+        /* واجهة الترحيب التفاعلية */
         #intro-screen {
             position: fixed;
             inset: 0;
             z-index: 10000;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1920');
-            background-size: cover;
-            background-position: center;
+            background: url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1920') center/cover;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transition: 1.2s cubic-bezier(0.8, 0, 0.2, 1);
         }
 
         .intro-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 3rem;
-            border-radius: 2.5rem;
+            padding: 4rem;
+            border-radius: 3rem;
             text-align: center;
-            transform-style: preserve-3d;
-            perspective: 1000px;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
-        }
-
-        .intro-logo {
-            transform: translateZ(50px);
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
         }
 
         .enter-btn {
-            transform: translateZ(30px);
             background: #f37321;
             color: white;
-            padding: 1rem 3rem;
-            border-radius: 1rem;
+            padding: 1.2rem 3.5rem;
+            border-radius: 1.5rem;
             font-weight: 900;
             margin-top: 2rem;
             display: inline-block;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(243, 115, 33, 0.4);
+            transition: all 0.5s ease;
+            box-shadow: 0 15px 45px rgba(243, 115, 33, 0.4);
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
         .enter-btn:hover {
-            transform: translateZ(40px) scale(1.05);
-            background: #ff853a;
+            transform: translateY(-5px) scale(1.05);
+            filter: brightness(1.1);
+            box-shadow: 0 20px 50px rgba(243, 115, 33, 0.6);
         }
 
-        /* اخفاء الواجهة */
         .hide-intro {
             opacity: 0;
             visibility: hidden;
-            transform: scale(1.1);
+            transform: scale(1.2);
         }
 
         .bg-brand-orange { background-color: #f37321; }
         .text-brand-orange { color: #f37321; }
-        .border-brand-orange { border-color: #f37321; }
 
-        /* Hero Section & Motion Graphic */
+        /* Hero Section */
         .hero-gradient {
             position: relative;
-            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920');
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920');
             background-size: cover;
             background-position: center;
             min-height: 100vh;
             display: flex;
             align-items: center;
             width: 100%;
-            overflow: hidden;
         }
 
         #motion-canvas {
@@ -110,166 +116,142 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             pointer-events: none;
-            opacity: 0.4;
-            z-index: 1;
-        }
-
-        #detail-layer {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.92);
-            z-index: 9999; display: none; align-items: center; justify-content: center;
-            backdrop-filter: blur(8px); padding: 15px;
-        }
-
-        .modal-container {
-            width: 100%; max-width: 700px; max-height: 85vh;
-            overflow-y: auto; background: white;
-            border-radius: 1.5rem; padding: 1.5rem; position: relative;
+            opacity: 0.3;
         }
 
         .floating-whatsapp {
-            position: fixed; bottom: 20px; right: 20px; z-index: 9000;
+            position: fixed; bottom: 30px; right: 30px; z-index: 9000;
         }
 
-        .container-custom {
-            width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px;
-            position: relative; z-index: 10;
-        }
+        .service-card:hover { transform: translateY(-10px) scale(1.02); }
 
-        .service-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; border-radius: 1.25rem; overflow: hidden; background: white; height: 100%; }
-        .service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 30px rgba(0,0,0,0.15); }
-
-        .reveal { opacity: 0; transform: translateY(20px); transition: 0.6s all ease-out; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s all ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
     <div id="intro-screen">
-        <div class="intro-card animate__animated animate__zoomIn">
-            <div class="intro-logo mb-6">
-                <img src="https://andalus-projects.com/Logo.png" alt="Andalus Logo" class="h-24 mx-auto mb-4">
-                <h2 class="text-white font-black text-3xl tracking-tighter italic">
+        <div class="intro-card animate__animated animate__fadeIn">
+            <div class="mb-8">
+                <img src="https://andalus-projects.com/Logo.png" alt="Logo" class="h-28 mx-auto mb-6 drop-shadow-2xl">
+                <h2 class="text-white font-black text-4xl tracking-tighter uppercase italic">
                     ANDALUS <span class="text-brand-orange">PROJECTS</span>
                 </h2>
-                <p class="text-gray-300 text-xs tracking-[0.3em] uppercase mt-2">Belgium Luxury Renovation</p>
+                <div class="h-1 w-20 bg-brand-orange mx-auto mt-4 rounded-full"></div>
             </div>
             <div onclick="startSite()" class="enter-btn">
-                Ontdek de Ervaring
+                Betreed de Ervaring
             </div>
         </div>
     </div>
 
     <div class="floating-whatsapp">
-        <a href="https://wa.me/32483404778" target="_blank" class="w-14 h-14 md:w-16 md:h-16 bg-[#25D366] rounded-full flex items-center justify-center text-white text-2xl md:text-3xl shadow-2xl animate__animated animate__pulse animate__infinite">
+        <a href="https://wa.me/32483404778" target="_blank" class="w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center text-white text-3xl shadow-2xl glass-ui" style="background: rgba(37, 211, 102, 0.8);">
             <i class="fab fa-whatsapp"></i>
         </a>
     </div>
 
-    <div id="detail-layer" onclick="closeDetails()">
-        <div class="modal-container" onclick="event.stopPropagation()">
-            <button onclick="closeDetails()" class="absolute top-4 right-4 text-gray-400 hover:text-brand-orange text-2xl">
-                <i class="fas fa-times"></i>
+    <div id="detail-layer" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4 backdrop-blur-xl bg-black/40" onclick="closeDetails()">
+        <div class="modal-container glass-card w-full max-w-lg p-10 rounded-[3rem] relative" onclick="event.stopPropagation()">
+            <button onclick="closeDetails()" class="absolute top-6 right-6 text-gray-400 hover:text-brand-orange text-3xl">
+                <i class="fas fa-times-circle"></i>
             </button>
             <div id="modal-content" class="animate__animated animate__fadeInUp"></div>
         </div>
     </div>
 
     <div id="main-content">
-        <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md text-white border-b border-white/10">
-            <div class="container-custom py-4 flex justify-between items-center">
-                <a href="#" class="flex items-center gap-3 hover:opacity-80 transition">
-                    <img src="https://andalus-projects.com/Logo.png" alt="Logo" class="h-8 md:h-10 w-auto object-contain">
-                    <span class="font-black text-sm md:text-lg tracking-tighter uppercase leading-none italic">
-                        ANDALUS <span class="text-brand-orange">PROJECTS</span>
-                    </span>
+        <nav class="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-5xl z-50 glass-ui rounded-[2rem] py-4 px-8 text-white">
+            <div class="flex justify-between items-center">
+                <a href="#" class="flex items-center gap-3">
+                    <img src="https://andalus-projects.com/Logo.png" alt="Logo" class="h-8">
+                    <span class="font-black text-sm tracking-tighter uppercase italic">ANDALUS <span class="text-brand-orange">PROJECTS</span></span>
                 </a>
-                <div class="hidden md:flex gap-6 text-[10px] font-bold uppercase tracking-widest">
+                <div class="hidden md:flex gap-8 text-[11px] font-black uppercase tracking-[0.2em]">
                     <a href="https://andalus-projects.com/overons.html" class="hover:text-brand-orange transition">Over Ons</a>
                     <a href="#services" class="hover:text-brand-orange transition">Diensten</a>
-                    <a href="#contact" class="text-brand-orange transition underline underline-offset-4">Contact</a>
+                    <a href="#contact" class="text-brand-orange">Contact</a>
                 </div>
             </div>
         </nav>
 
         <section id="home" class="hero-gradient">
             <canvas id="motion-canvas"></canvas>
-            <div class="container-custom">
-                <div class="max-w-3xl">
-                    <div class="inline-block bg-brand-orange text-[10px] font-black px-4 py-1.5 rounded-full text-white mb-6 animate__animated animate__fadeInDown uppercase italic">Est. 2004 | Expert Renovatie</div>
-                    <h1 class="text-4xl md:text-7xl lg:text-8xl font-black text-white leading-[1.1] mb-6 uppercase tracking-tighter">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="max-w-4xl glass-ui p-12 md:p-20 rounded-[4rem] border-white/5">
+                    <span class="inline-block bg-brand-orange/20 text-brand-orange text-xs font-black px-5 py-2 rounded-full mb-6 uppercase tracking-widest italic border border-brand-orange/30">Est. 2004 | Belgium</span>
+                    <h1 class="text-5xl md:text-8xl font-black text-white leading-none mb-8 uppercase italic tracking-tighter">
                         Meester in <br><span class="text-brand-orange">Vakmanschap</span>
                     </h1>
-                    <p class="text-gray-300 text-base md:text-xl mb-8 leading-relaxed max-w-xl">
-                        Al meer dan 20 jaar bouwen wij aan dromen. Van strakke badkamers tot luxe visgraat vloeren.
+                    <p class="text-gray-200 text-lg md:text-2xl mb-10 leading-relaxed font-light">
+                        Creëer de perfecte ruimte met meer dan 20 jaar passie. Luxe renovaties met een onberispelijke afwerking.
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="#services" class="bg-brand-orange text-white px-8 py-4 rounded-xl font-black text-center hover:scale-105 transition shadow-lg text-sm">BEKIJK DIENSTEN</a>
-                        <a href="https://wa.me/32483404778" class="bg-white/10 text-white border border-white/20 px-8 py-4 rounded-xl font-black text-center hover:bg-white/20 transition text-sm">WHATSAPP CONTACT</a>
+                    <div class="flex flex-col sm:flex-row gap-6">
+                        <a href="#services" class="bg-brand-orange text-white px-10 py-5 rounded-2xl font-black text-center shadow-2xl hover:scale-105 transition uppercase tracking-tighter">Onze Diensten</a>
+                        <a href="https://wa.me/32483404778" class="glass-ui text-white px-10 py-5 rounded-2xl font-black text-center hover:bg-white/10 transition uppercase tracking-tighter border-white/20">Direct Contact</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="services" class="py-20 bg-gray-50">
-            <div class="container-custom">
-                <div class="text-center mb-12 reveal">
-                    <h2 class="text-3xl md:text-5xl font-black text-zinc-900 uppercase italic leading-none">Onze <span class="text-brand-orange">Diensten</span></h2>
-                    <p class="text-gray-400 mt-3 text-xs font-bold uppercase tracking-widest">Klik op een categorie voor meer info</p>
+        <section id="services" class="py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-20 reveal">
+                    <h2 class="text-4xl md:text-6xl font-black text-zinc-900 uppercase italic">Luxe <span class="text-brand-orange">Oplossingen</span></h2>
+                    <div class="h-1.5 w-24 bg-brand-orange mx-auto mt-6 rounded-full"></div>
                 </div>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div onclick="openDetails('badkamer')" class="service-card reveal">
-                        <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?q=80&w=600" class="w-full h-48 object-cover">
-                        <div class="p-6 text-center"><h3 class="text-lg font-black uppercase">Badkamerrenovatie</h3></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <div onclick="openDetails('badkamer')" class="service-card glass-card rounded-[3rem] p-4 reveal">
+                        <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?q=80&w=600" class="w-full h-64 object-cover rounded-[2.5rem] mb-6">
+                        <div class="text-center pb-6">
+                            <h3 class="text-xl font-black uppercase italic text-zinc-800">Badkamerrenovatie</h3>
+                            <p class="text-brand-orange font-bold text-xs mt-2 uppercase tracking-widest">Premium Detail</p>
+                        </div>
                     </div>
-                    <div onclick="openDetails('tegelwerk')" class="service-card reveal">
-                        <img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?q=80&w=600" class="w-full h-48 object-cover">
-                        <div class="p-6 text-center"><h3 class="text-lg font-black uppercase">Tegelwerken</h3></div>
+
+                    <div onclick="openDetails('tegelwerk')" class="service-card glass-card rounded-[3rem] p-4 reveal">
+                        <img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?q=80&w=600" class="w-full h-64 object-cover rounded-[2.5rem] mb-6">
+                        <div class="text-center pb-6">
+                            <h3 class="text-xl font-black uppercase italic text-zinc-800">Tegelwerken</h3>
+                            <p class="text-brand-orange font-bold text-xs mt-2 uppercase tracking-widest">Nauwkeurigheid</p>
+                        </div>
                     </div>
-                    <div onclick="openDetails('stucwerk')" class="service-card reveal">
-                        <img src="https://andalus-projects.com/image1.jpg" class="w-full h-48 object-cover">
-                        <div class="p-6 text-center"><h3 class="text-lg font-black uppercase">Stucwerk</h3></div>
-                    </div>
-                    <div onclick="openDetails('schilderwerk')" class="service-card reveal">
-                        <img src="https://andalus-projects.com/image2.jpeg" class="w-full h-48 object-cover">
-                        <div class="p-6 text-center"><h3 class="text-lg font-black uppercase">Schilderwerk</h3></div>
-                    </div>
-                    <div onclick="openDetails('vloeren')" class="service-card reveal">
-                        <img src="https://andalus-projects.com/images3.jpg" class="w-full h-48 object-cover">
-                        <div class="p-6 text-center"><h3 class="text-lg font-black uppercase">Vloerplaatsing</h3></div>
-                    </div>
-                    <div onclick="openDetails('reiniging')" class="service-card reveal">
-                        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=600" class="w-full h-48 object-cover">
-                        <div class="p-6 text-center"><h3 class="text-lg font-black uppercase">Reiniging</h3></div>
+
+                    <div onclick="openDetails('stucwerk')" class="service-card glass-card rounded-[3rem] p-4 reveal">
+                        <img src="https://andalus-projects.com/image1.jpg" class="w-full h-64 object-cover rounded-[2.5rem] mb-6">
+                        <div class="text-center pb-6">
+                            <h3 class="text-xl font-black uppercase italic text-zinc-800">Stucwerk</h3>
+                            <p class="text-brand-orange font-bold text-xs mt-2 uppercase tracking-widest">Gladde Afwerking</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="py-16 bg-zinc-950 text-white text-center">
-            <div class="container-custom">
-                <h2 class="text-3xl md:text-5xl font-black mb-8 uppercase italic leading-none">Klaar om te <span class="text-brand-orange">starten?</span></h2>
-                <div class="flex flex-col gap-4 max-w-md mx-auto">
-                    <a href="tel:+32483404778" class="bg-white/5 border border-white/10 p-5 rounded-2xl flex items-center justify-center gap-4 hover:border-brand-orange transition group">
-                        <i class="fas fa-phone text-brand-orange group-hover:scale-110 transition"></i>
-                        <span class="font-bold">+32 483 404 778</span>
+        <section id="contact" class="py-24 bg-zinc-950">
+            <div class="container mx-auto px-6">
+                <div class="glass-ui rounded-[4rem] p-16 text-center border-white/5">
+                    <h2 class="text-4xl md:text-6xl font-black text-white mb-10 uppercase italic">Klaar voor een <span class="text-brand-orange">transformatie?</span></h2>
+                    <a href="tel:+32483404778" class="inline-flex items-center gap-6 bg-white text-zinc-900 px-12 py-6 rounded-[2rem] font-black text-xl hover:bg-brand-orange hover:text-white transition group">
+                        <i class="fas fa-phone-alt text-brand-orange group-hover:text-white"></i>
+                        <span>BEL ONS NU</span>
                     </a>
                 </div>
             </div>
         </section>
 
-        <footer class="py-8 bg-white text-center text-gray-400 font-bold uppercase tracking-widest text-[10px]">
-            <p>&copy; 2026 Andalus Projects - Belgium Renovatie Specialist</p>
+        <footer class="py-12 text-center text-gray-500 font-bold uppercase tracking-[0.4em] text-[10px]">
+            &copy; 2026 Andalus Projects | Crafted with Precision
         </footer>
     </div>
 
     <script>
-        // وظيفة الدخول للموقع
         function startSite() {
             document.getElementById('intro-screen').classList.add('hide-intro');
             document.body.style.overflowY = 'auto';
-            // تشغيل الانيميشن عند الدخول
-            setTimeout(reveal, 500);
+            setTimeout(reveal, 600);
         }
 
         // Motion Graphics Logic
@@ -280,12 +262,12 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             particles = [];
-            for(let i=0; i<80; i++) {
+            for(let i=0; i<60; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4
                 });
             }
         }
@@ -296,12 +278,12 @@
                 p.x += p.vx; p.y += p.vy;
                 if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
                 if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.arc(p.x, p.y, 1.5, 0, Math.PI*2); ctx.fill();
                 for(let j=i+1; j<particles.length; j++) {
                     let p2 = particles[j];
                     let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if(dist < 150) {
-                        ctx.globalAlpha = 1 - (dist/150);
+                    if(dist < 180) {
+                        ctx.globalAlpha = 1 - (dist/180);
                         ctx.lineWidth = 0.5;
                         ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
                     }
@@ -312,33 +294,30 @@
         window.addEventListener('resize', initCanvas);
         initCanvas(); draw();
 
-        // Services Data & Logic
         const servicesData = {
-            badkamer: { title: "Badkamerrenovatie", desc: "Complete vernieuwing van A tot Z. Sloopwerk, leidingen, sanitair en luxe afwerking.", items: ["Sanitair installatie", "Waterdicht maken", "Design afwerking"] },
-            tegelwerk: { title: "Tegelwerken", desc: "Nauwkeurige plaatsing voor wanden en vloeren, keukens en badkamers.", items: ["Keramisch & Natuursteen", "Badkamers", "Terrassen"] },
-            stucwerk: { title: "Stucwerk", desc: "Gladde wanden en plafonds voor een moderne en frisse look.", items: ["Glad pleisterwerk", "Sierpleister", "Muurreparaties"] },
-            schilderwerk: { title: "Schilderwerk", desc: "Hoogwaardige schilderwerken voor binnen en buiten met duurzame verf.", items: ["Binnenschilderwerk", "Buitenschilderwerk", "Kozijnen & Deuren"] },
-            vloeren: { title: "Vloerplaatsing", desc: "Specialist in Laminaat, Visgraat en PVC vloeren met perfecte ondervloer.", items: ["Laminaat & PVC", "Luxe Visgraat", "Egalisatie"] },
-            reiniging: { title: "Reiniging", desc: "Grondige bouwschoonmaak of onderhoud van gebouwen en tuinen.", items: ["Eindschoonmaak bouw", "Tuinonderhoud", "Gemeenschappelijke ruimtes"] }
+            badkamer: { title: "Badkamerrenovatie", desc: "Complete luxe vernieuwing van sanitair en afwerking.", items: ["Sanitair", "Waterdicht", "Design"] },
+            tegelwerk: { title: "Tegelwerken", desc: "Nauwkeurige plaatsing voor wanden en vloeren.", items: ["Keramiek", "Natuursteen", "Balkon"] },
+            stucwerk: { title: "Stucwerk", desc: "Strakke en moderne wanden zonder oneffenheden.", items: ["Glad", "Sierpleister", "Herstel"] }
         };
 
         function openDetails(id) {
             const data = servicesData[id];
             const content = document.getElementById('modal-content');
             content.innerHTML = `
-                <h2 class="text-xl md:text-2xl font-black mb-4 uppercase italic border-b-4 border-brand-orange inline-block">${data.title}</h2>
-                <p class="text-gray-600 mb-6 text-sm md:text-base">${data.desc}</p>
-                <ul class="space-y-3 mb-8">
-                    ${data.items.map(i => `<li class="flex items-center gap-3 font-bold text-xs md:text-sm"><i class="fas fa-check-circle text-brand-orange"></i> ${i}</li>`).join('')}
-                </ul>
-                <a href="https://wa.me/32483404778" class="block bg-brand-orange text-white py-4 rounded-xl font-black text-center text-sm shadow-lg hover:brightness-110 transition">OFFERTE VIA WHATSAPP</a>
+                <h2 class="text-3xl font-black mb-6 uppercase italic text-zinc-800">${data.title}</h2>
+                <p class="text-gray-600 mb-8 text-lg">${data.desc}</p>
+                <div class="grid grid-cols-1 gap-4 mb-10">
+                    ${data.items.map(i => `<div class="bg-gray-100 p-4 rounded-2xl font-black text-sm flex items-center gap-3"><i class="fas fa-check text-brand-orange"></i> ${i}</div>`).join('')}
+                </div>
+                <a href="https://wa.me/32483404778" class="block bg-brand-orange text-white py-5 rounded-2xl font-black text-center shadow-xl">VRAAG OFFERTE</a>
             `;
-            document.getElementById('detail-layer').style.display = 'flex';
+            document.getElementById('detail-layer').classList.remove('hidden');
+            document.getElementById('detail-layer').classList.add('flex');
             document.body.style.overflow = 'hidden';
         }
 
         function closeDetails() {
-            document.getElementById('detail-layer').style.display = 'none';
+            document.getElementById('detail-layer').classList.add('hidden');
             document.body.style.overflowY = 'auto';
         }
 
@@ -348,8 +327,6 @@
             });
         }
         window.addEventListener("scroll", reveal);
-
-        // قفل المفاتيح (Ctrl+C, Ctrl+U, etc)
         document.onkeydown = function(e) {
             if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 85 || e.keyCode === 73 || e.keyCode === 74)) return false;
         };
