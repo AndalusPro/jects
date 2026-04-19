@@ -11,11 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-        }
+        body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; overflow: hidden; } /* منع التمرير حتى فتح الموقع */
         .bg-brand-orange { background-color: #f37321; }
         .text-brand-orange { color: #f37321; }
         .bg-brand-dark { background-color: #2d3436; }
@@ -26,46 +22,45 @@
             background-position: center;
         }
 
-        /* Coming Soon Overlay */
+        /* واجهة القفل والانتظار */
         #coming-soon {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #2d3436;
+            background: #1a1a1a;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
+            z-index: 10000;
             color: white;
-            transition: opacity 1s ease-out, visibility 1s;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
         }
 
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #f37321;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin-top: 20px;
+        .password-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #f37321;
+            padding: 12px 20px;
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            width: 250px;
+            text-align: center;
+            transition: all 0.3s;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .password-input:focus { box-shadow: 0 0 15px rgba(243, 115, 33, 0.4); }
+
+        .error-shake { animation: shake 0.5s; border-color: #ff4d4d; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
         }
 
-        .logo-svg { width: 60px; height: 60px; }
-
-        /* Swiper Customization */
-        .swiper-button-next, .swiper-button-prev { color: #f37321 !important; }
-        .swiper-pagination-bullet-active { background: #f37321 !important; }
-        .slide-img { height: 500px; object-fit: cover; width: 100%; }
-
-        /* Smooth reveal for sections */
+        .logo-svg { width: 80px; height: 80px; }
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
@@ -73,158 +68,103 @@
 <body class="bg-gray-50">
 
     <div id="coming-soon">
-        <div class="text-center animate__animated animate__fadeInDown">
-            <svg class="logo-svg mx-auto mb-4" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <div class="text-center animate__animated animate__fadeIn">
+            <svg class="logo-svg mx-auto mb-6" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                 <path d="M256 40L40 220v252h140V330h152v142h140V220L256 40z" fill="#f37321"/>
             </svg>
-            <h1 class="text-3xl font-bold mb-2">Andalus Projects</h1>
-            <p class="text-brand-orange tracking-widest uppercase text-sm">Binnenkort Beschikbaar</p>
-            <div class="mt-6 flex flex-col items-center">
-                <p class="text-gray-400 text-sm mb-4">We bereiden iets geweldigs voor...</p>
-                <button onclick="enterSite()" class="px-8 py-3 bg-brand-orange text-white rounded-full font-bold hover:bg-orange-600 transition animate__animated animate__pulse animate__infinite">
-                    Bekijk Preview
+            <h1 class="text-3xl font-bold mb-2 tracking-wide">ANDALUS PROJECTS</h1>
+            <p class="text-brand-orange mb-8 uppercase tracking-[0.3em] text-sm">Protected Area</p>
+            
+            <div class="space-y-4">
+                <input type="password" id="sitePass" class="password-input block mx-auto" placeholder="Wachtwoord invoeren">
+                <button onclick="checkPassword()" class="bg-brand-orange text-white px-10 py-3 rounded-full font-bold hover:bg-orange-600 transition shadow-lg">
+                    Access Website
                 </button>
             </div>
+            <p id="errorMsg" class="text-red-500 mt-4 text-sm font-medium opacity-0">Onjuist wachtwoord. Probeer het opnieuw.</p>
         </div>
     </div>
 
     <nav class="bg-brand-dark text-white sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <svg class="logo-svg" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                <svg width="40" height="40" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                     <path d="M256 40L40 220v252h140V330h152v142h140V220L256 40z" fill="#f37321"/>
-                    <rect x="360" y="260" width="30" height="30" fill="white"/>
-                    <rect x="400" y="260" width="30" height="30" fill="white"/>
-                    <rect x="360" y="300" width="30" height="30" fill="white"/>
-                    <rect x="400" y="300" width="30" height="30" fill="white"/>
-                    <path d="M256 120l40 60-40 20-40-20z" fill="white" opacity="0.8"/>
                 </svg>
                 <div class="leading-tight">
                     <span class="text-xl font-bold tracking-wider block">ANDALUS PROJECTS</span>
-                    <span class="text-xs text-brand-orange uppercase tracking-widest">Renovatie & Schoonmaken</span>
                 </div>
             </div>
-            <div class="hidden md:flex space-x-8 font-medium items-center">
-                <a href="#home" class="hover:text-brand-orange transition">Home</a>
-                <a href="#services" class="hover:text-brand-orange transition">Diensten</a>
-                <a href="#contact" class="bg-brand-orange px-5 py-2 rounded-full hover:bg-orange-600 transition">Offerte aanvragen</a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#home" class="hover:text-brand-orange">Home</a>
+                <a href="#services" class="hover:text-brand-orange">Diensten</a>
+                <a href="#contact" class="bg-brand-orange px-5 py-2 rounded-full">Offerte aanvragen</a>
             </div>
         </div>
     </nav>
 
-    <section id="home" class="hero-gradient h-[80vh] flex items-center relative text-white">
-        <div class="container mx-auto px-6 text-center md:text-left">
-            <h2 class="text-brand-orange font-bold text-xl md:text-2xl mb-2 uppercase tracking-widest animate__animated animate__fadeInLeft">Professionele Bouw</h2>
-            <h1 class="text-4xl md:text-7xl font-extrabold mb-6 leading-tight animate__animated animate__fadeInLeft animate__delay-1s">EN RENOVATIEDIENSTEN</h1>
-            <div class="inline-flex items-center bg-brand-orange text-white px-8 py-4 rounded-full text-lg font-bold shadow-2xl transform hover:scale-105 transition animate__animated animate__zoomIn animate__delay-2s cursor-pointer">
-                Geef uw huis een nieuw leven!
-            </div>
+    <section id="home" class="hero-gradient h-[80vh] flex items-center text-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-brand-orange font-bold text-xl mb-2 uppercase animate__animated animate__fadeInLeft">Professionele Bouw</h2>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 animate__animated animate__fadeInLeft animate__delay-1s">EN RENOVATIEDIENSTEN</h1>
         </div>
     </section>
 
     <section id="services" class="py-20 bg-white reveal">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h3 class="text-brand-orange font-bold tracking-widest uppercase mb-2">Onze Expertise</h3>
-                <h2 class="text-4xl font-bold text-brand-dark">Service Categorieën</h2>
-            </div>
-
-            <div class="swiper mySwiper rounded-3xl overflow-hidden shadow-2xl mb-16">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide relative">
-                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1200&q=80" class="slide-img" alt="Stucwerk">
-                        <div class="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black text-white">
-                            <h4 class="text-2xl font-bold">Stucwerk</h4>
-                        </div>
-                    </div>
-                    <div class="swiper-slide relative">
-                        <img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=1200&q=80" class="slide-img" alt="Badkamer Renovatie">
-                        <div class="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black text-white">
-                            <h4 class="text-2xl font-bold">Badkamer Renovatie</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-pagination"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="p-8 bg-gray-50 rounded-2xl border-l-8 border-brand-orange font-bold text-brand-dark shadow-sm hover:shadow-md transition cursor-default">Tegelwerk</div>
-                <div class="p-8 bg-gray-50 rounded-2xl border-l-8 border-brand-orange font-bold text-brand-dark shadow-sm hover:shadow-md transition cursor-default">Schoonmaken</div>
-                <div class="p-8 bg-gray-50 rounded-2xl border-l-8 border-brand-orange font-bold text-brand-dark shadow-sm hover:shadow-md transition cursor-default">Laminaat leggen</div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="py-20 bg-brand-dark text-white reveal">
-        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-            <div>
-                <h2 class="text-4xl font-bold mb-8 italic">"Droomt u van een mooi en modern huis?"</h2>
-                <div class="space-y-6">
-                    <div class="flex items-center space-x-4 group">
-                        <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center group-hover:bg-brand-orange transition">
-                            <i class="fas fa-phone-alt text-white"></i>
-                        </div>
-                        <span class="text-lg font-semibold">+32 483 404 778</span>
-                    </div>
-                    <div class="flex items-center space-x-4 group">
-                        <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center group-hover:bg-brand-orange transition">
-                            <i class="fas fa-envelope text-white"></i>
-                        </div>
-                        <span class="text-lg font-semibold">Andalusprojects1@gmail.com</span>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-white p-10 rounded-3xl text-center text-brand-dark shadow-2xl">
-                <p class="font-bold mb-6 text-xl">VRAAG VANDAAG NOG UW GRATIS OFFERTE AAN</p>
-                <div class="inline-block p-4 border-4 border-brand-orange rounded-2xl mb-4">
-                    <i class="fas fa-qrcode text-9xl"></i>
-                </div>
-                <p class="text-gray-500 font-bold animate__animated animate__pulse animate__infinite">SCAN ME</p>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-black text-white py-10">
         <div class="container mx-auto px-6 text-center">
-            <p class="text-brand-orange font-bold text-lg mb-2">Andalus Projects</p>
-            <p class="text-xs text-gray-600 tracking-widest uppercase">&copy; 2024. Created by Medbunz. Alle rechten voorbehouden.</p>
+            <h2 class="text-4xl font-bold text-brand-dark mb-12">Onze Expertise</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-10 bg-gray-50 rounded-2xl border-b-4 border-brand-orange shadow-lg">Tegelwerk</div>
+                <div class="p-10 bg-gray-50 rounded-2xl border-b-4 border-brand-orange shadow-lg">Schoonmaken</div>
+                <div class="p-10 bg-gray-50 rounded-2xl border-b-4 border-brand-orange shadow-lg">Renovatie</div>
+            </div>
         </div>
-    </footer>
+    </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // 1. Entry Function to hide Coming Soon
-        function enterSite() {
+        function checkPassword() {
+            const passInput = document.getElementById('sitePass');
+            const errorMsg = document.getElementById('errorMsg');
             const overlay = document.getElementById('coming-soon');
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                overlay.style.visibility = 'hidden';
-            }, 1000);
+            
+            // كلمة المرور هنا
+            const correctPass = "Andalus2024";
+
+            if (passInput.value === correctPass) {
+                // حركة خروج أنيقة للأعلى
+                overlay.style.transform = "translateY(-100%)";
+                document.body.style.overflow = "auto"; // السماح بالتمرير
+                setTimeout(() => {
+                    overlay.style.display = "none";
+                }, 800);
+            } else {
+                // تأثير الخطأ
+                passInput.classList.add('error-shake');
+                errorMsg.style.opacity = "1";
+                setTimeout(() => {
+                    passInput.classList.remove('error-shake');
+                }, 500);
+            }
         }
 
-        // 2. Initialize Swiper
-        var swiper = new Swiper(".mySwiper", {
-            loop: true,
-            autoplay: { delay: 3500, disableOnInteraction: false },
-            pagination: { el: ".swiper-pagination", clickable: true },
-            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+        // السماح بالدخول عند الضغط على Enter
+        document.getElementById('sitePass').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
         });
 
-        // 3. Scroll Reveal Animation Logic
-        function reveal() {
+        // تأثير ظهور العناصر عند التمرير
+        window.addEventListener("scroll", function() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 150;
-                if (elementTop < windowHeight - elementVisible) {
+                if (elementTop < windowHeight - 150) {
                     reveals[i].classList.add("active");
                 }
             }
-        }
-        window.addEventListener("scroll", reveal);
+        });
     </script>
 </body>
 </html>
