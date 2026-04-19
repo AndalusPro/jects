@@ -11,160 +11,197 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
     <style>
-        body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; overflow: hidden; } /* منع التمرير حتى فتح الموقع */
+        body { font-family: 'Poppins', sans-serif; overflow-x: hidden; }
+        
         .bg-brand-orange { background-color: #f37321; }
         .text-brand-orange { color: #f37321; }
         .bg-brand-dark { background-color: #2d3436; }
         
-        .hero-gradient {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1503387762-592dee58c460?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+        /* تحسين صورة الـ Hero لتناسب جميع الشاشات */
+        .hero-section {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), 
+                        url('https://images.unsplash.com/photo-1503387762-592dee58c460?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed; /* تأثير Parallax بسيط للحواسب */
         }
 
-        /* واجهة القفل والانتظار */
+        /* واجهة الدخول - ملء الشاشة بالكامل */
         #coming-soon {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: #1a1a1a;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             z-index: 10000;
-            color: white;
             transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
         }
 
+        /* حاوية الصور في السلايدر */
+        .swiper-slide img {
+            width: 100%;
+            height: 60vh; /* ارتفاع نسبي بدلاً من ثابت */
+            object-fit: cover;
+            border-radius: 1.5rem;
+        }
+
         .password-input {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid #f37321;
-            padding: 12px 20px;
-            border-radius: 12px;
-            color: white;
-            outline: none;
-            width: 250px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(243, 115, 33, 0.5);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            width: 100%;
+            max-width: 300px;
             text-align: center;
-            transition: all 0.3s;
+            color: white;
+            font-size: 1.1rem;
         }
 
-        .password-input:focus { box-shadow: 0 0 15px rgba(243, 115, 33, 0.4); }
-
-        .error-shake { animation: shake 0.5s; border-color: #ff4d4d; }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        .logo-svg { width: 80px; height: 80px; }
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal { opacity: 0; transform: translateY(20px); transition: 0.6s all ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .hero-section { background-attachment: scroll; } /* إيقاف التثبيت في الهواتف للأداء */
+            .swiper-slide img { height: 40vh; }
+        }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 overflow-hidden">
 
-    <div id="coming-soon">
-        <div class="text-center animate__animated animate__fadeIn">
-            <svg class="logo-svg mx-auto mb-6" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                <path d="M256 40L40 220v252h140V330h152v142h140V220L256 40z" fill="#f37321"/>
+    <div id="coming-soon" class="items-center justify-center px-6">
+        <div class="max-w-md w-full text-center animate__animated animate__fadeIn">
+            <svg class="w-20 h-20 mx-auto mb-6" viewBox="0 0 512 512" fill="#f37321">
+                <path d="M256 40L40 220v252h140V330h152v142h140V220L256 40z"/>
             </svg>
-            <h1 class="text-3xl font-bold mb-2 tracking-wide">ANDALUS PROJECTS</h1>
-            <p class="text-brand-orange mb-8 uppercase tracking-[0.3em] text-sm">Protected Area</p>
+            <h1 class="text-3xl font-bold text-white mb-2 tracking-tight">ANDALUS PROJECTS</h1>
+            <p class="text-brand-orange mb-8 tracking-widest text-sm font-semibold">SITE PROTECTION</p>
             
             <div class="space-y-4">
-                <input type="password" id="sitePass" class="password-input block mx-auto" placeholder="Wachtwoord invoeren">
-                <button onclick="checkPassword()" class="bg-brand-orange text-white px-10 py-3 rounded-full font-bold hover:bg-orange-600 transition shadow-lg">
-                    Access Website
+                <input type="password" id="sitePass" class="password-input mx-auto block focus:border-brand-orange outline-none transition-all" placeholder="Wachtwoord">
+                <button onclick="checkPassword()" class="w-full max-w-[300px] bg-brand-orange text-white py-3 rounded-xl font-bold hover:scale-105 transition-transform shadow-xl">
+                    Inloggen
                 </button>
             </div>
-            <p id="errorMsg" class="text-red-500 mt-4 text-sm font-medium opacity-0">Onjuist wachtwoord. Probeer het opnieuw.</p>
+            <p id="errorMsg" class="text-red-500 mt-4 text-sm opacity-0 transition-opacity">Verkeerd wachtwoord!</p>
         </div>
     </div>
 
-    <nav class="bg-brand-dark text-white sticky top-0 z-50 shadow-lg">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <svg width="40" height="40" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M256 40L40 220v252h140V330h152v142h140V220L256 40z" fill="#f37321"/>
-                </svg>
-                <div class="leading-tight">
-                    <span class="text-xl font-bold tracking-wider block">ANDALUS PROJECTS</span>
-                </div>
+    <nav class="bg-brand-dark/95 backdrop-blur-md text-white sticky top-0 z-50 py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <svg width="35" height="35" viewBox="0 0 512 512" fill="#f37321"><path d="M256 40L40 220v252h140V330h152v142h140V220L256 40z"/></svg>
+                <span class="font-bold text-xl tracking-tighter">ANDALUS</span>
             </div>
-            <div class="hidden md:flex space-x-8 items-center">
-                <a href="#home" class="hover:text-brand-orange">Home</a>
-                <a href="#services" class="hover:text-brand-orange">Diensten</a>
-                <a href="#contact" class="bg-brand-orange px-5 py-2 rounded-full">Offerte aanvragen</a>
+            <div class="hidden lg:flex gap-8 text-sm font-semibold uppercase tracking-wider">
+                <a href="#home" class="hover:text-brand-orange transition">Home</a>
+                <a href="#services" class="hover:text-brand-orange transition">Diensten</a>
+                <a href="#contact" class="bg-brand-orange px-6 py-2 rounded-lg">Contact</a>
             </div>
         </div>
     </nav>
 
-    <section id="home" class="hero-gradient h-[80vh] flex items-center text-white">
-        <div class="container mx-auto px-6">
-            <h2 class="text-brand-orange font-bold text-xl mb-2 uppercase animate__animated animate__fadeInLeft">Professionele Bouw</h2>
-            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 animate__animated animate__fadeInLeft animate__delay-1s">EN RENOVATIEDIENSTEN</h1>
-        </div>
-    </section>
-
-    <section id="services" class="py-20 bg-white reveal">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold text-brand-dark mb-12">Onze Expertise</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-10 bg-gray-50 rounded-2xl border-b-4 border-brand-orange shadow-lg">Tegelwerk</div>
-                <div class="p-10 bg-gray-50 rounded-2xl border-b-4 border-brand-orange shadow-lg">Schoonmaken</div>
-                <div class="p-10 bg-gray-50 rounded-2xl border-b-4 border-brand-orange shadow-lg">Renovatie</div>
+    <main>
+        <section id="home" class="hero-section flex items-center">
+            <div class="container mx-auto px-6">
+                <div class="max-w-4xl">
+                    <h2 class="text-brand-orange font-bold text-lg md:text-2xl mb-4 animate__animated animate__fadeInUp">EST. 2024</h2>
+                    <h1 class="text-4xl md:text-6xl lg:text-8xl font-black text-white leading-none mb-8 animate__animated animate__fadeInUp animate__delay-1s">
+                        BOUW EN <br> <span class="text-brand-orange">RENOVATIE</span>
+                    </h1>
+                    <a href="#services" class="inline-block bg-white text-brand-dark px-10 py-4 rounded-full font-bold hover:bg-brand-orange hover:text-white transition-all shadow-2xl">
+                        Onze Projecten
+                    </a>
+                </div>
             </div>
+        </section>
+
+        <section id="services" class="py-24 bg-white reveal">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col lg:flex-row justify-between items-end mb-16 gap-6">
+                    <div class="max-w-2xl">
+                        <h3 class="text-brand-orange font-bold mb-2 uppercase tracking-widest">Wat we doen</h3>
+                        <h2 class="text-4xl md:text-5xl font-bold text-brand-dark">Kwaliteit in elk detail</h2>
+                    </div>
+                </div>
+
+                <div class="swiper mySwiper mb-16">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1200&q=80" alt="Renovatie">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=1200&q=80" alt="Badkamer">
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="group p-10 bg-gray-50 rounded-3xl hover:bg-brand-dark hover:text-white transition-all duration-500 shadow-sm">
+                        <i class="fas fa-hammer text-3xl text-brand-orange mb-6"></i>
+                        <h4 class="text-xl font-bold mb-4">Tegelwerk</h4>
+                        <p class="opacity-70">Hoogwaardige afwerking voor vloeren en wanden.</p>
+                    </div>
+                    <div class="group p-10 bg-gray-50 rounded-3xl hover:bg-brand-dark hover:text-white transition-all duration-500 shadow-sm">
+                        <i class="fas fa-paint-roller text-3xl text-brand-orange mb-6"></i>
+                        <h4 class="text-xl font-bold mb-4">Schilderwerk</h4>
+                        <p class="opacity-70">Geef uw muren een frisse en moderne uitstraling.</p>
+                    </div>
+                    <div class="group p-10 bg-gray-50 rounded-3xl hover:bg-brand-dark hover:text-white transition-all duration-500 shadow-sm">
+                        <i class="fas fa-broom text-3xl text-brand-orange mb-6"></i>
+                        <h4 class="text-xl font-bold mb-4">Schoonmaken</h4>
+                        <p class="opacity-70">Professionele reiniging voor elk project.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-brand-dark text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-400 text-sm italic mb-4">Andalus Projects - Vakmanschap in Antwerpen & Omgeving</p>
+            <p class="font-bold text-brand-orange">&copy; 2024 Created by Medbunz</p>
         </div>
-    </section>
+    </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
+        // التحقق من كلمة المرور
         function checkPassword() {
-            const passInput = document.getElementById('sitePass');
-            const errorMsg = document.getElementById('errorMsg');
+            const pass = document.getElementById('sitePass').value;
             const overlay = document.getElementById('coming-soon');
-            
-            // كلمة المرور هنا
-            const correctPass = "Andalus2024";
+            const error = document.getElementById('errorMsg');
 
-            if (passInput.value === correctPass) {
-                // حركة خروج أنيقة للأعلى
+            if(pass === "Andalus2024") {
                 overlay.style.transform = "translateY(-100%)";
-                document.body.style.overflow = "auto"; // السماح بالتمرير
-                setTimeout(() => {
-                    overlay.style.display = "none";
-                }, 800);
+                document.body.classList.remove('overflow-hidden');
+                setTimeout(() => overlay.remove(), 1000);
             } else {
-                // تأثير الخطأ
-                passInput.classList.add('error-shake');
-                errorMsg.style.opacity = "1";
-                setTimeout(() => {
-                    passInput.classList.remove('error-shake');
-                }, 500);
+                error.classList.replace('opacity-0', 'opacity-100');
+                document.getElementById('sitePass').classList.add('animate__shakeX');
+                setTimeout(() => document.getElementById('sitePass').classList.remove('animate__shakeX'), 500);
             }
         }
 
-        // السماح بالدخول عند الضغط على Enter
-        document.getElementById('sitePass').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                checkPassword();
-            }
+        // إعداد السلايدر المتجاوب
+        var swiper = new Swiper(".mySwiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            autoplay: { delay: 3000 },
+            pagination: { el: ".swiper-pagination" },
         });
 
-        // تأثير ظهور العناصر عند التمرير
-        window.addEventListener("scroll", function() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                if (elementTop < windowHeight - 150) {
-                    reveals[i].classList.add("active");
-                }
-            }
-        });
+        // تأثير الظهور عند التمرير
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add("active");
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
