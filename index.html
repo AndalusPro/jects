@@ -22,14 +22,13 @@
             background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920');
             background-size: cover;
             background-position: center;
-            min-height: 100vh; /* للحواسب */
-            min-height: 100svh; /* للهواتف لمنع مشاكل المتصفح */
+            min-height: 100vh;
+            min-height: 100svh;
             display: flex;
             align-items: center;
             width: 100%;
         }
 
-        /* Modal Overlay Fix */
         #detail-layer {
             position: fixed; inset: 0; background: rgba(0,0,0,0.92);
             z-index: 9999; display: none; align-items: center; justify-content: center;
@@ -51,7 +50,6 @@
             position: fixed; bottom: 20px; right: 20px; z-index: 9000;
         }
 
-        /* Prevent Layout Shifts */
         .container-custom {
             width: 100%;
             max-width: 1200px;
@@ -95,12 +93,16 @@
     <div id="main-content">
         <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md text-white border-b border-white/10">
             <div class="container-custom py-4 flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <div class="bg-brand-orange p-1.5 rounded-md"><i class="fas fa-hammer text-xs"></i></div>
-                    <span class="font-black text-sm md:text-lg tracking-tighter uppercase leading-none italic">ANDALUS <span class="text-brand-orange">PROJECTS</span></span>
-                </div>
+                
+                <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                    <img src="JOUW_LOGO_URL_HIER" alt="Logo" class="h-8 md:h-10 w-auto object-contain">
+                    <span class="font-black text-sm md:text-lg tracking-tighter uppercase leading-none italic">
+                        ANDALUS <span class="text-brand-orange">PROJECTS</span>
+                    </span>
+                </a>
+                
                 <div class="hidden md:flex gap-6 text-[10px] font-bold uppercase tracking-widest">
-                    <a href="#about" class="hover:text-brand-orange transition">Over Ons</a>
+                    <a href="https://www.andalus-projects.com/overons.html" class="hover:text-brand-orange transition">Over Ons</a>
                     <a href="#services" class="hover:text-brand-orange transition">Diensten</a>
                     <a href="#contact" class="text-brand-orange transition underline underline-offset-4">Contact</a>
                 </div>
