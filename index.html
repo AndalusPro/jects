@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="nl" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andalus Projects | Bouw en Renovatie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Swiper CSS for Slideshow -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .bg-brand-orange { background-color: #f37321; }
+        .text-brand-orange { color: #f37321; }
+        .bg-brand-dark { background-color: #2d3436; }
+        
+        .hero-gradient {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1503387762-592dee58c460?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .logo-svg {
+            width: 60px;
+            height: 60px;
+        }
+
+        /* Swiper Customization */
+        .swiper-button-next, .swiper-button-prev {
+            color: #f37321 !important;
+        }
+        .swiper-pagination-bullet-active {
+            background: #f37321 !important;
+        }
+        .slide-img {
+            height: 500px;
+            object-fit: cover;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navbar -->
+    <nav class="bg-brand-dark text-white sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <!-- Inline Logo SVG based on your image -->
+                <svg class="logo-svg" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M256 40L40 220v252h140V330h152v142h140V220L256 40z" fill="#f37321"/>
+                    <rect x="360" y="260" width="30" height="30" fill="white"/>
+                    <rect x="400" y="260" width="30" height="30" fill="white"/>
+                    <rect x="360" y="300" width="30" height="30" fill="white"/>
+                    <rect x="400" y="300" width="30" height="30" fill="white"/>
+                    <path d="M256 120l40 60-40 20-40-20z" fill="white" opacity="0.8"/>
+                </svg>
+                <div class="leading-tight">
+                    <span class="text-xl font-bold tracking-wider block">ANDALUS PROJECTS</span>
+                    <span class="text-xs text-brand-orange uppercase tracking-widest">Renovatie & Schoonmaken</span>
+                </div>
+            </div>
+            <div class="hidden md:flex space-x-8 font-medium items-center">
+                <a href="#home" class="hover:text-brand-orange transition">Home</a>
+                <a href="#services" class="hover:text-brand-orange transition">Diensten</a>
+                <a href="#contact" class="bg-brand-orange px-5 py-2 rounded-full hover:bg-orange-600 transition">Offerte aanvragen</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient h-[70vh] flex items-center relative text-white">
+        <div class="container mx-auto px-6 text-center md:text-left">
+            <h2 class="text-brand-orange font-bold text-xl md:text-2xl mb-2 uppercase tracking-widest">Professionele Bouw</h2>
+            <h1 class="text-4xl md:text-7xl font-extrabold mb-6 leading-tight">EN RENOVATIEDIENSTEN</h1>
+            <div class="inline-flex items-center bg-brand-orange text-white px-8 py-4 rounded-full text-lg font-bold shadow-2xl transform hover:scale-105 transition">
+                Geef uw huis een nieuw leven!
+            </div>
+        </div>
+    </section>
+
+    <!-- Services & Slideshow Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h3 class="text-brand-orange font-bold tracking-widest uppercase mb-2">Onze Expertise</h3>
+                <h2 class="text-4xl font-bold text-brand-dark">Service Categorieën</h2>
+            </div>
+
+            <!-- Slideshow Container -->
+            <div class="swiper mySwiper rounded-3xl overflow-hidden shadow-2xl mb-16">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide relative">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1200&q=80" class="slide-img" alt="Stucwerk">
+                        <div class="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black text-white">
+                            <h4 class="text-2xl font-bold">Stucwerk</h4>
+                        </div>
+                    </div>
+                    <div class="swiper-slide relative">
+                        <img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=1200&q=80" class="slide-img" alt="Badkamer Renovatie">
+                        <div class="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black text-white">
+                            <h4 class="text-2xl font-bold">Badkamer Renovatie</h4>
+                        </div>
+                    </div>
+                    <div class="swiper-slide relative">
+                        <img src="https://images.unsplash.com/photo-1588854337236-6889d631faa8?auto=format&fit=crop&w=1200&q=80" class="slide-img" alt="Schilderwerk">
+                        <div class="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black text-white">
+                            <h4 class="text-2xl font-bold">Schilderwerk</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="p-6 bg-gray-50 rounded-2xl border-l-4 border-brand-orange font-bold text-brand-dark">Tegelwerk</div>
+                <div class="p-6 bg-gray-50 rounded-2xl border-l-4 border-brand-orange font-bold text-brand-dark">Schoonmaken</div>
+                <div class="p-6 bg-gray-50 rounded-2xl border-l-4 border-brand-orange font-bold text-brand-dark">Laminaat leggen</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-brand-dark text-white">
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-4xl font-bold mb-8 italic">"Droomt u van een mooi en modern huis?"</h2>
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-4">
+                        <i class="fas fa-phone-alt text-brand-orange text-2xl w-8 text-center"></i>
+                        <span class="text-lg font-semibold">+32 483 404 778</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <i class="fas fa-envelope text-brand-orange text-2xl w-8 text-center"></i>
+                        <span class="text-lg font-semibold">Andalusprojects1@gmail.com</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <i class="fab fa-instagram text-brand-orange text-2xl w-8 text-center"></i>
+                        <span class="text-lg font-semibold">Andalus.Projects</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-3xl text-center">
+                <p class="text-brand-dark font-bold mb-6 text-xl">VRAAG VANDAAG NOG UW GRATIS OFFERTE AAN</p>
+                <div class="inline-block p-4 border-4 border-brand-orange rounded-2xl">
+                    <i class="fas fa-qrcode text-9xl text-brand-dark"></i>
+                </div>
+                <p class="mt-4 text-gray-500 font-bold">SCAN ME</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-10 border-t border-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <div class="mb-6">
+                <p class="text-brand-orange font-bold text-lg mb-2">Andalus Projects</p>
+                <p class="text-gray-500 text-sm italic">Created by Medbunz</p>
+            </div>
+            <p class="text-xs text-gray-600 tracking-widest uppercase">&copy; 2024. Alle rechten voorbehouden.</p>
+        </div>
+    </footer>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+        });
+    </script>
+</body>
+</html>
