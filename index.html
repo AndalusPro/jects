@@ -11,13 +11,20 @@
     
     <style>
         :root { scroll-behavior: smooth; }
-        body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; overflow-x: hidden; width: 100%; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: #f9fafb; 
+            overflow-x: hidden; 
+            width: 100%; 
+            margin: 0; 
+            padding: 0;
+            overflow-y: auto; 
+        }
         
         .bg-brand-orange { background-color: #f37321; }
         .text-brand-orange { color: #f37321; }
         .border-brand-orange { border-color: #f37321; }
 
-        /* Hero Responsive Fix */
         .hero-gradient {
             background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920');
             background-size: cover;
@@ -72,15 +79,6 @@
         </a>
     </div>
 
-    <div id="login-overlay" class="fixed inset-0 bg-[#1a1a1a] z-[10000] flex items-center justify-center p-4">
-        <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-8 md:p-10 rounded-[2rem] w-full max-w-sm text-center">
-            <h2 class="text-white text-xl font-black mb-6 tracking-widest uppercase italic">ANDALUS <span class="text-brand-orange">PROJECTS</span></h2>
-            <input type="password" id="sitePassword" class="w-full p-4 bg-white/10 border-2 border-brand-orange rounded-xl text-white text-center outline-none mb-4 focus:bg-white/20 transition" placeholder="Wachtwoord">
-            <button onclick="unlockSite()" class="w-full bg-brand-orange text-white py-4 rounded-xl font-black uppercase hover:bg-orange-600 transition tracking-tighter">Enter Website</button>
-            <p id="error-msg" class="text-red-500 mt-4 hidden text-sm">Foutief wachtwoord.</p>
-        </div>
-    </div>
-
     <div id="detail-layer" onclick="closeDetails()">
         <div class="modal-container" onclick="event.stopPropagation()">
             <button onclick="closeDetails()" class="absolute top-4 right-4 text-gray-400 hover:text-brand-orange text-2xl">
@@ -93,16 +91,14 @@
     <div id="main-content">
         <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md text-white border-b border-white/10">
             <div class="container-custom py-4 flex justify-between items-center">
-                
-                <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                <a href="#" class="flex items-center gap-3 hover:opacity-80 transition">
                     <img src="https://andalus-projects.com/Logo.png" alt="Logo" class="h-8 md:h-10 w-auto object-contain">
                     <span class="font-black text-sm md:text-lg tracking-tighter uppercase leading-none italic">
                         ANDALUS <span class="text-brand-orange">PROJECTS</span>
                     </span>
                 </a>
-                
                 <div class="hidden md:flex gap-6 text-[10px] font-bold uppercase tracking-widest">
-                    <a href="https://www.andalus-projects.com/overons.html" class="hover:text-brand-orange transition">Over Ons</a>
+                    <a href="#" class="hover:text-brand-orange transition">Over Ons</a>
                     <a href="#services" class="hover:text-brand-orange transition">Diensten</a>
                     <a href="#contact" class="text-brand-orange transition underline underline-offset-4">Contact</a>
                 </div>
@@ -182,36 +178,12 @@
 
     <script>
         const servicesData = {
-            badkamer: { 
-                title: "Badkamerrenovatie", 
-                desc: "Complete vernieuwing van A tot Z. Sloopwerk, leidingen, sanitair en luxe afwerking.", 
-                items: ["Sanitair installatie", "Waterdicht maken", "Design afwerking"] 
-            },
-            tegelwerk: { 
-                title: "Tegelwerken", 
-                desc: "Nauwkeurige plaatsing voor wanden en vloeren, keukens en badkamers.", 
-                items: ["Keramisch & Natuursteen", "Badkamers", "Terrassen"] 
-            },
-            stucwerk: { 
-                title: "Stucwerk", 
-                desc: "Gladde wanden en plafonds voor een moderne en frisse look.", 
-                items: ["Glad pleisterwerk", "Sierpleister", "Muurreparaties"] 
-            },
-            schilderwerk: { 
-                title: "Schilderwerk", 
-                desc: "Hoogwaardige schilderwerken voor binnen en buiten met duurzame verf.", 
-                items: ["Binnenschilderwerk", "Buitenschilderwerk", "Kozijnen & Deuren"] 
-            },
-            vloeren: { 
-                title: "Vloerplaatsing", 
-                desc: "Specialist in Laminaat, Visgraat en PVC vloeren met perfecte ondervloer.", 
-                items: ["Laminaat & PVC", "Luxe Visgraat", "Egalisatie"] 
-            },
-            reiniging: { 
-                title: "Reiniging", 
-                desc: "Grondige bouwschoonmaak of onderhoud van gebouwen en tuinen.", 
-                items: ["Eindschoonmaak bouw", "Tuinonderhoud", "Gemeenschappelijke ruimtes"] 
-            }
+            badkamer: { title: "Badkamerrenovatie", desc: "Complete vernieuwing van A tot Z. Sloopwerk, leidingen, sanitair en luxe afwerking.", items: ["Sanitair installatie", "Waterdicht maken", "Design afwerking"] },
+            tegelwerk: { title: "Tegelwerken", desc: "Nauwkeurige plaatsing voor wanden en vloeren, keukens en badkamers.", items: ["Keramisch & Natuursteen", "Badkamers", "Terrassen"] },
+            stucwerk: { title: "Stucwerk", desc: "Gladde wanden en plafonds voor een moderne en frisse look.", items: ["Glad pleisterwerk", "Sierpleister", "Muurreparaties"] },
+            schilderwerk: { title: "Schilderwerk", desc: "Hoogwaardige schilderwerken voor binnen en buiten met duurzame verf.", items: ["Binnenschilderwerk", "Buitenschilderwerk", "Kozijnen & Deuren"] },
+            vloeren: { title: "Vloerplaatsing", desc: "Specialist in Laminaat, Visgraat en PVC vloeren met perfecte ondervloer.", items: ["Laminaat & PVC", "Luxe Visgraat", "Egalisatie"] },
+            reiniging: { title: "Reiniging", desc: "Grondige bouwschoonmaak of onderhoud van gebouwen en tuinen.", items: ["Eindschoonmaak bouw", "Tuinonderhoud", "Gemeenschappelijke ruimtes"] }
         };
 
         function openDetails(id) {
@@ -234,28 +206,13 @@
             document.body.style.overflowY = 'auto';
         }
 
-        function unlockSite() {
-            const pass = document.getElementById('sitePassword').value;
-            if (pass === "Andalus2024") {
-                document.getElementById('login-overlay').style.transform = "translateY(-100%)";
-                document.body.style.overflowY = "auto";
-            } else {
-                document.getElementById('error-msg').classList.remove('hidden');
-                document.getElementById('sitePassword').classList.add('border-red-500', 'animate__animated', 'animate__headShake');
-                setTimeout(() => { document.getElementById('sitePassword').classList.remove('animate__headShake'); }, 500);
-            }
-        }
-
         function reveal() {
             document.querySelectorAll(".reveal").forEach(el => {
                 if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active");
             });
         }
         window.addEventListener("scroll", reveal);
-        document.addEventListener("DOMContentLoaded", () => {
-            reveal();
-            document.body.style.overflow = "hidden";
-        });
+        document.addEventListener("DOMContentLoaded", reveal);
     </script>
 </body>
 </html>
