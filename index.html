@@ -26,9 +26,68 @@
             background-color: #f9fafb; 
             overflow-x: hidden; 
             width: 100%; margin: 0; padding: 0;
-            overflow-y: auto; 
+            overflow-y: hidden; /* مغلق حتى الضغط على دخول */
         }
         
+        /* واجهة الترحيب الاحترافية */
+        #intro-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .intro-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 2.5rem;
+            text-align: center;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+        }
+
+        .intro-logo {
+            transform: translateZ(50px);
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }
+
+        .enter-btn {
+            transform: translateZ(30px);
+            background: #f37321;
+            color: white;
+            padding: 1rem 3rem;
+            border-radius: 1rem;
+            font-weight: 900;
+            margin-top: 2rem;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(243, 115, 33, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .enter-btn:hover {
+            transform: translateZ(40px) scale(1.05);
+            background: #ff853a;
+        }
+
+        /* اخفاء الواجهة */
+        .hide-intro {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.1);
+        }
+
         .bg-brand-orange { background-color: #f37321; }
         .text-brand-orange { color: #f37321; }
         .border-brand-orange { border-color: #f37321; }
@@ -83,7 +142,24 @@
         .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body oncontextmenu="return false;"> <div class="floating-whatsapp">
+<body oncontextmenu="return false;">
+
+    <div id="intro-screen">
+        <div class="intro-card animate__animated animate__zoomIn">
+            <div class="intro-logo mb-6">
+                <img src="https://andalus-projects.com/Logo.png" alt="Andalus Logo" class="h-24 mx-auto mb-4">
+                <h2 class="text-white font-black text-3xl tracking-tighter italic">
+                    ANDALUS <span class="text-brand-orange">PROJECTS</span>
+                </h2>
+                <p class="text-gray-300 text-xs tracking-[0.3em] uppercase mt-2">Belgium Luxury Renovation</p>
+            </div>
+            <div onclick="startSite()" class="enter-btn">
+                Ontdek de Ervaring
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-whatsapp">
         <a href="https://wa.me/32483404778" target="_blank" class="w-14 h-14 md:w-16 md:h-16 bg-[#25D366] rounded-full flex items-center justify-center text-white text-2xl md:text-3xl shadow-2xl animate__animated animate__pulse animate__infinite">
             <i class="fab fa-whatsapp"></i>
         </a>
@@ -188,6 +264,14 @@
     </div>
 
     <script>
+        // وظيفة الدخول للموقع
+        function startSite() {
+            document.getElementById('intro-screen').classList.add('hide-intro');
+            document.body.style.overflowY = 'auto';
+            // تشغيل الانيميشن عند الدخول
+            setTimeout(reveal, 500);
+        }
+
         // Motion Graphics Logic
         const canvas = document.getElementById('motion-canvas');
         const ctx = canvas.getContext('2d');
@@ -235,7 +319,7 @@
             stucwerk: { title: "Stucwerk", desc: "Gladde wanden en plafonds voor een moderne en frisse look.", items: ["Glad pleisterwerk", "Sierpleister", "Muurreparaties"] },
             schilderwerk: { title: "Schilderwerk", desc: "Hoogwaardige schilderwerken voor binnen en buiten met duurzame verf.", items: ["Binnenschilderwerk", "Buitenschilderwerk", "Kozijnen & Deuren"] },
             vloeren: { title: "Vloerplaatsing", desc: "Specialist in Laminaat, Visgraat en PVC vloeren met perfecte ondervloer.", items: ["Laminaat & PVC", "Luxe Visgraat", "Egalisatie"] },
-            reiniging: { title: "Reiniging", desc: "Grondige bouwschoonماكينة bouwschoonmaak of onderhoud van gebouwen en tuinen.", items: ["Eindschoonmaak bouw", "Tuinonderhoud", "Gemeenschappelijke ruimtes"] }
+            reiniging: { title: "Reiniging", desc: "Grondige bouwschoonmaak of onderhoud van gebouwen en tuinen.", items: ["Eindschoonmaak bouw", "Tuinonderhoud", "Gemeenschappelijke ruimtes"] }
         };
 
         function openDetails(id) {
@@ -264,7 +348,6 @@
             });
         }
         window.addEventListener("scroll", reveal);
-        document.addEventListener("DOMContentLoaded", reveal);
 
         // قفل المفاتيح (Ctrl+C, Ctrl+U, etc)
         document.onkeydown = function(e) {
