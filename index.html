@@ -11,197 +11,246 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
     <style>
-        body { font-family: 'Poppins', sans-serif; overflow-x: hidden; }
-        
+        body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; overflow: hidden; }
         .bg-brand-orange { background-color: #f37321; }
         .text-brand-orange { color: #f37321; }
         .bg-brand-dark { background-color: #2d3436; }
         
-        /* تحسين صورة الـ Hero لتناسب جميع الشاشات */
-        .hero-section {
-            min-height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), 
-                        url('https://images.unsplash.com/photo-1503387762-592dee58c460?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed; /* تأثير Parallax بسيط للحواسب */
-        }
-
-        /* واجهة الدخول - ملء الشاشة بالكامل */
-        #coming-soon {
+        /* واجهة الدخول */
+        #login-overlay {
             position: fixed;
             inset: 0;
             background: #1a1a1a;
             display: flex;
-            z-index: 10000;
-            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
-        /* حاوية الصور في السلايدر */
-        .swiper-slide img {
-            width: 100%;
-            height: 60vh; /* ارتفاع نسبي بدلاً من ثابت */
-            object-fit: cover;
-            border-radius: 1.5rem;
-        }
-
-        .password-input {
+        .login-card {
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(243, 115, 33, 0.5);
-            padding: 1rem;
-            border-radius: 0.75rem;
-            width: 100%;
-            max-width: 300px;
+            padding: 2.5rem;
+            border-radius: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(243, 115, 33, 0.3);
+            width: 90%;
+            max-width: 400px;
             text-align: center;
-            color: white;
-            font-size: 1.1rem;
         }
 
-        .reveal { opacity: 0; transform: translateY(20px); transition: 0.6s all ease-out; }
+        .pass-input {
+            background: transparent;
+            border: 2px solid #f37321;
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            width: 100%;
+            margin-bottom: 1rem;
+            text-align: center;
+            outline: none;
+        }
+
+        /* تحسينات الـ Hero */
+        .hero-gradient {
+            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1503387762-592dee58c460?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+        }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s all ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        @media (max-width: 768px) {
-            .hero-section { background-attachment: scroll; } /* إيقاف التثبيت في الهواتف للأداء */
-            .swiper-slide img { height: 40vh; }
-        }
+        .slide-img { height: 60vh; object-fit: cover; width: 100%; border-radius: 20px; }
+        
+        .logo-svg { width: 80px; height: 80px; filter: drop-shadow(0 0 10px rgba(243, 115, 33, 0.5)); }
     </style>
 </head>
-<body class="bg-gray-50 overflow-hidden">
+<body class="bg-gray-50">
 
-    <div id="coming-soon" class="items-center justify-center px-6">
-        <div class="max-w-md w-full text-center animate__animated animate__fadeIn">
-            <svg class="w-20 h-20 mx-auto mb-6" viewBox="0 0 512 512" fill="#f37321">
-                <path d="M256 40L40 220v252h140V330h152v142h140V220L256 40z"/>
+    <div id="login-overlay">
+        <div class="login-card animate__animated animate__zoomIn">
+            <svg class="logo-svg mx-auto mb-6" viewBox="0 0 512 512">
+                <path d="M256 40L40 220v252h140V330h152v142h140V220L256 40z" fill="#f37321"/>
             </svg>
-            <h1 class="text-3xl font-bold text-white mb-2 tracking-tight">ANDALUS PROJECTS</h1>
-            <p class="text-brand-orange mb-8 tracking-widest text-sm font-semibold">SITE PROTECTION</p>
+            <h2 class="text-white text-2xl font-bold mb-2">Andalus Projects</h2>
+            <p class="text-gray-400 text-sm mb-6 uppercase tracking-widest">Binnenkort Beschikbaar</p>
             
-            <div class="space-y-4">
-                <input type="password" id="sitePass" class="password-input mx-auto block focus:border-brand-orange outline-none transition-all" placeholder="Wachtwoord">
-                <button onclick="checkPassword()" class="w-full max-w-[300px] bg-brand-orange text-white py-3 rounded-xl font-bold hover:scale-105 transition-transform shadow-xl">
-                    Inloggen
-                </button>
-            </div>
-            <p id="errorMsg" class="text-red-500 mt-4 text-sm opacity-0 transition-opacity">Verkeerd wachtwoord!</p>
+            <input type="password" id="sitePassword" class="pass-input" placeholder="Wachtwoord invoeren">
+            <button onclick="unlockSite()" class="bg-brand-orange text-white w-full py-3 rounded-xl font-bold hover:bg-orange-600 transition duration-300 transform hover:scale-105">
+                Toegang krijgen
+            </button>
+            <p id="error-msg" class="text-red-500 mt-4 text-xs hidden">Onjuist wachtwoord. Probeer het opnieuw.</p>
         </div>
     </div>
 
-    <nav class="bg-brand-dark/95 backdrop-blur-md text-white sticky top-0 z-50 py-4">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <svg width="35" height="35" viewBox="0 0 512 512" fill="#f37321"><path d="M256 40L40 220v252h140V330h152v142h140V220L256 40z"/></svg>
-                <span class="font-bold text-xl tracking-tighter">ANDALUS</span>
+    <div id="main-content">
+        <nav class="bg-brand-dark/95 backdrop-blur-sm text-white sticky top-0 z-50 shadow-xl">
+            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <svg width="40" height="40" viewBox="0 0 512 512">
+                        <path d="M256 40L40 220v252h140V330h152v142h140V220L256 40z" fill="#f37321"/>
+                    </svg>
+                    <div class="leading-tight">
+                        <span class="text-xl font-bold tracking-wider block">ANDALUS PROJECTS</span>
+                        <span class="text-[10px] text-brand-orange uppercase tracking-[3px]">Renovatie Specialist</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-8 font-medium items-center">
+                    <a href="#home" class="hover:text-brand-orange transition">Home</a>
+                    <a href="#services" class="hover:text-brand-orange transition">Diensten</a>
+                    <a href="#contact" class="bg-brand-orange px-6 py-2 rounded-full hover:shadow-[0_0_15px_rgba(243,115,33,0.5)] transition">Offerte</a>
+                </div>
             </div>
-            <div class="hidden lg:flex gap-8 text-sm font-semibold uppercase tracking-wider">
-                <a href="#home" class="hover:text-brand-orange transition">Home</a>
-                <a href="#services" class="hover:text-brand-orange transition">Diensten</a>
-                <a href="#contact" class="bg-brand-orange px-6 py-2 rounded-lg">Contact</a>
-            </div>
-        </div>
-    </nav>
+        </nav>
 
-    <main>
-        <section id="home" class="hero-section flex items-center">
-            <div class="container mx-auto px-6">
-                <div class="max-w-4xl">
-                    <h2 class="text-brand-orange font-bold text-lg md:text-2xl mb-4 animate__animated animate__fadeInUp">EST. 2024</h2>
-                    <h1 class="text-4xl md:text-6xl lg:text-8xl font-black text-white leading-none mb-8 animate__animated animate__fadeInUp animate__delay-1s">
-                        BOUW EN <br> <span class="text-brand-orange">RENOVATIE</span>
+        <section id="home" class="hero-gradient flex items-center relative text-white px-6">
+            <div class="container mx-auto">
+                <div class="max-w-3xl">
+                    <h2 class="text-brand-orange font-bold text-xl mb-4 animate__animated animate__fadeInLeft">Vakmanschap & Vertrouwen</h2>
+                    <h1 class="text-5xl md:text-8xl font-black mb-8 leading-none animate__animated animate__fadeInLeft animate__delay-1s">
+                        BOUW UW <br><span class="text-brand-orange italic text-4xl md:text-7xl">TOEKOMST</span>
                     </h1>
-                    <a href="#services" class="inline-block bg-white text-brand-dark px-10 py-4 rounded-full font-bold hover:bg-brand-orange hover:text-white transition-all shadow-2xl">
-                        Onze Projecten
-                    </a>
+                    <p class="text-lg text-gray-300 mb-10 max-w-lg animate__animated animate__fadeIn animate__delay-2s">
+                        Wij transformeren uw ruimtes met precisie, van renovatie tot volledige afwerking.
+                    </p>
+                    <div class="animate__animated animate__zoomIn animate__delay-2s">
+                        <a href="#services" class="inline-block bg-brand-orange text-white px-10 py-4 rounded-full text-lg font-bold shadow-2xl hover:bg-white hover:text-brand-dark transition-all duration-500">
+                            Bekijk Diensten
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="services" class="py-24 bg-white reveal">
             <div class="container mx-auto px-6">
-                <div class="flex flex-col lg:flex-row justify-between items-end mb-16 gap-6">
-                    <div class="max-w-2xl">
-                        <h3 class="text-brand-orange font-bold mb-2 uppercase tracking-widest">Wat we doen</h3>
-                        <h2 class="text-4xl md:text-5xl font-bold text-brand-dark">Kwaliteit in elk detail</h2>
-                    </div>
+                <div class="text-center mb-16">
+                    <span class="text-brand-orange font-bold tracking-widest uppercase">Expertise</span>
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-brand-dark mt-2">Onze Diensten</h2>
                 </div>
 
                 <div class="swiper mySwiper mb-16">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1200&q=80" alt="Renovatie">
+                        <div class="swiper-slide relative group overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1200&q=80" class="slide-img" alt="Stucwerk">
+                            <div class="absolute inset-0 bg-brand-dark/40 group-hover:bg-brand-dark/20 transition duration-500"></div>
+                            <div class="absolute bottom-10 left-10 text-white">
+                                <h4 class="text-3xl font-bold">Stucwerk</h4>
+                            </div>
                         </div>
-                        <div class="swiper-slide">
-                            <img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=1200&q=80" alt="Badkamer">
+                        <div class="swiper-slide relative">
+                            <img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=1200&q=80" class="slide-img" alt="Badkamer">
+                            <div class="absolute bottom-10 left-10 text-white"><h4 class="text-3xl font-bold">Badkamer Renovatie</h4></div>
                         </div>
                     </div>
                     <div class="swiper-pagination"></div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="group p-10 bg-gray-50 rounded-3xl hover:bg-brand-dark hover:text-white transition-all duration-500 shadow-sm">
-                        <i class="fas fa-hammer text-3xl text-brand-orange mb-6"></i>
-                        <h4 class="text-xl font-bold mb-4">Tegelwerk</h4>
-                        <p class="opacity-70">Hoogwaardige afwerking voor vloeren en wanden.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="p-10 bg-gray-50 rounded-3xl border-b-4 border-brand-orange hover:shadow-2xl transition duration-500 group">
+                        <i class="fas fa-tools text-brand-orange text-4xl mb-6 group-hover:scale-110 transition"></i>
+                        <h4 class="text-xl font-bold mb-2 text-brand-dark">Tegelwerk</h4>
+                        <p class="text-gray-500 text-sm">Nauwkeurige plaatsing voor een perfect resultaat.</p>
                     </div>
-                    <div class="group p-10 bg-gray-50 rounded-3xl hover:bg-brand-dark hover:text-white transition-all duration-500 shadow-sm">
-                        <i class="fas fa-paint-roller text-3xl text-brand-orange mb-6"></i>
-                        <h4 class="text-xl font-bold mb-4">Schilderwerk</h4>
-                        <p class="opacity-70">Geef uw muren een frisse en moderne uitstraling.</p>
+                    <div class="p-10 bg-gray-50 rounded-3xl border-b-4 border-brand-orange hover:shadow-2xl transition duration-500 group">
+                        <i class="fas fa-broom text-brand-orange text-4xl mb-6 group-hover:scale-110 transition"></i>
+                        <h4 class="text-xl font-bold mb-2 text-brand-dark">Schoonmaken</h4>
+                        <p class="text-gray-500 text-sm">Grondige eindschoonmaak na elke verbouwing.</p>
                     </div>
-                    <div class="group p-10 bg-gray-50 rounded-3xl hover:bg-brand-dark hover:text-white transition-all duration-500 shadow-sm">
-                        <i class="fas fa-broom text-3xl text-brand-orange mb-6"></i>
-                        <h4 class="text-xl font-bold mb-4">Schoonmaken</h4>
-                        <p class="opacity-70">Professionele reiniging voor elk project.</p>
+                    <div class="p-10 bg-gray-50 rounded-3xl border-b-4 border-brand-orange hover:shadow-2xl transition duration-500 group">
+                        <i class="fas fa-layer-group text-brand-orange text-4xl mb-6 group-hover:scale-110 transition"></i>
+                        <h4 class="text-xl font-bold mb-2 text-brand-dark">Laminaat</h4>
+                        <p class="text-gray-500 text-sm">Professionele vloeren voor een warme sfeer.</p>
                     </div>
                 </div>
             </div>
         </section>
-    </main>
 
-    <footer class="bg-brand-dark text-white py-12">
-        <div class="container mx-auto px-6 text-center">
-            <p class="text-gray-400 text-sm italic mb-4">Andalus Projects - Vakmanschap in Antwerpen & Omgeving</p>
-            <p class="font-bold text-brand-orange">&copy; 2024 Created by Medbunz</p>
-        </div>
-    </footer>
+        <section id="contact" class="py-24 bg-brand-dark text-white reveal">
+            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-black mb-8 leading-tight">Klaar om te <br><span class="text-brand-orange">beginnen?</span></h2>
+                    <div class="space-y-8">
+                        <div class="flex items-center space-x-6 group">
+                            <div class="w-14 h-14 bg-brand-orange flex items-center justify-center rounded-2xl group-hover:rotate-12 transition">
+                                <i class="fas fa-phone-alt text-2xl"></i>
+                            </div>
+                            <span class="text-xl font-semibold hover:text-brand-orange cursor-pointer transition">+32 483 404 778</span>
+                        </div>
+                        <div class="flex items-center space-x-6 group">
+                            <div class="w-14 h-14 bg-brand-orange flex items-center justify-center rounded-2xl group-hover:rotate-12 transition">
+                                <i class="fas fa-envelope text-2xl"></i>
+                            </div>
+                            <span class="text-xl font-semibold hover:text-brand-orange cursor-pointer transition">Andalusprojects1@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-12 rounded-[3rem] shadow-2xl text-center transform hover:-translate-y-2 transition duration-500">
+                    <p class="text-brand-dark font-black mb-8 text-2xl uppercase">Gratis Offerte</p>
+                    <div class="inline-block p-6 border-4 border-dashed border-brand-orange rounded-3xl mb-4">
+                        <i class="fas fa-qrcode text-[120px] text-brand-dark"></i>
+                    </div>
+                    <p class="mt-4 text-gray-400 font-bold tracking-widest animate-pulse">SCAN MIJ</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-black text-white py-12 text-center">
+            <p class="text-brand-orange font-bold text-xl mb-2">Andalus Projects</p>
+            <p class="text-gray-500 text-xs tracking-widest">&copy; 2024. Created by Medbunz. All rights reserved.</p>
+        </footer>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // التحقق من كلمة المرور
-        function checkPassword() {
-            const pass = document.getElementById('sitePass').value;
-            const overlay = document.getElementById('coming-soon');
-            const error = document.getElementById('errorMsg');
+        // نظام كلمة المرور
+        function unlockSite() {
+            const pass = document.getElementById('sitePassword').value;
+            const overlay = document.getElementById('login-overlay');
+            const error = document.getElementById('error-msg');
+            
+            // كلمة المرور الافتراضية
+            const correctPass = "Andalus2024"; 
 
-            if(pass === "Andalus2024") {
+            if (pass === correctPass) {
                 overlay.style.transform = "translateY(-100%)";
-                document.body.classList.remove('overflow-hidden');
-                setTimeout(() => overlay.remove(), 1000);
+                document.body.style.overflow = "auto";
+                setTimeout(() => {
+                    overlay.style.display = "none";
+                }, 800);
             } else {
-                error.classList.replace('opacity-0', 'opacity-100');
-                document.getElementById('sitePass').classList.add('animate__shakeX');
-                setTimeout(() => document.getElementById('sitePass').classList.remove('animate__shakeX'), 500);
+                error.classList.remove('hidden');
+                document.querySelector('.login-card').classList.add('animate__shakeX');
+                setTimeout(() => {
+                    document.querySelector('.login-card').classList.remove('animate__shakeX');
+                }, 500);
             }
         }
 
-        // إعداد السلايدر المتجاوب
-        var swiper = new Swiper(".mySwiper", {
-            effect: "coverflow",
-            grabCursor: true,
-            centeredSlides: true,
-            slidesPerView: "auto",
-            autoplay: { delay: 3000 },
-            pagination: { el: ".swiper-pagination" },
-        });
-
         // تأثير الظهور عند التمرير
-        const observerOptions = { threshold: 0.1 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add("active");
-            });
-        }, observerOptions);
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 150) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        // إعداد السلايدر
+        var swiper = new Swiper(".mySwiper", {
+            loop: true,
+            autoplay: { delay: 4000 },
+            pagination: { el: ".swiper-pagination", clickable: true },
+            effect: "fade",
+            fadeEffect: { crossFade: true }
+        });
     </script>
 </body>
 </html>
