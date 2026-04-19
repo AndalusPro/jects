@@ -41,31 +41,26 @@
             transition: background-color var(--transition-speed);
         }
 
-        /* --- Global Clean Accents --- */
         .text-brand-orange { color: var(--brand-orange); }
         .bg-brand-orange { background-color: var(--brand-orange); }
         
-        /* --- Navigation Enhancements --- */
         .glass-header {
             background: var(--nav-bg) !important;
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--brand-orange-soft);
-            /* Clean orange line at the very top */
             border-top: 3px solid var(--brand-orange);
         }
 
         .nav-link { color: var(--text-main); transition: 0.3s; }
         .nav-link:hover { color: var(--brand-orange) !important; }
 
-        /* --- Hero Section --- */
         .hero-gradient {
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920');
             background-size: cover; background-position: center;
             min-height: 100vh; display: flex; align-items: center;
         }
 
-        /* --- Clean Cards --- */
         .service-card { 
             background: var(--card-bg); 
             border: 1px solid var(--brand-orange-soft);
@@ -78,7 +73,6 @@
             box-shadow: 0 20px 30px rgba(0,0,0,0.1);
         }
 
-        /* --- Intro Screen --- */
         #intro-screen {
             position: fixed; inset: 0; z-index: 10000;
             background: #111; display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -89,7 +83,6 @@
         @keyframes fill { to { width: 100%; } }
         .intro-finish { transform: translateY(-100%); }
 
-        /* --- Modals --- */
         #detail-layer {
             position: fixed; inset: 0; background: rgba(0,0,0,0.8);
             z-index: 9999; display: none; align-items: center; justify-content: center;
@@ -124,7 +117,7 @@
     <nav class="fixed top-0 w-full z-50 glass-header transition-all">
         <div class="container-custom py-4 flex justify-between items-center">
             <a href="#" class="flex items-center gap-2 group">
-                <img src="https://andalus-projects.com/Logo.png" alt="Logo" class="h-9 transition-transform group-hover:scale-110">
+                <img src="https://andalus-projects.com/Logo.png" id="main-logo" alt="Logo" class="h-9 transition-transform group-hover:scale-110">
                 <span class="font-black text-xl tracking-tighter uppercase italic">ANDALUS <span class="text-brand-orange">PROJECTS</span></span>
             </a>
             
@@ -234,7 +227,7 @@
 
     <footer class="py-10 border-t border-brand-orange-soft">
         <div class="container-custom text-center">
-            <img src="https://andalus-projects.com/Logo.png" class="h-8 mx-auto mb-4 grayscale opacity-50">
+            <img src="https://andalus-projects.com/Logo.png" id="footer-logo" class="h-8 mx-auto mb-4 grayscale opacity-50">
             <p class="text-gray-500 text-[10px] uppercase tracking-[0.5em]">&copy; 2026 Andalus Projects - Belgium Luxury Renovatie</p>
         </div>
     </footer>
@@ -251,12 +244,28 @@
     </a>
 
     <script>
-        // Theme Switch
+        // Updated Theme Switch logic with Logo swapping
         function toggleTheme() {
-            document.body.classList.toggle('dark-theme');
+            const body = document.body;
             const icon = document.getElementById('theme-icon');
-            icon.classList.toggle('fa-sun');
-            icon.classList.toggle('fa-adjust');
+            const mainLogo = document.getElementById('main-logo');
+            const footerLogo = document.getElementById('footer-logo');
+
+            body.classList.toggle('dark-theme');
+            
+            // Define your logo URLs here
+            const lightLogoUrl = "https://andalus-projects.com/Logo.png";
+            const darkLogoUrl = "URL_FOR_DARK_LOGO"; // REPLACE THIS WITH YOUR DARK MODE LOGO URL
+
+            if (body.classList.contains('dark-theme')) {
+                icon.classList.replace('fa-adjust', 'fa-sun');
+                mainLogo.src = darkLogoUrl;
+                footerLogo.src = darkLogoUrl;
+            } else {
+                icon.classList.replace('fa-sun', 'fa-adjust');
+                mainLogo.src = lightLogoUrl;
+                footerLogo.src = lightLogoUrl;
+            }
         }
 
         // Intro screen
