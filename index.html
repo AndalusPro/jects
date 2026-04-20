@@ -19,7 +19,6 @@
             --text-main: #1a1a1a; 
             --card-bg: #ffffff;
             --nav-bg: rgba(255, 255, 255, 0.85);
-            --main-font: 'Myriad Pro', 'Myriad', 'Segoe UI', Tahoma, Geneva, sans-serif;
         }
 
         body.dark-theme {
@@ -32,7 +31,7 @@
         body { 
             user-select: none; 
             -webkit-user-select: none; 
-            font-family: var(--main-font); 
+            font-family: 'Poppins', sans-serif; 
             margin: 0; padding: 0;
             overflow-x: hidden;
             background-color: var(--bg-body);
@@ -40,23 +39,6 @@
             transition: background-color var(--transition-speed), color var(--transition-speed);
         }
 
-        /* --- RESPONSIVE MOBILE FIXES --- */
-        @media (max-width: 768px) {
-            h1 { font-size: 2.8rem !important; line-height: 1.1 !important; }
-            .hero-gradient { min-height: 80vh; padding-top: 100px; padding-bottom: 50px; }
-            .container-custom { padding: 0 20px; }
-            .slider-container { height: 280px; border-radius: 1.2rem; }
-            .modal-container { width: 92%; padding: 1.5rem; margin-top: 20px; }
-            
-            /* Responsive Hero Buttons */
-            .hero-btn-container { flex-direction: column; width: 100%; }
-            .hero-btn-container a { width: 100%; text-align: center; }
-        }
-
-        /* Nav & Theme Utils */
-        .text-brand-orange { color: var(--brand-orange); }
-        .bg-brand-orange { background-color: var(--brand-orange); }
-        
         .glass-header {
             background: var(--nav-bg) !important;
             backdrop-filter: blur(12px);
@@ -68,51 +50,74 @@
         .nav-link { color: var(--text-main); transition: 0.3s; }
         .nav-link:hover { color: var(--brand-orange) !important; }
 
-        .theme-toggle-btn {
-            width: 40px; height: 40px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            background: var(--brand-orange-soft); color: var(--brand-orange);
-        }
-
+        /* Responsive Hero Logic */
         .hero-gradient {
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920');
             background-size: cover; background-position: center;
             min-height: 100vh; display: flex; align-items: center;
+            padding-top: 80px;
         }
 
-        /* Slider Logic */
-        .slider-container {
-            position: relative; width: 100%; height: 450px;
-            overflow: hidden; border-radius: 2rem;
-            margin-bottom: 3rem; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        @media (max-width: 768px) {
+            .hero-gradient { min-height: 80vh; padding-top: 60px; }
+            .hero-title { font-size: 2.75rem !important; line-height: 1.1; }
         }
-        .slider-wrapper { display: flex; transition: transform 0.7s cubic-bezier(0.85, 0, 0.15, 1); height: 100%; }
+
+        /* Responsive Slider */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .slider-container { height: 280px; border-radius: 1rem; }
+            .slide-overlay h3 { font-size: 1.25rem; }
+            .slide-overlay p { font-size: 0.75rem; }
+        }
+
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.7s cubic-bezier(0.85, 0, 0.15, 1);
+            height: 100%;
+        }
         .slide { min-width: 100%; height: 100%; position: relative; }
         .slide img { width: 100%; height: 100%; object-fit: cover; }
         .slide-overlay {
-            position: absolute; bottom: 0; left: 0; right: 0;
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
             background: linear-gradient(transparent, rgba(0,0,0,0.9));
-            padding: 40px 25px 25px; color: white;
+            padding: 30px 20px;
+            color: white;
         }
-        .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: 0.3s; }
-        .dot.active { background: var(--brand-orange); width: 20px; border-radius: 10px; }
 
-        /* Service Cards */
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: 0.3s; }
+        .dot.active { background: var(--brand-orange); width: 24px; border-radius: 10px; }
+
         .service-card { 
             background: var(--card-bg); 
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 4px solid transparent;
             transition: all var(--transition-speed);
         }
-        .service-card:hover { transform: translateY(-8px); border-bottom: 4px solid var(--brand-orange); }
+        .service-card:hover { 
+            transform: translateY(-10px); 
+            border-bottom-color: var(--brand-orange);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+        }
 
-        /* Modal */
         #detail-layer {
             position: fixed; inset: 0; background: rgba(0,0,0,0.8);
             z-index: 9999; display: none; align-items: center; justify-content: center;
             backdrop-filter: blur(8px);
         }
         .modal-container { 
-            background: var(--card-bg); border-radius: 1.5rem; position: relative;
+            width: 95%; max-width: 650px; background: var(--card-bg); 
+            border-radius: 1.5rem; padding: 1.5rem; position: relative;
+            max-height: 90vh; overflow-y: auto;
             border-top: 6px solid var(--brand-orange);
         }
 
@@ -125,50 +130,48 @@
 
     <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-[9500] hidden flex-col items-center justify-center space-y-8">
         <button onclick="toggleMenu()" class="absolute top-8 right-8 text-white text-3xl"><i class="fas fa-times"></i></button>
-        <a href="#home" onclick="toggleMenu()" class="text-3xl font-bold text-white uppercase italic tracking-tighter">Home</a>
-        <a href="https://andalus-projects.com/overons.html" class="text-3xl font-bold text-white uppercase italic tracking-tighter">Over Ons</a>
-        <a href="#services" onclick="toggleMenu()" class="text-3xl font-bold text-white uppercase italic tracking-tighter">Diensten</a>
-        <a href="#contact" onclick="toggleMenu()" class="text-3xl font-bold text-brand-orange uppercase italic tracking-tighter">Contact</a>
+        <a href="#home" onclick="toggleMenu()" class="text-2xl font-bold text-white">Home</a>
+        <a href="https://andalus-projects.com/overons.html" class="text-2xl font-bold text-white">Over Ons</a>
+        <a href="#services" onclick="toggleMenu()" class="text-2xl font-bold text-white">Diensten</a>
+        <a href="#contact" onclick="toggleMenu()" class="text-2xl font-bold text-brand-orange">Contact</a>
+        <button onclick="toggleTheme(); toggleMenu();" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white">
+            <i class="fas fa-sun theme-icon"></i>
+        </button>
     </div>
 
-    <nav class="fixed top-0 w-full z-50 glass-header transition-all">
-        <div class="container-custom py-4 flex justify-between items-center">
+    <nav class="fixed top-0 w-full z-50 glass-header">
+        <div class="container-custom py-3 md:py-4 flex justify-between items-center">
             <a href="#" class="flex items-center gap-2">
-                <img src="https://andalus-projects.com/Logo.png" id="main-logo" alt="Logo" class="h-8 md:h-9">
+                <img src="https://andalus-projects.com/Logo.png" id="main-logo" alt="Logo" class="h-7 md:h-9">
                 <span class="font-black text-lg md:text-xl tracking-tighter uppercase italic">ANDALUS <span class="text-brand-orange">PROJECTS</span></span>
             </a>
-            
             <div class="hidden md:flex items-center gap-6">
                 <div class="flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest mr-4">
                     <a href="https://andalus-projects.com/overons.html" class="nav-link">Over Ons</a>
                     <a href="#services" class="nav-link">Diensten</a>
                 </div>
-                <button onclick="toggleTheme()" class="theme-toggle-btn"><i class="fas fa-sun theme-icon"></i></button>
-                <a href="#contact" class="bg-brand-orange px-6 py-2 rounded-full text-white font-bold text-[11px] uppercase tracking-widest hover:scale-105 transition shadow-lg">Contact</a>
+                <button onclick="toggleTheme()" class="theme-toggle-btn w-10 h-10 flex items-center justify-center rounded-full bg-brand-orange-soft text-brand-orange hover:bg-brand-orange hover:text-white transition"><i class="fas fa-sun theme-icon"></i></button>
+                <a href="#contact" class="bg-brand-orange px-6 py-2 rounded-full text-white font-bold text-[11px] uppercase tracking-widest hover:scale-105 transition">Contact</a>
             </div>
-
-            <div class="flex items-center gap-4 md:hidden">
-                <button onclick="toggleTheme()" class="theme-toggle-btn w-10 h-10"><i class="fas fa-sun theme-icon"></i></button>
-                <button onclick="toggleMenu()" class="text-2xl text-brand-orange"><i class="fas fa-bars-staggered"></i></button>
-            </div>
+            <button onclick="toggleMenu()" class="md:hidden text-2xl text-brand-orange"><i class="fas fa-bars-staggered"></i></button>
         </div>
     </nav>
 
     <section id="home" class="hero-gradient">
         <div class="container-custom">
-            <div class="max-w-2xl">
-                <div class="inline-block border-l-4 border-brand-orange px-4 py-1 mb-6">
+            <div class="max-w-3xl">
+                <div class="inline-block border-l-4 border-brand-orange px-4 py-1 mb-4 md:mb-6">
                     <span class="text-white text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">Est. 2004 | Premium Renovatie</span>
                 </div>
-                <h1 class="text-5xl md:text-8xl font-black text-white leading-tight mb-6 italic uppercase">
-                    PROFESSIONELE BOUW EN <br><span class="text-brand-orange">RENOVATIEDIENSTEN</span>
+                <h1 class="hero-title text-5xl md:text-8xl font-black text-white leading-none mb-6 italic uppercase">
+                   PROFESSIONELE BOUW EN <br><span class="text-brand-orange"> RENOVATIEDIENSTEN</span>
                 </h1>
-                <p class="text-gray-300 text-base md:text-xl mb-10 font-light leading-relaxed max-w-lg">
-                    Geef uw huis een nieuw leven! Wij leveren vakmanschap in elke laag voor een resultaat dat staat.
+                <p class="text-gray-300 text-base md:text-xl mb-8 md:text-xl font-light leading-relaxed">
+                   Geef uw huis een nieuw leven!
                 </p>
-                <div class="flex flex-wrap gap-4 hero-btn-container">
-                    <a href="#services" class="bg-brand-orange text-white px-8 md:px-10 py-4 rounded-xl font-bold text-sm hover:bg-orange-600 transition shadow-xl">ONTDEK DIENSTEN</a>
-                    <a href="https://wa.me/32483404778" class="bg-white/10 text-white backdrop-blur-md px-8 md:px-10 py-4 rounded-xl font-bold text-sm hover:bg-white/20 transition border border-white/20">CONTACTEER ONS</a>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#services" class="bg-brand-orange text-white px-8 py-4 rounded-xl font-bold text-center hover:bg-orange-600 transition">ONTDEK DIENSTEN</a>
+                    <a href="https://wa.me/32483404778" class="bg-white/10 text-white backdrop-blur-md px-8 py-4 rounded-xl font-bold text-center border border-white/20">CONTACTEER ONS</a>
                 </div>
             </div>
         </div>
@@ -176,46 +179,87 @@
 
     <section id="services" class="py-16 md:py-24">
         <div class="container-custom">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 reveal">
                 <div>
-                    <h2 class="text-4xl md:text-6xl font-black uppercase italic">Onze <span class="text-brand-orange">Expertise</span></h2>
-                    <div class="w-20 h-1 bg-brand-orange mt-4"></div>
+                    <h2 class="text-3xl md:text-6xl font-black uppercase italic">Onze <span class="text-brand-orange">Expertise</span></h2>
+                    <div class="w-16 h-1 bg-brand-orange mt-3"></div>
                 </div>
-                <p class="text-gray-500 max-w-sm mt-4 md:mt-0 text-sm hidden md:block">Vakmanschap en precisie verwerkt in elk detail van uw project.</p>
+                <p class="text-gray-500 max-w-sm mt-4 md:mt-0 text-sm">Vakmanschap en precisie verwerkt in elk detail van uw project.</p>
             </div>
 
             <div class="slider-container reveal">
                 <div class="slider-wrapper" id="main-slider">
                     <div class="slide">
                         <img src="https://andalus-projects.com/badkamerrenovatie.jpg" alt="Badkamer">
-                        <div class="slide-overlay"><h3 class="text-xl md:text-2xl font-black uppercase italic">Badkamer Transformaties</h3></div>
+                        <div class="slide-overlay">
+                            <h3 class="text-xl md:text-2xl font-black uppercase italic">Badkamer Transformaties</h3>
+                            <p class="text-xs md:text-sm opacity-70">Luxe sanitair en moderne afwerking.</p>
+                        </div>
                     </div>
                     <div class="slide">
                         <img src="https://andalus-projects.com/tegelwerk.jpg" alt="Tegelwerk">
-                        <div class="slide-overlay"><h3 class="text-xl md:text-2xl font-black uppercase italic">Tegelwerk</h3></div>
+                        <div class="slide-overlay">
+                            <h3 class="text-xl md:text-2xl font-black uppercase italic">Tegelwerk</h3>
+                            <p class="text-xs md:text-sm opacity-70">Nauwkeurige plaatsing van natuursteen en keramiek.</p>
+                        </div>
                     </div>
                     <div class="slide">
                         <img src="https://andalus-projects.com/stucwerk.jpg" alt="Stucwerk">
-                        <div class="slide-overlay"><h3 class="text-xl md:text-2xl font-black uppercase italic">Stucwerk</h3></div>
+                        <div class="slide-overlay">
+                            <h3 class="text-xl md:text-2xl font-black uppercase italic">Stucwerk</h3>
+                            <p class="text-xs md:text-sm opacity-70">De perfecte gladde basis voor uw interieur.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-10" id="dots-container"></div>
+                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10" id="dots-container"></div>
+                <button onclick="moveSlide(-1)" class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-black/20 text-white rounded-full"><i class="fas fa-chevron-left text-xs"></i></button>
+                <button onclick="moveSlide(1)" class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-black/20 text-white rounded-full"><i class="fas fa-chevron-right text-xs"></i></button>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
                 <div onclick="openDetails('badkamer')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
                     <div class="h-40 md:h-48 overflow-hidden"><img src="https://andalus-projects.com/badkamerrenovatie.jpg" class="w-full h-full object-cover"></div>
-                    <div class="p-6 flex justify-between items-center"><h3 class="font-bold uppercase text-xs tracking-widest">Badkamer Renovatie</h3><i class="fas fa-arrow-right text-brand-orange"></i></div>
+                    <div class="p-5 flex justify-between items-center">
+                        <h3 class="font-bold uppercase text-xs tracking-widest">Badkamer Renovatie</h3>
+                        <i class="fas fa-arrow-right text-brand-orange"></i>
+                    </div>
                 </div>
                 <div onclick="openDetails('tegelwerk')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
                     <div class="h-40 md:h-48 overflow-hidden"><img src="https://andalus-projects.com/tegelwerk.jpg" class="w-full h-full object-cover"></div>
-                    <div class="p-6 flex justify-between items-center"><h3 class="font-bold uppercase text-xs tracking-widest">Tegelwerk</h3><i class="fas fa-arrow-right text-brand-orange"></i></div>
+                    <div class="p-5 flex justify-between items-center">
+                        <h3 class="font-bold uppercase text-xs tracking-widest">Tegelwerk</h3>
+                        <i class="fas fa-arrow-right text-brand-orange"></i>
+                    </div>
                 </div>
                 <div onclick="openDetails('stucwerk')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
                     <div class="h-40 md:h-48 overflow-hidden"><img src="https://andalus-projects.com/stucwerk.jpg" class="w-full h-full object-cover"></div>
-                    <div class="p-6 flex justify-between items-center"><h3 class="font-bold uppercase text-xs tracking-widest">Stucwerk</h3><i class="fas fa-arrow-right text-brand-orange"></i></div>
+                    <div class="p-5 flex justify-between items-center">
+                        <h3 class="font-bold uppercase text-xs tracking-widest">Stucwerk</h3>
+                        <i class="fas fa-arrow-right text-brand-orange"></i>
+                    </div>
                 </div>
+                <div onclick="openDetails('schilderwerk')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
+                    <div class="h-40 md:h-48 overflow-hidden"><img src="https://andalus-projects.com/schilderwerk.jpg" class="w-full h-full object-cover"></div>
+                    <div class="p-5 flex justify-between items-center">
+                        <h3 class="font-bold uppercase text-xs tracking-widest">Schilderwerk</h3>
+                        <i class="fas fa-arrow-right text-brand-orange"></i>
+                    </div>
                 </div>
+                <div onclick="openDetails('schoonmaken')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
+                    <div class="h-40 md:h-48 overflow-hidden"><img src="https://andalus-projects.com/schoonmaken.jpg" class="w-full h-full object-cover"></div>
+                    <div class="p-5 flex justify-between items-center">
+                        <h3 class="font-bold uppercase text-xs tracking-widest">Schoonmaken</h3>
+                        <i class="fas fa-arrow-right text-brand-orange"></i>
+                    </div>
+                </div>
+                <div onclick="openDetails('laminaatleggen')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
+                    <div class="h-40 md:h-48 overflow-hidden"><img src="https://andalus-projects.com/laminaatleggen.jpg" class="w-full h-full object-cover"></div>
+                    <div class="p-5 flex justify-between items-center">
+                        <h3 class="font-bold uppercase text-xs tracking-widest">Laminaat Leggen</h3>
+                        <i class="fas fa-arrow-right text-brand-orange"></i>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -223,26 +267,31 @@
         <div class="container-custom flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
             <div>
                 <h2 class="text-3xl md:text-6xl font-black uppercase italic mb-2">Start uw project</h2>
-                <p class="font-light opacity-90 text-sm md:text-lg">Krijg direct een vrijblijvende offerte.</p>
+                <p class="font-light opacity-90 text-sm md:text-lg">Neem contact op voor een vrijblijvende offerte.</p>
             </div>
-            <a href="tel:+32483404778" class="bg-white text-brand-orange px-8 md:px-12 py-5 rounded-2xl font-black text-xl md:text-4xl shadow-2xl transition active:scale-95">+32 483 404 778</a>
+            <a href="tel:+32483404778" class="bg-white text-brand-orange px-8 py-4 md:px-12 md:py-6 rounded-2xl font-black text-xl md:text-4xl shadow-2xl transition-transform hover:scale-105">+32 483 404 778</a>
         </div>
     </section>
 
-    <footer class="py-10 text-center">
-        <img src="https://andalus-projects.com/Logo.png" id="footer-logo" class="h-7 mx-auto mb-4 grayscale opacity-30">
+    <footer class="py-10 border-t border-brand-orange-soft text-center">
+        <img src="https://andalus-projects.com/Logo.png" id="footer-logo" class="h-6 mx-auto mb-4 grayscale opacity-50">
         <p class="text-gray-400 font-bold uppercase tracking-widest text-[9px] mb-2">&copy; 2026 Andalus Projects</p>
-        <span class="text-[9px] uppercase tracking-[0.3em] text-gray-500 font-black">Bunz Vision</span>
+        <a href="https://www.instagram.com/3d.bunz" target="_blank" class="text-[8px] uppercase tracking-[0.3em] text-gray-500 font-black">Bunz Vision</a>
     </footer>
 
     <div id="detail-layer" onclick="closeDetails()">
-        <div class="modal-container p-6 w-[90%] max-w-[600px]" onclick="event.stopPropagation()">
+        <div class="modal-container" onclick="event.stopPropagation()">
             <button onclick="closeDetails()" class="absolute top-4 right-4 text-gray-400"><i class="fas fa-times text-xl"></i></button>
-            <div id="modal-content" class="animate__animated animate__fadeIn"></div>
+            <div id="modal-content" class="animate__animated animate__fadeInUp animate__faster"></div>
         </div>
     </div>
 
+    <a href="https://wa.me/32483404778" target="_blank" class="fixed bottom-6 right-6 w-12 h-12 md:w-14 md:h-14 bg-[#25D366] rounded-full flex items-center justify-center text-white text-xl md:text-2xl shadow-2xl z-[9000]">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
     <script>
+        /* Slider logic, theme toggle, and reveal logic remain exactly as per original requirements */
         let slideIdx = 0;
         const sliderWrapper = document.getElementById('main-slider');
         const slides = document.querySelectorAll('.slide');
@@ -265,16 +314,28 @@
             updateSlider();
         }
 
-        function jumpToSlide(i) { slideIdx = i; updateSlider(); }
+        function jumpToSlide(i) {
+            slideIdx = i;
+            updateSlider();
+        }
+
         setInterval(() => moveSlide(1), 5000);
 
         function toggleTheme() {
-            document.body.classList.toggle('dark-theme');
-            const isDark = document.body.classList.contains('dark-theme');
-            document.querySelectorAll('.theme-icon').forEach(i => {
-                i.classList.toggle('fa-sun', isDark);
-                i.classList.toggle('fa-moon', !isDark);
+            const body = document.body;
+            const icons = document.querySelectorAll('.theme-icon');
+            const mainLogo = document.getElementById('main-logo');
+            const footerLogo = document.getElementById('footer-logo');
+            body.classList.toggle('dark-theme');
+            const isDark = body.classList.contains('dark-theme');
+            const lightUrl = "https://andalus-projects.com/darklogo.png";
+            const darkUrl = "https://andalus-projects.com/Logo.png";
+            icons.forEach(icon => {
+                icon.classList.toggle('fa-sun', isDark);
+                icon.classList.toggle('fa-moon', !isDark);
             });
+            mainLogo.src = isDark ? darkUrl : lightUrl;
+            footerLogo.src = isDark ? darkUrl : lightUrl;
         }
 
         function toggleMenu() {
@@ -283,8 +344,26 @@
             menu.classList.toggle('flex');
         }
 
+        const servicesData = {
+            badkamer: { title: "Badkamerrenovatie", desc: "Professionele renovaties van A tot Z.", items: ["Inloopdouches", "Luxe badkamermeubels", "Leidingwerk"] },
+            tegelwerk: { title: "Professionele Tegelwerken", desc: "Kwaliteit en precisie voor vloer en wand.", items: ["Vakkundige plaatsing", "Hoogwaardige materialen", "Scherpe prijzen"] },
+            stucwerk: { title: "Professioneel Stucwerk", desc: "Perfect afgewerkte muren en plafonds.", items: ["Glad pleisterwerk", "Renovatie en nieuwbouw", "Duurzaam resultaat"] },
+            schilderwerk: { title: "Professioneel Schilderwerk", desc: "Binnen- en buitenschilderwerk met oog voor detail.", items: ["Strakke afwerking", "Duurzame verf", "Snelle service"] },
+            schoonmaken: { title: "Reinigingsdiensten", desc: "Eindschoonmaak na bouw of tuinonderhoud.", items: ["Bouwschoonmaak", "Tuinreiniging", "Gebouwenonderhoud"] },
+            laminaatleggen: { title: "Vloerplaatsing", desc: "Laminaat, visgraat en PVC vloeren.", items: ["Professionele plaatsing", "Nauwkeurige afwerking", "Advies op maat"] }
+        };
+
         function openDetails(id) {
-            document.getElementById('modal-content').innerHTML = `<h2 class="text-2xl font-black text-brand-orange uppercase italic mb-4">${id}</h2><p class="text-sm opacity-80 leading-relaxed">Wij bieden hoogwaardige oplossingen voor uw ${id}. Neem contact op voor details.</p>`;
+            const data = servicesData[id];
+            document.getElementById('modal-content').innerHTML = `
+                <h2 class="text-2xl md:text-3xl font-black mb-2 uppercase italic text-brand-orange">${data.title}</h2>
+                <div class="w-12 h-1 bg-brand-orange mb-6"></div>
+                <p class="mb-6 leading-relaxed opacity-80 text-sm md:text-base">${data.desc}</p>
+                <ul class="space-y-3 mb-8">
+                    ${data.items.map(i => `<li class="flex items-center gap-3 font-bold text-xs md:text-sm"><i class="fas fa-check text-brand-orange"></i> ${i}</li>`).join('')}
+                </ul>
+                <a href="https://wa.me/32483404778" class="block bg-brand-orange text-white py-4 rounded-xl font-bold text-center uppercase tracking-widest text-sm">Offerte via WhatsApp</a>
+            `;
             document.getElementById('detail-layer').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
@@ -296,7 +375,8 @@
 
         function reveal() {
             document.querySelectorAll(".reveal").forEach(el => {
-                if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active");
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 50) el.classList.add("active");
             });
         }
         window.addEventListener("scroll", reveal);
