@@ -2,7 +2,7 @@
 <html lang="nl" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Andalus Projects | Meesters in Renovatie</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -33,10 +33,20 @@
             -webkit-user-select: none; 
             font-family: 'Poppins', sans-serif; 
             margin: 0; padding: 0;
+            /* Lock horizontal movement strictly */
             overflow-x: hidden;
+            width: 100%;
+            position: relative;
             background-color: var(--bg-body);
             color: var(--text-main);
             transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        /* Prevent the page from shifting when menu is open */
+        body.menu-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
         }
 
         .glass-header {
@@ -50,20 +60,25 @@
         .nav-link { color: var(--text-main); transition: 0.3s; }
         .nav-link:hover { color: var(--brand-orange) !important; }
 
-        /* Responsive Hero Logic */
         .hero-gradient {
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920');
             background-size: cover; background-position: center;
             min-height: 100vh; display: flex; align-items: center;
             padding-top: 80px;
+            width: 100%;
+        }
+
+        /* Fixed Hero Title Responsiveness */
+        .hero-title {
+            font-size: clamp(2rem, 8vw, 5.5rem) !important;
+            line-height: 1.1;
         }
 
         @media (max-width: 768px) {
-            .hero-gradient { min-height: 80vh; padding-top: 60px; }
-            .hero-title { font-size: 2.75rem !important; line-height: 1.1; }
+            .hero-gradient { min-height: 100svh; padding-top: 60px; }
+            .hero-title { font-size: clamp(2.2rem, 10vw, 3.5rem) !important; }
         }
 
-        /* Responsive Slider */
         .slider-container {
             position: relative;
             width: 100%;
@@ -163,10 +178,10 @@
                 <div class="inline-block border-l-4 border-brand-orange px-4 py-1 mb-4 md:mb-6">
                     <span class="text-white text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">Est. 2004 | Premium Renovatie</span>
                 </div>
-                <h1 class="hero-title text-5xl md:text-8xl font-black text-white leading-none mb-6 italic uppercase">
+                <h1 class="hero-title font-black text-white italic uppercase mb-6">
                    PROFESSIONELE BOUW EN <br><span class="text-brand-orange"> RENOVATIEDIENSTEN</span>
                 </h1>
-                <p class="text-gray-300 text-base md:text-xl mb-8 md:text-xl font-light leading-relaxed">
+                <p class="text-gray-300 text-base md:text-xl mb-8 font-light leading-relaxed">
                    Geef uw huis een nieuw leven!
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4">
@@ -291,7 +306,6 @@
     </a>
 
     <script>
-        /* Slider logic, theme toggle, and reveal logic remain exactly as per original requirements */
         let slideIdx = 0;
         const sliderWrapper = document.getElementById('main-slider');
         const slides = document.querySelectorAll('.slide');
@@ -340,8 +354,11 @@
 
         function toggleMenu() {
             const menu = document.getElementById('mobile-menu');
+            const body = document.body;
             menu.classList.toggle('hidden');
             menu.classList.toggle('flex');
+            // Logic to lock body scroll when menu is active
+            body.classList.toggle('menu-open');
         }
 
         const servicesData = {
@@ -365,12 +382,12 @@
                 <a href="https://wa.me/32483404778" class="block bg-brand-orange text-white py-4 rounded-xl font-bold text-center uppercase tracking-widest text-sm">Offerte via WhatsApp</a>
             `;
             document.getElementById('detail-layer').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
+            document.body.classList.add('menu-open'); // Reusing scroll lock logic
         }
 
         function closeDetails() {
             document.getElementById('detail-layer').style.display = 'none';
-            document.body.style.overflowY = 'auto';
+            document.body.classList.remove('menu-open');
         }
 
         function reveal() {
