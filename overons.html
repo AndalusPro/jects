@@ -10,23 +10,49 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
     <style>
-        :root { scroll-behavior: smooth; }
-        
-        /* قفل النسخ وتحديد النص */
-        * {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-touch-callout: none;
+        :root { 
+            scroll-behavior: smooth; 
+            --brand-orange: #f37321;
+            --brand-orange-soft: rgba(243, 115, 33, 0.1);
+            --transition-speed: 0.4s;
+            /* Default Light Mode */
+            --bg-body: #fdfdfd; 
+            --text-main: #1a1a1a; 
+            --card-bg: #ffffff;
+            --nav-bg: rgba(255, 255, 255, 0.85);
         }
 
-        body { font-family: 'Poppins', sans-serif; background-color: #ffffff; overflow-x: hidden; }
+        body.dark-theme {
+            --bg-body: #0a0a0a; 
+            --text-main: #f3f4f6; 
+            --card-bg: #141414;
+            --nav-bg: rgba(10, 10, 10, 0.85);
+        }
+
+        body { 
+            user-select: none; 
+            -webkit-user-select: none; 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            transition: background-color var(--transition-speed);
+            overflow-x: hidden;
+        }
+
+        .text-brand-orange { color: var(--brand-orange); }
+        .bg-brand-orange { background-color: var(--brand-orange); }
         
-        .bg-brand-orange { background-color: #f37321; }
-        .text-brand-orange { color: #f37321; }
-        
-        /* Hero Styling (مثل الرئيسية) */
+        .glass-header {
+            background: var(--nav-bg) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--brand-orange-soft);
+            border-top: 3px solid var(--brand-orange);
+        }
+
+        .nav-link { color: var(--text-main); transition: 0.3s; }
+        .nav-link:hover { color: var(--brand-orange) !important; }
+
         .hero-about {
             position: relative;
             background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1541933224312-45e569263b71?q=80&w=1920');
@@ -59,8 +85,10 @@
         }
 
         .card-stat {
+            background: var(--card-bg);
+            border: 1px solid var(--brand-orange-soft);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border-bottom: 4px solid #f37321;
+            border-bottom: 4px solid var(--brand-orange);
         }
         .card-stat:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
 
@@ -68,21 +96,28 @@
         .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body oncontextmenu="return false;">
+<body oncontextmenu="return false;" class="dark-theme">
 
-    <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md text-white border-b border-white/10">
+    <nav class="fixed top-0 w-full z-50 glass-header transition-all">
         <div class="container-custom py-4 flex justify-between items-center">
-            <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition">
-                <img src="https://andalus-projects.com/Logo.png" alt="Logo" class="h-8 md:h-10 w-auto object-contain">
+            <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition group">
+                <img src="https://andalus-projects.com/Logo.png" id="main-logo" alt="Logo" class="h-8 md:h-10 w-auto object-contain transition-transform group-hover:scale-110">
                 <span class="font-black text-sm md:text-lg tracking-tighter uppercase leading-none italic">
                     ANDALUS <span class="text-brand-orange">PROJECTS</span>
                 </span>
             </a>
-            <div class="hidden md:flex gap-6 text-[10px] font-bold uppercase tracking-widest">
-                <a href="index.html" class="hover:text-brand-orange transition">Home</a>
-                <a href="index.html#services" class="hover:text-brand-orange transition">Diensten</a>
-                <a href="index.html#contact" class="text-brand-orange transition underline underline-offset-4">Contact</a>
+            
+            <div class="hidden md:flex items-center gap-8 text-[10px] font-bold uppercase tracking-widest">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="index.html#services" class="nav-link">Diensten</a>
+                
+                <button onclick="toggleTheme()" class="nav-link text-lg px-2" title="Switch Theme">
+                    <i class="fas fa-sun" id="theme-icon"></i>
+                </button>
+
+                <a href="index.html#contact" class="bg-brand-orange px-6 py-2 rounded-full text-white hover:scale-105 transition shadow-lg shadow-orange-500/20">Contact</a>
             </div>
+
             <a href="index.html" class="md:hidden text-[10px] font-bold uppercase text-brand-orange">
                 <i class="fas fa-arrow-left mr-1"></i> Home
             </a>
@@ -106,12 +141,12 @@
             <div class="grid lg:grid-cols-2 gap-16 items-start">
                 
                 <div class="reveal">
-                    <h2 class="text-4xl md:text-6xl font-black text-zinc-900 leading-[1] mb-10 uppercase italic">
+                    <h2 class="text-4xl md:text-6xl font-black leading-[1] mb-10 uppercase italic">
                         Kies voor kwaliteit, ervaring en <span class="text-brand-orange">vakmanschap.</span>
                     </h2>
-                    <div class="space-y-6 text-gray-600 text-lg md:text-xl leading-relaxed">
+                    <div class="space-y-6 opacity-80 text-lg md:text-xl leading-relaxed">
                         <p>
-                            Wij zijn een professioneel bouw- en renovatiebedrijf met meer dan <span class="font-black text-zinc-900 underline decoration-brand-orange decoration-4">20 jaar ervaring</span> in de sector. Wij zijn gespecialiseerd in diverse vakgebieden, waaronder stucwerk, schilderwerk, het plaatsen van laminaatvloeren en tegelwerken.
+                            Wij zijn een professioneel bouw- en renovatiebedrijf met meer dan <span class="font-black underline decoration-brand-orange decoration-4">20 jaar ervaring</span> in de sector. Wij zijn gespecialiseerd in diverse vakgebieden, waaronder stucwerk, schilderwerk, het plaatsen van laminaatvloeren en tegelwerken.
                         </p>
                         <p>
                             Dankzij onze jarenlange ervaring en vakmanschap leveren wij hoogwaardige resultaten die voldoen aan de hoogste kwaliteitsnormen. Wij combineren technische expertise met oog voor detail om elke ruimte om te vormen tot een perfect afgewerkt geheel.
@@ -123,25 +158,25 @@
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 reveal">
-                    <div class="card-stat bg-gray-50 p-8 rounded-[2rem]">
+                    <div class="card-stat p-8 rounded-[2rem]">
                         <i class="fas fa-check-circle text-brand-orange text-4xl mb-6"></i>
                         <h4 class="font-black text-2xl mb-2 italic uppercase">Toewijding</h4>
-                        <p class="text-gray-500 font-medium">Ernst in ons werk vormt de basis van alles wat wij doen.</p>
+                        <p class="opacity-60 font-medium text-sm">Ernst in ons werk vormt de basis van alles wat wij doen.</p>
                     </div>
                     <div class="card-stat bg-zinc-900 p-8 rounded-[2rem] text-white">
                         <i class="fas fa-clock text-brand-orange text-4xl mb-6"></i>
                         <h4 class="font-black text-2xl mb-2 italic uppercase">20+ Jaar</h4>
-                        <p class="text-gray-400 font-medium">Ervaring in de meest complexe renovatieprojecten.</p>
+                        <p class="text-gray-400 font-medium text-sm">Ervaring in de meest complexe renovatieprojecten.</p>
                     </div>
-                    <div class="card-stat bg-gray-50 p-8 rounded-[2rem]">
+                    <div class="card-stat p-8 rounded-[2rem]">
                         <i class="fas fa-star text-brand-orange text-4xl mb-6"></i>
                         <h4 class="font-black text-2xl mb-2 italic uppercase">Kwaliteit</h4>
-                        <p class="text-gray-500 font-medium">Wij overtreffen de verwachtingen van elke klant.</p>
+                        <p class="opacity-60 font-medium text-sm">Wij overtreffen de verwachtingen van elke klant.</p>
                     </div>
                     <div class="card-stat bg-brand-orange p-8 rounded-[2rem] text-white">
                         <i class="fas fa-eye text-white text-4xl mb-6"></i>
                         <h4 class="font-black text-2xl mb-2 italic uppercase">Oog voor Detail</h4>
-                        <p class="text-orange-100 font-medium">Technische expertise gecombineerd met precisie.</p>
+                        <p class="text-orange-100 font-medium text-sm">Technische expertise gecombineerd met precisie.</p>
                     </div>
                 </div>
             </div>
@@ -162,14 +197,40 @@
         </div>
     </main>
 
-    <footer class="py-12 border-t border-gray-100 text-center">
+    <footer class="py-12 border-t border-brand-orange-soft text-center">
+        <img src="https://andalus-projects.com/Logo.png" id="footer-logo" class="h-8 mx-auto mb-4 grayscale opacity-50">
         <p class="text-gray-400 font-bold uppercase tracking-widest text-[10px]">
             &copy; 2026 Andalus Projects - Meesters in Renovatie
         </p>
     </footer>
 
     <script>
-        // Motion Graphics (نفس كود الرئيسية)
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            const mainLogo = document.getElementById('main-logo');
+            const footerLogo = document.getElementById('footer-logo');
+
+            body.classList.toggle('dark-theme');
+            
+            // Flipped Logic:
+            // Light Logo (Logo.png) for Dark Background
+            // Dark Logo (darklogo.png) for Light Background
+            const lightLogoUrl = "https://andalus-projects.com/darklogo.png";
+            const darkLogoUrl = "https://andalus-projects.com/Logo.png";
+
+            if (body.classList.contains('dark-theme')) {
+                icon.classList.replace('fa-adjust', 'fa-sun');
+                mainLogo.src = darkLogoUrl;
+                footerLogo.src = darkLogoUrl;
+            } else {
+                icon.classList.replace('fa-sun', 'fa-adjust');
+                mainLogo.src = lightLogoUrl;
+                footerLogo.src = lightLogoUrl;
+            }
+        }
+
+        // Motion Graphics
         const canvas = document.getElementById('motion-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -221,7 +282,7 @@
         window.addEventListener("scroll", reveal);
         document.addEventListener("DOMContentLoaded", reveal);
 
-        // قفل المفاتيح والنسخ
+        // Security
         document.onkeydown = function(e) {
             if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 85 || e.keyCode === 73 || e.keyCode === 74)) return false;
         };
