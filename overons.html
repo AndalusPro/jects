@@ -23,10 +23,11 @@
         }
 
         body.dark-theme {
-            --bg-body: #0a0a0a; 
+            /* Updated to Soft Dark Gris */
+            --bg-body: #1a1a1a; 
             --text-main: #f3f4f6; 
-            --card-bg: #141414;
-            --nav-bg: rgba(10, 10, 10, 0.85);
+            --card-bg: #242424;
+            --nav-bg: rgba(26, 26, 26, 0.85);
         }
 
         body { 
@@ -90,10 +91,14 @@
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border-bottom: 4px solid var(--brand-orange);
         }
-        .card-stat:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .card-stat:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
 
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s all ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Smooth contrast for the mission section in dark mode */
+        body.dark-theme .bg-mission-box { background-color: #242424; }
+        body:not(.dark-theme) .bg-mission-box { background-color: #1a1a1a; }
     </style>
 </head>
 <body oncontextmenu="return false;" class="dark-theme">
@@ -163,7 +168,7 @@
                         <h4 class="font-black text-2xl mb-2 italic uppercase">Toewijding</h4>
                         <p class="opacity-60 font-medium text-sm">Ernst in ons werk vormt de basis van alles wat wij doen.</p>
                     </div>
-                    <div class="card-stat bg-zinc-900 p-8 rounded-[2rem] text-white">
+                    <div class="card-stat bg-zinc-800 p-8 rounded-[2rem] text-white">
                         <i class="fas fa-clock text-brand-orange text-4xl mb-6"></i>
                         <h4 class="font-black text-2xl mb-2 italic uppercase">20+ Jaar</h4>
                         <p class="text-gray-400 font-medium text-sm">Ervaring in de meest complexe renovatieprojecten.</p>
@@ -181,7 +186,7 @@
                 </div>
             </div>
 
-            <div class="mt-32 bg-zinc-900 rounded-[3rem] p-10 md:p-20 text-center reveal relative overflow-hidden">
+            <div class="mt-32 bg-mission-box rounded-[3rem] p-10 md:p-20 text-center reveal relative overflow-hidden transition-colors duration-500">
                 <div class="relative z-10">
                     <h3 class="text-3xl md:text-5xl font-black mb-8 uppercase italic text-white">Onze <span class="text-brand-orange">Missie</span></h3>
                     <p class="text-xl md:text-3xl text-gray-300 max-w-4xl mx-auto leading-relaxed font-light italic">
@@ -216,9 +221,6 @@
 
             body.classList.toggle('dark-theme');
             
-            // Flipped Logic:
-            // Light Logo (Logo.png) for Dark Background
-            // Dark Logo (darklogo.png) for Light Background
             const lightLogoUrl = "https://andalus-projects.com/darklogo.png";
             const darkLogoUrl = "https://andalus-projects.com/Logo.png";
 
