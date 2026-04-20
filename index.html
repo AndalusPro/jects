@@ -12,20 +12,21 @@
     <style>
         :root { 
             scroll-behavior: smooth; 
-            --brand-orange: #f37321;
-            --brand-orange-soft: rgba(243, 115, 33, 0.1);
+            --brand-orange: #e9731b;
+            --brand-charcoal: #2e3639;
+            --brand-orange-soft: rgba(233, 115, 27, 0.1);
             --transition-speed: 0.4s;
             --bg-body: #fdfdfd; 
-            --text-main: #1a1a1a; 
+            --text-main: #2e3639; 
             --card-bg: #ffffff;
             --nav-bg: rgba(255, 255, 255, 0.85);
         }
 
         body.dark-theme {
-            --bg-body: #1a1a1a; 
+            --bg-body: #1a1e1f; 
             --text-main: #f3f4f6; 
-            --card-bg: #242424;
-            --nav-bg: rgba(26, 26, 26, 0.85);
+            --card-bg: #2e3639;
+            --nav-bg: rgba(46, 54, 57, 0.85);
         }
 
         body { 
@@ -34,7 +35,6 @@
             font-family: 'Poppins', sans-serif; 
             margin: 0; padding: 0;
             overflow-x: hidden;
-            /* Changed overflow-y to auto to allow scrolling immediately */
             overflow-y: auto;
             background-color: var(--bg-body);
             color: var(--text-main);
@@ -43,6 +43,7 @@
 
         .text-brand-orange { color: var(--brand-orange); }
         .bg-brand-orange { background-color: var(--brand-orange); }
+        .bg-brand-charcoal { background-color: var(--brand-charcoal); }
         
         .glass-header {
             background: var(--nav-bg) !important;
@@ -73,25 +74,25 @@
         }
 
         .hero-gradient {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920');
+            background: linear-gradient(rgba(46, 54, 57, 0.7), rgba(46, 54, 57, 0.85)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920');
             background-size: cover; background-position: center;
             min-height: 100vh; display: flex; align-items: center;
         }
 
         .service-card { 
             background: var(--card-bg); 
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(233, 115, 27, 0.05);
             border-bottom: 4px solid transparent;
             transition: all var(--transition-speed);
         }
         .service-card:hover { 
             transform: translateY(-10px); 
             border-bottom-color: var(--brand-orange);
-            box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.15);
         }
 
         #detail-layer {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+            position: fixed; inset: 0; background: rgba(46, 54, 57, 0.9);
             z-index: 9999; display: none; align-items: center; justify-content: center;
             backdrop-filter: blur(8px);
         }
@@ -107,8 +108,8 @@
     </style>
 </head>
 <body oncontextmenu="return false;" class="dark-theme"> 
-    
-    <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-[9500] hidden flex-col items-center justify-center space-y-8">
+
+    <div id="mobile-menu" class="fixed inset-0 bg-[#2e3639]/fb z-[9500] hidden flex-col items-center justify-center space-y-8">
         <button onclick="toggleMenu()" class="absolute top-8 right-8 text-white text-3xl"><i class="fas fa-times"></i></button>
         <a href="#home" onclick="toggleMenu()" class="text-3xl font-bold text-white hover:text-brand-orange">Home</a>
         <a href="https://andalus-projects.com/overons.html" class="text-3xl font-bold text-white hover:text-brand-orange">Over Ons</a>
@@ -161,7 +162,7 @@
                     Uw partner voor hoogwaardige renovaties in België. Van moderne badkamers tot meesterlijk stucwerk.
                 </p>
                 <div class="flex flex-wrap gap-4">
-                    <a href="#services" class="bg-brand-orange text-white px-10 py-4 rounded-xl font-bold hover:bg-orange-600 transition shadow-xl">ONTDEK DIENSTEN</a>
+                    <a href="#services" class="bg-brand-orange text-white px-10 py-4 rounded-xl font-bold hover:brightness-110 transition shadow-xl">ONTDEK DIENSTEN</a>
                     <a href="https://wa.me/32483404778" class="bg-white/10 text-white backdrop-blur-md px-10 py-4 rounded-xl font-bold hover:bg-white/20 transition border border-white/20">CONTACTEER ONS</a>
                 </div>
             </div>
@@ -231,11 +232,11 @@
                 <h2 class="text-4xl md:text-6xl font-black uppercase italic mb-4">Start uw project</h2>
                 <p class="font-light opacity-90 text-lg">Neem vandaag nog contact op voor een vrijblijvende offerte.</p>
             </div>
-            <a href="tel:+32483404778" class="bg-white text-brand-orange px-12 py-6 rounded-2xl font-black text-2xl md:text-4xl shadow-2xl hover:scale-105 transition-transform">+32 483 404 778</a>
+            <a href="tel:+32483404778" class="bg-[#2e3639] text-white px-12 py-6 rounded-2xl font-black text-2xl md:text-4xl shadow-2xl hover:scale-105 transition-transform">+32 483 404 778</a>
         </div>
     </section>
 
-    <footer class="py-12 border-t border-brand-orange-soft text-center">
+    <footer class="py-12 border-t border-brand-orange-soft text-center bg-transparent">
         <img src="https://andalus-projects.com/Logo.png" id="footer-logo" class="h-8 mx-auto mb-4 grayscale opacity-50">
         <p class="text-gray-400 font-bold uppercase tracking-widest text-[10px] mb-2">
             &copy; 2026 Andalus Projects 
@@ -282,7 +283,6 @@
             footerLogo.src = isDark ? darkLogoUrl : lightLogoUrl;
         }
 
-        // Trigger reveal on load since intro is gone
         window.addEventListener('load', () => {
             reveal();
         });
@@ -311,7 +311,7 @@
                 <ul class="space-y-3 mb-8">
                     ${data.items.map(i => `<li class="flex items-center gap-3 font-bold text-sm"><i class="fas fa-check text-brand-orange"></i> ${i}</li>`).join('')}
                 </ul>
-                <a href="https://wa.me/32483404778" class="block bg-brand-orange text-white py-4 rounded-xl font-bold text-center uppercase tracking-widest">Offerte via WhatsApp</a>
+                <a href="https://wa.me/32483404778" class="block bg-brand-orange text-white py-4 rounded-xl font-bold text-center uppercase tracking-widest hover:brightness-110 transition">Offerte via WhatsApp</a>
             `;
             document.getElementById('detail-layer').style.display = 'flex';
             document.body.style.overflow = 'hidden';
