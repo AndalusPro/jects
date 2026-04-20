@@ -117,7 +117,7 @@
     <nav class="fixed top-0 w-full z-50 glass-header transition-all">
         <div class="container-custom py-4 flex justify-between items-center">
             <a href="#" class="flex items-center gap-2 group">
-                <img src="https://andalus-projects.com/darklogo.png" id="main-logo" alt="Logo" class="h-9 transition-transform group-hover:scale-110">
+                <img src="https://andalus-projects.com/Logo.png" id="main-logo" alt="Logo" class="h-9 transition-transform group-hover:scale-110">
                 <span class="font-black text-xl tracking-tighter uppercase italic">ANDALUS <span class="text-brand-orange">PROJECTS</span></span>
             </a>
             
@@ -227,7 +227,7 @@
 
     <footer class="py-10 border-t border-brand-orange-soft">
         <div class="container-custom text-center">
-            <img src="https://andalus-projects.com/darklogo.png" id="footer-logo" class="h-8 mx-auto mb-4 grayscale opacity-50">
+            <img src="https://andalus-projects.com/Logo.png" id="footer-logo" class="h-8 mx-auto mb-4 grayscale opacity-50">
             <p class="text-gray-500 text-[10px] uppercase tracking-[0.5em]">&copy; 2026 Andalus Projects - Belgium Luxury Renovatie</p>
         </div>
     </footer>
@@ -252,8 +252,11 @@
 
             body.classList.toggle('dark-theme');
             
-            const lightLogoUrl = "https://andalus-projects.com/Logo.png";
-            const darkLogoUrl = "https://andalus-projects.com/darklogo.png";
+            // Flipped Logic:
+            // Light Logo (Logo.png) for Dark Background
+            // Dark Logo (darklogo.png) for Light Background
+            const lightLogoUrl = "https://andalus-projects.com/darklogo.png";
+            const darkLogoUrl = "https://andalus-projects.com/Logo.png";
 
             if (body.classList.contains('dark-theme')) {
                 icon.classList.replace('fa-adjust', 'fa-sun');
