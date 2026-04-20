@@ -117,7 +117,7 @@
     <nav class="fixed top-0 w-full z-50 glass-header transition-all">
         <div class="container-custom py-4 flex justify-between items-center">
             <a href="#" class="flex items-center gap-2 group">
-                <img src="https://andalus-projects.com/Logo.png" id="main-logo" alt="Logo" class="h-9 transition-transform group-hover:scale-110">
+                <img src="https://andalus-projects.com/darklogo.png" id="main-logo" alt="Logo" class="h-9 transition-transform group-hover:scale-110">
                 <span class="font-black text-xl tracking-tighter uppercase italic">ANDALUS <span class="text-brand-orange">PROJECTS</span></span>
             </a>
             
@@ -126,7 +126,7 @@
                 <a href="#services" class="nav-link">Diensten</a>
                 
                 <button onclick="toggleTheme()" class="nav-link text-lg px-2" title="Switch Theme">
-                    <i class="fas fa-adjust" id="theme-icon"></i>
+                    <i class="fas fa-sun" id="theme-icon"></i>
                 </button>
 
                 <a href="#contact" class="bg-brand-orange px-6 py-2 rounded-full text-white hover:scale-105 transition shadow-lg shadow-orange-500/20">Contact</a>
@@ -227,7 +227,7 @@
 
     <footer class="py-10 border-t border-brand-orange-soft">
         <div class="container-custom text-center">
-            <img src="https://andalus-projects.com/Logo.png" id="footer-logo" class="h-8 mx-auto mb-4 grayscale opacity-50">
+            <img src="https://andalus-projects.com/darklogo.png" id="footer-logo" class="h-8 mx-auto mb-4 grayscale opacity-50">
             <p class="text-gray-500 text-[10px] uppercase tracking-[0.5em]">&copy; 2026 Andalus Projects - Belgium Luxury Renovatie</p>
         </div>
     </footer>
@@ -244,7 +244,6 @@
     </a>
 
     <script>
-        // Updated Theme Switch logic with Logo swapping
         function toggleTheme() {
             const body = document.body;
             const icon = document.getElementById('theme-icon');
@@ -253,9 +252,8 @@
 
             body.classList.toggle('dark-theme');
             
-            // Define your logo URLs here
             const lightLogoUrl = "https://andalus-projects.com/Logo.png";
-            const darkLogoUrl = "URL_FOR_DARK_LOGO"; // REPLACE THIS WITH YOUR DARK MODE LOGO URL
+            const darkLogoUrl = "https://andalus-projects.com/darklogo.png";
 
             if (body.classList.contains('dark-theme')) {
                 icon.classList.replace('fa-adjust', 'fa-sun');
@@ -268,7 +266,6 @@
             }
         }
 
-        // Intro screen
         window.addEventListener('load', () => {
             setTimeout(() => { document.getElementById('start-trigger').style.opacity = '1'; }, 1500);
         });
