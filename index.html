@@ -23,7 +23,6 @@
         }
 
         body.dark-theme {
-            /* Soft Dark Gris Theme */
             --bg-body: #1a1a1a; 
             --text-main: #f3f4f6; 
             --card-bg: #242424;
@@ -111,8 +110,15 @@
     <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-[9500] hidden flex-col items-center justify-center space-y-8">
         <button onclick="toggleMenu()" class="absolute top-8 right-8 text-white text-3xl"><i class="fas fa-times"></i></button>
         <a href="#home" onclick="toggleMenu()" class="text-3xl font-bold text-white hover:text-brand-orange">Home</a>
+        <a href="https://andalus-projects.com/overons.html" class="text-3xl font-bold text-white hover:text-brand-orange">Over Ons</a>
         <a href="#services" onclick="toggleMenu()" class="text-3xl font-bold text-white hover:text-brand-orange">Diensten</a>
-        <a href="#contact" onclick="toggleMenu()" class="text-3xl font-bold text-brand-orange">Contact</a>
+        
+        <div class="flex items-center gap-6">
+            <a href="#contact" onclick="toggleMenu()" class="text-3xl font-bold text-brand-orange">Contact</a>
+            <button onclick="toggleTheme()" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white text-xl">
+                <i class="fas fa-sun theme-icon"></i>
+            </button>
+        </div>
     </div>
 
     <nav class="fixed top-0 w-full z-50 glass-header transition-all">
@@ -127,7 +133,7 @@
                 <a href="#services" class="nav-link">Diensten</a>
                 
                 <button onclick="toggleTheme()" class="nav-link text-lg px-2" title="Switch Theme">
-                    <i class="fas fa-sun" id="theme-icon"></i>
+                    <i class="fas fa-sun theme-icon"></i>
                 </button>
 
                 <a href="#contact" class="bg-brand-orange px-6 py-2 rounded-full text-white hover:scale-105 transition shadow-lg shadow-orange-500/20">Contact</a>
@@ -250,24 +256,26 @@
     <script>
         function toggleTheme() {
             const body = document.body;
-            const icon = document.getElementById('theme-icon');
+            const icons = document.querySelectorAll('.theme-icon');
             const mainLogo = document.getElementById('main-logo');
             const footerLogo = document.getElementById('footer-logo');
 
             body.classList.toggle('dark-theme');
             
+            const isDark = body.classList.contains('dark-theme');
             const lightLogoUrl = "https://andalus-projects.com/darklogo.png";
             const darkLogoUrl = "https://andalus-projects.com/Logo.png";
 
-            if (body.classList.contains('dark-theme')) {
-                icon.classList.replace('fa-adjust', 'fa-sun');
-                mainLogo.src = darkLogoUrl;
-                footerLogo.src = darkLogoUrl;
-            } else {
-                icon.classList.replace('fa-sun', 'fa-adjust');
-                mainLogo.src = lightLogoUrl;
-                footerLogo.src = lightLogoUrl;
-            }
+            icons.forEach(icon => {
+                if (isDark) {
+                    icon.classList.replace('fa-adjust', 'fa-sun');
+                } else {
+                    icon.classList.replace('fa-sun', 'fa-adjust');
+                }
+            });
+
+            mainLogo.src = isDark ? darkLogoUrl : lightLogoUrl;
+            footerLogo.src = isDark ? darkLogoUrl : lightLogoUrl;
         }
 
         window.addEventListener('load', () => {
@@ -289,7 +297,7 @@
         const servicesData = {
             badkamer: { title: "Badkamerrenovatie", desc: "Wij transformeren uw oude badkamer in een moderne oase van rust. Van sanitair tot luxe afwerking.", items: ["Inloopdouches", "Luxe badkamermeubels", "Leidingwerk"] },
             tegelwerk: { title: "Tegelwerken", desc: "Perfect recht, vakkundig gezet. Voor zowel binnen- als buitentoepassingen.", items: ["Grootformaat tegels", "Natuursteen", "Patroonwerk"] },
-            stucwerk: { title: "Stucwerk", desc: "Gladde muren vormen de basis voor elk interieur. Wij zorgen voor een strak resultaat.", items: ["Pleisterwerk", "Sierpleister", "Gyproc afwerking"] },
+            stucwerk: { title: "Stucwerk", desc: "Gladde muren vormen de basis voor elk interieur. Wij zorgen for een strak resultaat.", items: ["Pleisterwerk", "Sierpleister", "Gyproc afwerking"] },
             schilderwerk: { title: "Schilderwerk", desc: "Hoogwaardige afwerking voor een frisse uitstraling van uw woning.", items: ["Binnenschilderwerk", "Buitenschilderwerk", "Houtlakwerk"] },
             vloeren: { title: "Vloerplaatsing", desc: "Vakkundige plaatsing van diverse vloersoorten voor een duurzaam resultaat.", items: ["Visgraat Laminaat", "PVC Vloeren", "Plinten"] },
             reiniging: { title: "Reiniging", desc: "Professionele eindschoonmaak na uw verbouwing of voor periodiek onderhoud.", items: ["Bouwschoonmaak", "Glasbewassing", "Dieptereiniging"] }
