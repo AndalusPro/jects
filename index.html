@@ -23,10 +23,11 @@
         }
 
         body.dark-theme {
-            --bg-body: #0a0a0a; 
+            /* Soft Dark Gris Theme */
+            --bg-body: #1a1a1a; 
             --text-main: #f3f4f6; 
-            --card-bg: #141414;
-            --nav-bg: rgba(10, 10, 10, 0.85);
+            --card-bg: #242424;
+            --nav-bg: rgba(26, 26, 26, 0.85);
         }
 
         body { 
@@ -63,14 +64,14 @@
 
         .service-card { 
             background: var(--card-bg); 
-            border: 1px solid var(--brand-orange-soft);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-bottom: 4px solid transparent;
             transition: all var(--transition-speed);
         }
         .service-card:hover { 
             transform: translateY(-10px); 
             border-bottom-color: var(--brand-orange);
-            box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.2);
         }
 
         #intro-screen {
@@ -111,7 +112,7 @@
         <button onclick="toggleMenu()" class="absolute top-8 right-8 text-white text-3xl"><i class="fas fa-times"></i></button>
         <a href="#home" onclick="toggleMenu()" class="text-3xl font-bold text-white hover:text-brand-orange">Home</a>
         <a href="#services" onclick="toggleMenu()" class="text-3xl font-bold text-white hover:text-brand-orange">Diensten</a>
-        <a href="#contact" class="text-3xl font-bold text-brand-orange">Contact</a>
+        <a href="#contact" onclick="toggleMenu()" class="text-3xl font-bold text-brand-orange">Contact</a>
     </div>
 
     <nav class="fixed top-0 w-full z-50 glass-header transition-all">
@@ -225,15 +226,15 @@
         </div>
     </section>
 
- <footer class="py-12 border-t border-brand-orange-soft text-center">
-    <img src="https://andalus-projects.com/Logo.png" id="footer-logo" class="h-8 mx-auto mb-4 grayscale opacity-50">
-    <p class="text-gray-400 font-bold uppercase tracking-widest text-[10px] mb-2">
-        &copy; 2026 Andalus Projects 
-    </p>
-    <a href="https://www.instagram.com/3d.bunz" target="_blank" class="text-[9px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors duration-300">
-         <span class="font-black">Bunz Vision</span>
-    </a>
-</footer>
+    <footer class="py-12 border-t border-brand-orange-soft text-center">
+        <img src="https://andalus-projects.com/Logo.png" id="footer-logo" class="h-8 mx-auto mb-4 grayscale opacity-50">
+        <p class="text-gray-400 font-bold uppercase tracking-widest text-[10px] mb-2">
+            &copy; 2026 Andalus Projects 
+        </p>
+        <a href="https://www.instagram.com/3d.bunz" target="_blank" class="text-[9px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors duration-300">
+             <span class="font-black">Bunz Vision</span>
+        </a>
+    </footer>
 
     <div id="detail-layer" onclick="closeDetails()">
         <div class="modal-container" onclick="event.stopPropagation()">
@@ -255,9 +256,6 @@
 
             body.classList.toggle('dark-theme');
             
-            // Flipped Logic:
-            // Light Logo (Logo.png) for Dark Background
-            // Dark Logo (darklogo.png) for Light Background
             const lightLogoUrl = "https://andalus-projects.com/darklogo.png";
             const darkLogoUrl = "https://andalus-projects.com/Logo.png";
 
