@@ -1,265 +1,147 @@
 <!DOCTYPE html>
-<html lang="nl" dir="ltr" style="user-select: none; -webkit-user-select: none; -ms-user-select: none;">
+<html lang="nl" dir="ltr" style="user-select: none; -webkit-user-select: none; -ms-user-select: none; overflow-x: hidden;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Andalus Projects | Meesters in Renovatie</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
     <style>
         :root { 
-            scroll-behavior: smooth; 
             --brand-orange: #f37321;
             --brand-orange-soft: rgba(243, 115, 33, 0.1);
-            --transition-speed: 0.4s;
-            --bg-body: #fdfdfd; 
-            --text-main: #1a1a1a; 
-            --card-bg: #ffffff;
-            --nav-bg: rgba(255, 255, 255, 0.85);
+            --bg-body: #1a1a1a; 
+            --text-main: #f3f4f6; 
             --main-font: 'Myriad Pro', 'Myriad', 'Segoe UI', sans-serif;
         }
 
-        body.dark-theme {
-            --bg-body: #1a1a1a; 
-            --text-main: #f3f4f6; 
-            --card-bg: #242424;
-            --nav-bg: rgba(26, 26, 26, 0.85);
-        }
-
-        /* --- GLOBAL LOCK & FONT SETTINGS --- */
+        /* --- STRICTOR PAGE LOCKING --- */
         * {
             user-select: none !important;
             -webkit-user-select: none !important;
             -webkit-touch-callout: none !important;
             -webkit-tap-highlight-color: transparent;
+            outline: none !important;
         }
 
-        body { 
-            font-family: var(--main-font); 
-            margin: 0; padding: 0;
+        html, body {
             overflow-x: hidden;
+            width: 100%;
+            position: relative;
             background-color: var(--bg-body);
             color: var(--text-main);
-            transition: background-color var(--transition-speed), color var(--transition-speed);
+            font-family: var(--main-font);
+            margin: 0; padding: 0;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- MODERN SMALLER TYPOGRAPHY --- */
-        h1 { font-size: 3.5rem !important; letter-spacing: -0.02em; }
-        h2 { font-size: 2.2rem !important; letter-spacing: -0.01em; }
-        .hero-sub { font-size: 0.95rem !important; font-weight: 300; }
-        .nav-link { font-size: 10px !important; }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem !important; }
-            h2 { font-size: 1.8rem !important; }
-            .hero-gradient { min-height: 80vh; }
-            .slider-container { height: 280px; }
-            .container-custom { padding: 0 24px; }
+        /* --- REFINED MINI HERO TITLE --- */
+        .hero-title {
+            font-size: 2.8rem !important; /* Smaller, more modern scale */
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-style: italic;
         }
 
-        .text-brand-orange { color: var(--brand-orange); }
-        .bg-brand-orange { background-color: var(--brand-orange); }
-        
+        .hero-sub {
+            font-size: 0.85rem !important;
+            letter-spacing: 0.05em;
+            opacity: 0.7;
+            max-width: 400px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 1.8rem !important; }
+            .hero-sub { font-size: 0.75rem !important; }
+            .container-custom { padding: 0 20px; }
+        }
+
         .glass-header {
-            background: var(--nav-bg) !important;
+            background: rgba(26, 26, 26, 0.85) !important;
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--brand-orange-soft);
             border-top: 3px solid var(--brand-orange);
         }
 
-        .nav-link { color: var(--text-main); transition: 0.3s; }
-        .nav-link:hover { color: var(--brand-orange) !important; }
-
-        .theme-toggle-btn {
-            width: 36px; height: 36px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            background: var(--brand-orange-soft); color: var(--brand-orange);
-        }
-
         .hero-gradient {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920');
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920');
             background-size: cover; background-position: center;
-            min-height: 100vh; display: flex; align-items: center;
+            height: 100vh; display: flex; align-items: center;
         }
 
-        /* --- SLIDER --- */
-        .slider-container {
-            position: relative; width: 100%; height: 420px;
-            overflow: hidden; border-radius: 1.2rem;
-            margin-bottom: 3rem; box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-        }
-        .slider-wrapper { display: flex; transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); height: 100%; }
-        .slide { min-width: 100%; height: 100%; position: relative; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9); }
-        .slide-overlay {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.85));
-            padding: 40px; color: white;
-        }
+        .container-custom { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 25px; }
 
-        .service-card { 
-            background: var(--card-bg); 
-            border: 1px solid rgba(128, 128, 128, 0.1);
-            transition: all var(--transition-speed);
+        .btn-modern {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 12px 28px;
+            border-radius: 4px;
+            transition: 0.3s;
         }
-        .service-card:hover { transform: translateY(-5px); border-color: var(--brand-orange); }
-
-        #detail-layer {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-            z-index: 9999; display: none; align-items: center; justify-content: center;
-            backdrop-filter: blur(10px);
-        }
-        .modal-container { 
-            width: 90%; max-width: 550px; background: var(--card-bg); 
-            border-radius: 1rem; padding: 2rem; position: relative;
-        }
-
-        .reveal { opacity: 0; transform: translateY(15px); transition: 0.7s ease; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        .container-custom { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
     </style>
 </head>
-<body oncontextmenu="return false;" onselectstart="return false;" class="dark-theme"> 
+<body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;"> 
 
-    <nav class="fixed top-0 w-full z-50 glass-header transition-all">
+    <nav class="fixed top-0 w-full z-50 glass-header">
         <div class="container-custom py-3 flex justify-between items-center">
-            <a href="#" class="flex items-center gap-2 group">
-                <img src="https://andalus-projects.com/Logo.png" id="main-logo" alt="Logo" class="h-8 transition-transform group-hover:scale-105">
-                <span class="font-bold text-lg tracking-tight uppercase">ANDALUS <span class="text-brand-orange">PROJECTS</span></span>
+            <a href="#" class="flex items-center gap-2">
+                <img src="https://andalus-projects.com/Logo.png" alt="Logo" class="h-7">
+                <span class="font-bold text-sm tracking-tight uppercase">ANDALUS <span class="text-brand-orange">PROJECTS</span></span>
             </a>
-            <div class="hidden md:flex items-center gap-6">
-                <div class="flex items-center gap-8 text-[10px] font-bold uppercase tracking-[0.2em]">
-                    <a href="https://andalus-projects.com/overons.html" class="nav-link">Over Ons</a>
-                    <a href="#services" class="nav-link">Diensten</a>
-                </div>
-                <button onclick="toggleTheme()" class="theme-toggle-btn"><i class="fas fa-sun theme-icon"></i></button>
-                <a href="#contact" class="bg-brand-orange px-5 py-2 rounded-lg text-white font-bold text-[10px] uppercase tracking-widest hover:brightness-110 transition">Contact</a>
+            <div class="hidden md:flex items-center gap-6 text-[9px] font-bold uppercase tracking-[0.2em]">
+                <a href="#services" class="hover:text-brand-orange transition">Diensten</a>
+                <a href="#contact" class="bg-brand-orange text-white px-4 py-2 rounded">Contact</a>
             </div>
-            <button onclick="toggleMenu()" class="md:hidden text-xl text-brand-orange"><i class="fas fa-bars-staggered"></i></button>
         </div>
     </nav>
 
     <section id="home" class="hero-gradient">
         <div class="container-custom">
             <div class="max-w-xl">
-                <div class="inline-block border-l-2 border-brand-orange px-3 py-1 mb-4">
-                    <span class="text-white text-[10px] font-medium uppercase tracking-[0.4em] opacity-80">Premium Renovatie 2026</span>
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-[1px] bg-brand-orange"></div>
+                    <span class="text-[9px] font-bold uppercase tracking-[0.4em] text-brand-orange">Premium Quality</span>
                 </div>
-                <h1 class="font-bold text-white leading-[1.1] mb-5 uppercase italic">
-                   Professionele bouw & <br><span class="text-brand-orange">Renovatie</span>
+                <h1 class="hero-title text-white mb-4">
+                   Vakmanschap in <br>Bouw & <span class="text-brand-orange">Renovatie</span>
                 </h1>
-                <p class="text-gray-300 hero-sub mb-8 leading-relaxed max-w-md">
-                   Vakmanschap in elke laag. Geef uw vastgoed de aandacht die het verdient met onze gespecialiseerde diensten.
+                <p class="hero-sub text-gray-400 mb-8 leading-relaxed">
+                   Gespecialiseerde renovatiediensten voor woningen en commerciële projecten. Wij combineren precisie met moderne esthetiek.
                 </p>
-                <div class="flex flex-wrap gap-3">
-                    <a href="#services" class="bg-brand-orange text-white px-8 py-3 rounded-lg font-bold text-xs uppercase tracking-widest hover:opacity-90 transition">Diensten</a>
-                    <a href="https://wa.me/32483404778" class="bg-white/5 text-white backdrop-blur-sm px-8 py-3 rounded-lg font-bold text-xs uppercase tracking-widest border border-white/10 hover:bg-white/10 transition">Offerte</a>
+                <div class="flex gap-4">
+                    <a href="#services" class="btn-modern bg-brand-orange text-white">Projecten</a>
+                    <a href="https://wa.me/32483404778" class="btn-modern border border-white/20 text-white hover:bg-white/5">Offerte</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="services" class="py-20">
-        <div class="container-custom">
-            <div class="mb-12 reveal">
-                <h2 class="font-bold uppercase italic">Onze <span class="text-brand-orange">Expertise</span></h2>
-                <div class="w-12 h-1 bg-brand-orange mt-3"></div>
-            </div>
-
-            <div class="slider-container reveal">
-                <div class="slider-wrapper" id="main-slider">
-                    <div class="slide"><img src="https://andalus-projects.com/badkamerrenovatie.jpg" alt="Badkamer"></div>
-                    <div class="slide"><img src="https://andalus-projects.com/tegelwerk.jpg" alt="Tegelwerk"></div>
-                    <div class="slide"><img src="https://andalus-projects.com/stucwerk.jpg" alt="Stucwerk"></div>
-                </div>
-                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10" id="dots-container"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div onclick="openDetails('badkamer')" class="service-card rounded-xl overflow-hidden cursor-pointer reveal">
-                    <div class="h-44 overflow-hidden"><img src="https://andalus-projects.com/badkamerrenovatie.jpg" class="w-full h-full object-cover"></div>
-                    <div class="p-5 flex justify-between items-center"><h3 class="font-bold uppercase text-[11px] tracking-wider">Badkamer</h3><i class="fas fa-chevron-right text-brand-orange text-xs"></i></div>
-                </div>
-                <div onclick="openDetails('tegelwerk')" class="service-card rounded-xl overflow-hidden cursor-pointer reveal">
-                    <div class="h-44 overflow-hidden"><img src="https://andalus-projects.com/tegelwerk.jpg" class="w-full h-full object-cover"></div>
-                    <div class="p-5 flex justify-between items-center"><h3 class="font-bold uppercase text-[11px] tracking-wider">Tegelwerk</h3><i class="fas fa-chevron-right text-brand-orange text-xs"></i></div>
-                </div>
-                <div onclick="openDetails('stucwerk')" class="service-card rounded-xl overflow-hidden cursor-pointer reveal">
-                    <div class="h-44 overflow-hidden"><img src="https://andalus-projects.com/stucwerk.jpg" class="w-full h-full object-cover"></div>
-                    <div class="p-5 flex justify-between items-center"><h3 class="font-bold uppercase text-[11px] tracking-wider">Stucwerk</h3><i class="fas fa-chevron-right text-brand-orange text-xs"></i></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="py-16 bg-brand-orange text-white">
-        <div class="container-custom flex flex-col md:flex-row items-center justify-between gap-6">
-            <h2 class="font-bold uppercase italic text-center md:text-left m-0">Klaar voor de start?</h2>
-            <a href="tel:+32483404778" class="bg-white text-brand-orange px-8 py-4 rounded-xl font-bold text-xl">+32 483 404 778</a>
-        </div>
-    </section>
-
-    <footer class="py-10 text-center">
-        <img src="https://andalus-projects.com/Logo.png" id="footer-logo" class="h-6 mx-auto mb-4 opacity-30 grayscale">
-        <p class="text-gray-500 font-bold uppercase tracking-[0.3em] text-[9px]">&copy; 2026 Andalus Projects | <span class="text-brand-orange">Bunz Vision</span></p>
+    <footer class="py-10 text-center border-t border-white/5">
+        <p class="text-gray-600 font-bold uppercase tracking-[0.3em] text-[8px]">&copy; 2026 Andalus Projects | Protected Content</p>
     </footer>
 
-    <div id="detail-layer" onclick="closeDetails()">
-        <div class="modal-container" onclick="event.stopPropagation()">
-            <button onclick="closeDetails()" class="absolute top-4 right-4 text-gray-400"><i class="fas fa-times"></i></button>
-            <div id="modal-content"></div>
-        </div>
-    </div>
-
     <script>
-        // Copy/Selection Prevention Script
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 123)) {
-                e.preventDefault();
+        // DISABLE SHORTCUTS (F12, Ctrl+Shift+I, Ctrl+U, etc.)
+        document.onkeydown = function(e) {
+            if (e.keyCode == 123 || 
+                (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0))) || 
+                (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
+                return false;
             }
+        };
+
+        // PREVENT DRAGGING IMAGES
+        document.querySelectorAll('img').forEach(img => {
+            img.oncontextmenu = () => false;
+            img.ondragstart = () => false;
         });
-
-        // Original logic kept intact
-        let slideIdx = 0;
-        const sliderWrapper = document.getElementById('main-slider');
-        const slides = document.querySelectorAll('.slide');
-        const dotsBox = document.getElementById('dots-container');
-
-        slides.forEach((_, i) => {
-            const dot = document.createElement('div');
-            dot.className = `dot ${i === 0 ? 'active' : ''}`;
-            dot.style.cssText = "width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); cursor:pointer;";
-            dot.onclick = () => jumpToSlide(i);
-            dotsBox.appendChild(dot);
-        });
-
-        function updateSlider() {
-            sliderWrapper.style.transform = `translateX(-${slideIdx * 100}%)`;
-        }
-
-        function moveSlide(n) {
-            slideIdx = (slideIdx + n + slides.length) % slides.length;
-            updateSlider();
-        }
-
-        setInterval(() => moveSlide(1), 5000);
-
-        function toggleTheme() {
-            document.body.classList.toggle('dark-theme');
-        }
-
-        function reveal() {
-            document.querySelectorAll(".reveal").forEach(el => {
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight - 50) el.classList.add("active");
-            });
-        }
-        window.addEventListener("scroll", reveal);
-        window.addEventListener('load', reveal);
     </script>
+
 </body>
 </html>
