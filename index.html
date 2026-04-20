@@ -108,7 +108,6 @@
             background: var(--brand-orange);
             width: 24px; border-radius: 10px;
         }
-        /* --- End Slider Styles --- */
 
         .service-card { 
             background: var(--card-bg); 
@@ -181,7 +180,7 @@
                     Kwaliteit <br><span class="text-brand-orange">Zonder Compromis</span>
                 </h1>
                 <p class="text-gray-300 text-lg md:text-xl mb-10 font-light leading-relaxed">
-                    Uw partner voor hoogwaardige renovaties in België. Van moderne badkamers tot meesterlijk stucwerk.
+                    Uw partner voor hoogwaardige renovaties in België. Van moderne badkamers tot meesterlijk stucwerk en vloerplaatsing.
                 </p>
                 <div class="flex flex-wrap gap-4">
                     <a href="#services" class="bg-brand-orange text-white px-10 py-4 rounded-xl font-bold hover:bg-orange-600 transition shadow-xl">ONTDEK DIENSTEN</a>
@@ -199,35 +198,6 @@
                     <div class="w-20 h-1 bg-brand-orange mt-4"></div>
                 </div>
                 <p class="text-gray-500 max-w-sm mt-4 md:mt-0 text-sm">Vakmanschap en precisie verwerkt in elk detail van uw project.</p>
-            </div>
-
-            <div class="slider-container reveal">
-                <div class="slider-wrapper" id="main-slider">
-                    <div class="slide">
-                        <img src="https://andalus-projects.com/badkamerrenovatie.jpg" alt="Badkamer">
-                        <div class="slide-overlay">
-                            <h3 class="text-2xl font-black uppercase italic">Badkamer Transformaties</h3>
-                            <p class="text-sm opacity-70">Luxe sanitair en moderne afwerking.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                        <img src="https://andalus-projects.com/tegelwerk.jpg" alt="Tegelwerk">
-                        <div class="slide-overlay">
-                            <h3 class="text-2xl font-black uppercase italic">Tegelwerk</h3>
-                            <p class="text-sm opacity-70">Nauwkeurige plaatsing van natuursteen en keramiek.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                        <img src="https://andalus-projects.com/stucwerk.jpg" alt="Stucwerk">
-                        <div class="slide-overlay">
-                            <h3 class="text-2xl font-black uppercase italic">Stucwerk</h3>
-                            <p class="text-sm opacity-70">De perfecte gladde basis voor uw interieur.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-10" id="dots-container"></div>
-                <button onclick="moveSlide(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 hover:bg-brand-orange text-white rounded-full transition"><i class="fas fa-chevron-left"></i></button>
-                <button onclick="moveSlide(1)" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 hover:bg-brand-orange text-white rounded-full transition"><i class="fas fa-chevron-right"></i></button>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -259,17 +229,17 @@
                         <i class="fas fa-arrow-right text-brand-orange"></i>
                     </div>
                 </div>
+                <div onclick="openDetails('vloeren')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
+                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/laminaatleggen.jpg" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110"></div>
+                    <div class="p-6 flex justify-between items-center">
+                        <h3 class="font-bold uppercase text-sm tracking-widest">Vloerplaatsing</h3>
+                        <i class="fas fa-arrow-right text-brand-orange"></i>
+                    </div>
+                </div>
                 <div onclick="openDetails('reiniging')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
                     <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/schoonmaken.jpg" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110"></div>
                     <div class="p-6 flex justify-between items-center">
                         <h3 class="font-bold uppercase text-sm tracking-widest">Schoonmaken</h3>
-                        <i class="fas fa-arrow-right text-brand-orange"></i>
-                    </div>
-                </div>
-                <div onclick="openDetails('Laminaat Leggen')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
-                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/laminaatleggen.jpg" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110"></div>
-                    <div class="p-6 flex justify-between items-center">
-                        <h3 class="font-bold uppercase text-sm tracking-widest">Laminaat Leggen</h3>
                         <i class="fas fa-arrow-right text-brand-orange"></i>
                     </div>
                 </div>
@@ -307,39 +277,6 @@
     </a>
 
     <script>
-        /* --- Slider Logic --- */
-        let slideIdx = 0;
-        const sliderWrapper = document.getElementById('main-slider');
-        const slides = document.querySelectorAll('.slide');
-        const dotsBox = document.getElementById('dots-container');
-
-        // Create Dots
-        slides.forEach((_, i) => {
-            const dot = document.createElement('div');
-            dot.className = `dot ${i === 0 ? 'active' : ''}`;
-            dot.onclick = () => jumpToSlide(i);
-            dotsBox.appendChild(dot);
-        });
-
-        function updateSlider() {
-            sliderWrapper.style.transform = `translateX(-${slideIdx * 100}%)`;
-            document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === slideIdx));
-        }
-
-        function moveSlide(n) {
-            slideIdx = (slideIdx + n + slides.length) % slides.length;
-            updateSlider();
-        }
-
-        function jumpToSlide(i) {
-            slideIdx = i;
-            updateSlider();
-        }
-
-        // Auto play slider
-        setInterval(() => moveSlide(1), 5000);
-        /* --- End Slider Logic --- */
-
         function toggleTheme() {
             const body = document.body;
             const icons = document.querySelectorAll('.theme-icon');
@@ -374,9 +311,9 @@
         const servicesData = {
             badkamer: { title: "Badkamerrenovatie", desc: "Wij transformeren uw oude badkamer in een moderne oase van rust. Van sanitair tot luxe afwerking.", items: ["Inloopdouches", "Luxe badkamermeubels", "Leidingwerk"] },
             tegelwerk: { title: "Tegelwerken", desc: "Perfect recht, vakkundig gezet. Voor zowel binnen- als buitentoepassingen.", items: ["Grootformaat tegels", "Natuursteen", "Patroonwerk"] },
-            stucwerk: { title: "Stucwerk", desc: "Gladde muren vormen de basis voor elk interieur. Wij zorgen for een strak resultaat.", items: ["Pleisterwerk", "Sierpleister", "Gyproc afwerking"] },
+            stucwerk: { title: "Stucwerk", desc: "Gladde muren vormen de basis voor elk interieur. Wij zorgen voor een strak resultaat.", items: ["Pleisterwerk", "Sierpleister", "Gyproc afwerking"] },
             schilderwerk: { title: "Schilderwerk", desc: "Hoogwaardige afwerking voor een frisse uitstraling van uw woning.", items: ["Binnenschilderwerk", "Buitenschilderwerk", "Houtlakwerk"] },
-            vloeren: { title: "Vloerplaatsing", desc: "Vakkundige plaatsing van diverse vloersoorten voor een duurzaam resultaat.", items: ["Visgraat Laminaat", "PVC Vloeren", "Plinten"] },
+            vloeren: { title: "Vloerplaatsing", desc: "Vakkundige plaatsing van diverse vloersoorten voor een duurzaam en stijlvol resultaat.", items: ["Laminaatvloeren", "Visgraat (Laminaat/PVC)", "PVC Vloeren", "Plinten & Afwerking"] },
             reiniging: { title: "Reiniging", desc: "Professionele eindschoonmaak na uw verbouwing of voor periodiek onderhoud.", items: ["Bouwschoonmaak", "Glasbewassing", "Dieptereiniging"] }
         };
 
