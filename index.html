@@ -15,7 +15,6 @@
             --brand-orange: #f37321;
             --brand-orange-soft: rgba(243, 115, 33, 0.1);
             --transition-speed: 0.4s;
-            /* Default Light Mode */
             --bg-body: #fdfdfd; 
             --text-main: #1a1a1a; 
             --card-bg: #ffffff;
@@ -38,7 +37,7 @@
             overflow-y: hidden;
             background-color: var(--bg-body);
             color: var(--text-main);
-            transition: background-color var(--transition-speed);
+            transition: background-color var(--transition-speed), color var(--transition-speed);
         }
 
         .text-brand-orange { color: var(--brand-orange); }
@@ -54,6 +53,23 @@
 
         .nav-link { color: var(--text-main); transition: 0.3s; }
         .nav-link:hover { color: var(--brand-orange) !important; }
+
+        .theme-toggle-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            background: var(--brand-orange-soft);
+            color: var(--brand-orange);
+        }
+        .theme-toggle-btn:hover {
+            background: var(--brand-orange);
+            color: white;
+            transform: rotate(15deg);
+        }
 
         .hero-gradient {
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920');
@@ -113,9 +129,9 @@
         <a href="https://andalus-projects.com/overons.html" class="text-3xl font-bold text-white hover:text-brand-orange">Over Ons</a>
         <a href="#services" onclick="toggleMenu()" class="text-3xl font-bold text-white hover:text-brand-orange">Diensten</a>
         
-        <div class="flex items-center gap-6">
+        <div class="flex flex-col items-center gap-6">
             <a href="#contact" onclick="toggleMenu()" class="text-3xl font-bold text-brand-orange">Contact</a>
-            <button onclick="toggleTheme()" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white text-xl">
+            <button onclick="toggleTheme()" class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center text-white text-2xl">
                 <i class="fas fa-sun theme-icon"></i>
             </button>
         </div>
@@ -128,15 +144,17 @@
                 <span class="font-black text-xl tracking-tighter uppercase italic">ANDALUS <span class="text-brand-orange">PROJECTS</span></span>
             </a>
             
-            <div class="hidden md:flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest">
-                <a href="https://andalus-projects.com/overons.html" class="nav-link">Over Ons</a>
-                <a href="#services" class="nav-link">Diensten</a>
-                
-                <button onclick="toggleTheme()" class="nav-link text-lg px-2" title="Switch Theme">
+            <div class="hidden md:flex items-center gap-6">
+                <div class="flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest mr-4">
+                    <a href="https://andalus-projects.com/overons.html" class="nav-link">Over Ons</a>
+                    <a href="#services" class="nav-link">Diensten</a>
+                </div>
+
+                <button onclick="toggleTheme()" class="theme-toggle-btn" title="Verander thema">
                     <i class="fas fa-sun theme-icon"></i>
                 </button>
 
-                <a href="#contact" class="bg-brand-orange px-6 py-2 rounded-full text-white hover:scale-105 transition shadow-lg shadow-orange-500/20">Contact</a>
+                <a href="#contact" class="bg-brand-orange px-6 py-2 rounded-full text-white font-bold text-[11px] uppercase tracking-widest hover:scale-105 transition shadow-lg shadow-orange-500/20">Contact</a>
             </div>
 
             <button onclick="toggleMenu()" class="md:hidden text-2xl text-brand-orange">
@@ -268,9 +286,10 @@
 
             icons.forEach(icon => {
                 if (isDark) {
+                    icon.classList.replace('fa-moon', 'fa-sun');
                     icon.classList.replace('fa-adjust', 'fa-sun');
                 } else {
-                    icon.classList.replace('fa-sun', 'fa-adjust');
+                    icon.classList.replace('fa-sun', 'fa-moon');
                 }
             });
 
