@@ -1,0 +1,68 @@
+:root { 
+    scroll-behavior: smooth; 
+    --brand-orange: #f37321;
+    --brand-orange-soft: rgba(243, 115, 33, 0.1);
+    --transition-speed: 0.4s;
+    --bg-body: #fdfdfd; 
+    --text-main: #1a1a1a; 
+    --card-bg: #ffffff;
+    --nav-bg: rgba(255, 255, 255, 0.85);
+}
+
+body.dark-theme {
+    --bg-body: #1a1a1a; 
+    --text-main: #f3f4f6; 
+    --card-bg: #242424;
+    --nav-bg: rgba(26, 26, 26, 0.85);
+}
+
+/* Base Styles */
+body { 
+    font-family: 'Poppins', sans-serif; 
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    transition: background-color var(--transition-speed);
+    -webkit-font-smoothing: antialiased;
+}
+
+section { scroll-margin-top: 100px; }
+
+/* Scrollbar Customization */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-body); }
+::-webkit-scrollbar-thumb { background: var(--brand-orange); border-radius: 10px; }
+
+/* Header & Navigation */
+.glass-header {
+    background: var(--nav-bg) !important;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--brand-orange-soft);
+    border-top: 3px solid var(--brand-orange);
+}
+
+/* Service Cards */
+.service-card { 
+    background: var(--card-bg); 
+    border: 1px solid rgba(243, 115, 33, 0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.service-card:hover { 
+    transform: translateY(-10px); 
+    border-color: var(--brand-orange);
+    box-shadow: 0 20px 30px rgba(243, 115, 33, 0.15);
+}
+
+/* Reveal Animation */
+.reveal { 
+    opacity: 0; 
+    transform: translateY(30px); 
+    transition: all 0.8s ease-out; 
+}
+
+.reveal.active { 
+    opacity: 1; 
+    transform: translateY(0); 
+}
+
+.container-custom { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
