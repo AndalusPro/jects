@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Andalus Projects | Meesters in Renovatie</title>
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -29,28 +28,15 @@
             --nav-bg: rgba(26, 26, 26, 0.85);
         }
 
-        /* إصلاح اهتزاز الشاشة الأفقي */
-        html, body {
-            width: 100%;
-            max-width: 100%;
-            overflow-x: hidden;
-            position: relative;
-            margin: 0; padding: 0;
+        body {
             user-select: none;
             -webkit-user-select: none;
             font-family: 'Poppins', sans-serif;
+            margin: 0; padding: 0;
+            overflow-x: hidden;
             background-color: var(--bg-body);
             color: var(--text-main);
             transition: background-color var(--transition-speed), color var(--transition-speed);
-        }
-
-        img { pointer-events: none; max-width: 100%; }
-
-        /* جعل الخطوط الكبيرة تتناسب مع عرض الهاتف تلقائياً */
-        h1 {
-            font-size: clamp(2.3rem, 7vw, 5.5rem) !important;
-            line-height: 1.1 !important;
-            word-wrap: break-word;
         }
 
         .text-brand-orange { color: var(--brand-orange); }
@@ -72,6 +58,7 @@
             display: flex; align-items: center; justify-content: center;
             transition: all 0.3s ease; background: var(--brand-orange-soft); color: var(--brand-orange);
         }
+        .theme-toggle-btn:hover { background: var(--brand-orange); color: white; transform: rotate(15deg); }
 
         .hero-gradient {
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920');
@@ -80,23 +67,18 @@
         }
 
         .slider-container {
-            position: relative; width: 100%; height: 380px;
+            position: relative; width: 100%; height: 450px;
             overflow: hidden; border-radius: 2rem; margin-bottom: 3rem;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            touch-action: pan-y;
         }
-        @media (min-width: 768px) { .slider-container { height: 450px; } }
-
         .slider-wrapper { display: flex; transition: transform 0.7s cubic-bezier(0.85, 0, 0.15, 1); height: 100%; }
         .slide { min-width: 100%; height: 100%; position: relative; }
         .slide img { width: 100%; height: 100%; object-fit: cover; }
-        
         .slide-overlay {
             position: absolute; bottom: 0; left: 0; right: 0;
             background: linear-gradient(transparent, rgba(0,0,0,0.9));
             padding: 50px 30px 30px; color: white;
         }
-
         .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: 0.3s; }
         .dot.active { background: var(--brand-orange); width: 24px; border-radius: 10px; }
 
@@ -106,22 +88,23 @@
             border-bottom: 4px solid transparent;
             transition: all var(--transition-speed);
         }
-        .service-card:hover { transform: translateY(-10px); border-bottom-color: var(--brand-orange); }
+        .service-card:hover { transform: translateY(-10px); border-bottom-color: var(--brand-orange); box-shadow: 0 20px 30px rgba(0,0,0,0.2); }
 
         #detail-layer {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8);
             z-index: 9999; display: none; align-items: center; justify-content: center;
-            backdrop-filter: blur(8px); padding: 20px;
+            backdrop-filter: blur(8px);
         }
         .modal-container {
-            width: 100%; max-width: 650px; max-height: 90vh; background: var(--card-bg);
+            width: 95%; max-width: 650px; background: var(--card-bg);
             border-radius: 1.5rem; padding: 2.5rem; position: relative;
-            border-top: 6px solid var(--brand-orange); overflow-y: auto;
+            border-top: 6px solid var(--brand-orange);
+            max-height: 90vh; overflow-y: auto;
         }
 
-        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
+        .reveal { opacity: 0; transform: translateY(20px); transition: 0.6s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
-        .container-custom { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; box-sizing: border-box; }
+        .container-custom { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
     </style>
 </head>
 <body oncontextmenu="return false;" class="dark-theme">
@@ -131,7 +114,7 @@
         <a href="#home" onclick="toggleMenu()" class="text-3xl font-bold text-white hover:text-brand-orange">Home</a>
         <a href="https://andalus-projects.com/overons.html" class="text-3xl font-bold text-white hover:text-brand-orange">Over Ons</a>
         <a href="#services" onclick="toggleMenu()" class="text-3xl font-bold text-white hover:text-brand-orange">Diensten</a>
-        <div class="flex flex-col items-center gap-6 pt-4">
+        <div class="flex flex-col items-center gap-6">
             <a href="#contact" onclick="toggleMenu()" class="text-3xl font-bold text-brand-orange">Contact</a>
             <button onclick="toggleTheme()" class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center text-white text-2xl">
                 <i class="fas fa-sun theme-icon"></i>
@@ -139,10 +122,10 @@
         </div>
     </div>
 
-    <nav class="fixed top-0 w-full z-50 glass-header">
+    <nav class="fixed top-0 w-full z-50 glass-header transition-all">
         <div class="container-custom py-4 flex justify-between items-center">
             <a href="#" class="flex items-center gap-2 group">
-                <img src="https://andalus-projects.com/Logo.png" id="main-logo" alt="Logo" class="h-9 transition-transform group-hover:scale-105">
+                <img src="https://andalus-projects.com/Logo.png" id="main-logo" alt="Logo" class="h-9 transition-transform group-hover:scale-110">
                 <span class="font-black text-xl tracking-tighter uppercase italic">ANDALUS <span class="text-brand-orange">PROJECTS</span></span>
             </a>
             <div class="hidden md:flex items-center gap-6">
@@ -160,16 +143,16 @@
     <section id="home" class="hero-gradient">
         <div class="container-custom">
             <div class="max-w-2xl">
-                <div class="inline-block border-l-4 border-brand-orange px-4 py-1 mb-6 animate__animated animate__fadeInLeft">
+                <div class="inline-block border-l-4 border-brand-orange px-4 py-1 mb-6">
                     <span class="text-white text-xs font-bold uppercase tracking-[0.3em]">Est. 2004 | Premium Renovatie</span>
                 </div>
-                <h1 class="font-black text-white italic uppercase animate__animated animate__fadeInUp">
+                <h1 class="text-6xl md:text-8xl font-black text-white leading-none mb-6 italic uppercase">
                     PROFESSIONELE BOUW EN <br><span class="text-brand-orange"> RENOVATIEDIENSTEN</span>
                 </h1>
-                <p class="text-gray-300 text-lg md:text-xl mb-10 font-light leading-relaxed animate__animated animate__fadeInUp animate__delay-1s">
-                    Geef uw huis een nieuw leven!
+                <p class="text-gray-300 text-lg md:text-xl mb-10 font-light leading-relaxed">
+                    Geef uw woning een nieuw leven met ons vakmanschap.
                 </p>
-                <div class="flex flex-wrap gap-4 animate__animated animate__fadeInUp animate__delay-1s">
+                <div class="flex flex-wrap gap-4">
                     <a href="#services" class="bg-brand-orange text-white px-10 py-4 rounded-xl font-bold hover:bg-orange-600 transition shadow-xl">ONTDEK DIENSTEN</a>
                     <a href="https://wa.me/32483404778" class="bg-white/10 text-white backdrop-blur-md px-10 py-4 rounded-xl font-bold hover:bg-white/20 transition border border-white/20">CONTACTEER ONS</a>
                 </div>
@@ -200,14 +183,14 @@
                         <img src="https://andalus-projects.com/tegelwerk.jpg" alt="Tegelwerk">
                         <div class="slide-overlay">
                             <h3 class="text-2xl font-black uppercase italic">Tegelwerk</h3>
-                            <p class="text-sm opacity-70">Nauwkeurige plaatsing van natuursteen.</p>
+                            <p class="text-sm opacity-70">Nauwkeurige plaatsing van natuursteen en keramiek.</p>
                         </div>
                     </div>
                     <div class="slide">
                         <img src="https://andalus-projects.com/stucwerk.jpg" alt="Stucwerk">
                         <div class="slide-overlay">
                             <h3 class="text-2xl font-black uppercase italic">Stucwerk</h3>
-                            <p class="text-sm opacity-70">Perfect gladde muren.</p>
+                            <p class="text-sm opacity-70">De perfecte gladde basis voor uw interieur.</p>
                         </div>
                     </div>
                 </div>
@@ -255,7 +238,7 @@
                 <div onclick="openDetails('laminaatleggen')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
                     <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/laminaatleggen.jpg" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110"></div>
                     <div class="p-6 flex justify-between items-center">
-                        <h3 class="font-bold uppercase text-sm tracking-widest">Laminaat Leggen</h3>
+                        <h3 class="font-bold uppercase text-sm tracking-widest">Vloeren & Laminaat</h3>
                         <i class="fas fa-arrow-right text-brand-orange"></i>
                     </div>
                 </div>
@@ -267,21 +250,24 @@
         <div class="container-custom flex flex-col md:flex-row items-center justify-between gap-10">
             <div class="text-center md:text-left">
                 <h2 class="text-4xl md:text-6xl font-black uppercase italic mb-4">Start uw project</h2>
-                <p class="font-light opacity-90 text-lg">Neem vandaag nog contact op voor een offerte.</p>
+                <p class="font-light opacity-90 text-lg">Neem vandaag nog contact op voor een vrijblijvende offerte.</p>
             </div>
-            <a href="tel:+32483404778" class="bg-white text-brand-orange px-12 py-6 rounded-2xl font-black text-2xl md:text-4xl shadow-2xl">+32 483 404 778</a>
+            <a href="tel:+32483404778" class="bg-white text-brand-orange px-12 py-6 rounded-2xl font-black text-2xl md:text-4xl shadow-2xl hover:scale-105 transition-transform">+32 483 404 778</a>
         </div>
     </section>
 
     <footer class="py-12 border-t border-brand-orange-soft text-center">
         <img src="https://andalus-projects.com/Logo.png" id="footer-logo" class="h-8 mx-auto mb-4 grayscale opacity-50">
-        <p class="text-gray-400 font-bold uppercase tracking-widest text-[10px]">&copy; 2026 Andalus Projects | <span class="text-brand-orange">Bunz Vision</span></p>
+        <p class="text-gray-400 font-bold uppercase tracking-widest text-[10px] mb-2">&copy; 2026 Andalus Projects</p>
+        <a href="https://www.instagram.com/3d.bunz" target="_blank" class="text-[9px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors duration-300">
+            <span class="font-black">Bunz Vision</span>
+        </a>
     </footer>
 
     <div id="detail-layer" onclick="closeDetails()">
         <div class="modal-container" onclick="event.stopPropagation()">
-            <button onclick="closeDetails()" class="absolute top-4 right-4 text-gray-400 hover:text-brand-orange"><i class="fas fa-times text-2xl"></i></button>
-            <div id="modal-content"></div>
+            <button onclick="closeDetails()" class="absolute top-4 right-4 text-gray-400 hover:text-brand-orange transition"><i class="fas fa-times text-2xl"></i></button>
+            <div id="modal-content" class="animate__animated animate__fadeInUp animate__faster"></div>
         </div>
     </div>
 
@@ -290,7 +276,6 @@
     </a>
 
     <script>
-        /* Slider Logic */
         let slideIdx = 0;
         const sliderWrapper = document.getElementById('main-slider');
         const slides = document.querySelectorAll('.slide');
@@ -320,41 +305,75 @@
 
         setInterval(() => moveSlide(1), 5000);
 
-        /* Theme Toggle */
         function toggleTheme() {
             const body = document.body;
-            const isDark = body.classList.toggle('dark-theme');
+            const icons = document.querySelectorAll('.theme-icon');
             const mainLogo = document.getElementById('main-logo');
-            mainLogo.src = isDark ? "https://andalus-projects.com/Logo.png" : "https://andalus-projects.com/darklogo.png";
+            const footerLogo = document.getElementById('footer-logo');
+
+            body.classList.toggle('dark-theme');
+            const isDark = body.classList.contains('dark-theme');
+            const lightLogoUrl = "https://andalus-projects.com/darklogo.png";
+            const darkLogoUrl = "https://andalus-projects.com/Logo.png";
+
+            icons.forEach(icon => {
+                if (isDark) { icon.classList.replace('fa-moon', 'fa-sun'); } 
+                else { icon.classList.replace('fa-sun', 'fa-moon'); }
+            });
+
+            mainLogo.src = isDark ? darkLogoUrl : lightLogoUrl;
+            footerLogo.src = isDark ? darkLogoUrl : lightLogoUrl;
         }
 
-        /* Menu */
         function toggleMenu() {
             const menu = document.getElementById('mobile-menu');
-            const isHidden = menu.classList.toggle('hidden');
-            menu.classList.toggle('flex', !isHidden);
-            document.body.style.overflow = isHidden ? 'auto' : 'hidden';
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
         }
 
-        /* Modal Data */
         const servicesData = {
-            badkamer: { title: "Badkamerrenovatie", desc: "Complete renovatie van A tot Z.", items: ["Inloopdouches", "Luxe Sanitair", "Leidingwerk"] },
-            tegelwerk: { title: "Tegelwerken", desc: "Nauwkeurige plaatsing op muren en vloeren.", items: ["Keramiek", "Natuursteen", "Mozaïek"] },
-            stucwerk: { title: "Stucwerk", desc: "Gladde afwerking voor muren en plafonds.", items: ["Pleisterwerk", "Spackspuiten", "Sierpleister"] },
-            schilderwerk: { title: "Schilderwerk", desc: "Professioneel binnen- en buitenschilderwerk.", items: ["Kozijnen", "Muren", "Plafonds"] },
-            schoonmaken: { title: "Schoonmaken", desc: "Eindschoonmaak na bouwprojecten.", items: ["Bouwschoonmaak", "Glasbewassing", "Vloerreiniging"] },
-            laminaatleggen: { title: "Laminaat Leggen", desc: "Vakkundige vloerplaatsing.", items: ["Laminaat", "PVC", "Ondervloeren"] }
+            badkamer: { 
+                title: "Badkamerrenovatie", 
+                desc: "Wilt u uw badkamer volledig vernieuwen? Wij bieden professionele badkamerrenovaties van A tot Z, volledig afgestemd op uw wensen en budget. Van sloopwerk en leidingen tot tegelwerk, stucwerk en afwerking – wij zorgen voor een complete en zorgeloze renovatie. Met oog voor detail en gebruik van hoogwaardige materialen creëren wij een moderne, functionele en stijlvolle badkamer.", 
+                items: ["Volledige renovatie (van A tot Z)", "Tegelwerk & waterdichting", "Installatie van sanitair", "Moderne & luxe afwerking", "Leidingwerk & elektriciteit"] 
+            },
+            tegelwerk: { 
+                title: "Professionele Tegelwerken", 
+                desc: "Bent u op zoek naar een ervaren vakman voor het plaatsen van tegels? Wij bieden hoogwaardige tegelwerken voor badkamers, keukens, vloeren en terrassen. Met oog voor detail en gebruik van duurzame materialen zorgen wij voor een perfect afgewerkt resultaat. Of het nu gaat om renovatie of nieuwbouw, wij garanderen vakmanschap en een strakke afwerking.", 
+                items: ["Natuursteen & Keramiek", "Wand- en vloertegels", "Terrasaanleg", "Nauwkeurige voegafwerking", "Grote tegelformaten specialist"] 
+            },
+            stucwerk: { 
+                title: "Stuc- en Pleisterwerk", 
+                desc: "Op zoek naar perfect afgewerkte muren en plafonds? Wij bieden professioneel stucwerk voor zowel nieuwbouw als renovatieprojecten. Met vakmanschap en oog voor detail zorgen wij voor gladde, strakke oppervlakken die klaar zijn voor schilderwerk. Wij werken met hoogwaardige materialen en garanderen een duurzaam resultaat.", 
+                items: ["Glad pleisterwerk", "Sierpleister", "Reparatie van muren/plafonds", "Spackspuitwerk", "Strakke hoekafwerking"] 
+            },
+            schilderwerk: { 
+                title: "Schilder- en Decoratiewerk", 
+                desc: "Wilt u uw woning een frisse uitstraling geven? Wij bieden professioneel schilderwerk voor binnen en buiten. Met hoogwaardige verf en nauwkeurig vakmanschap zorgen wij voor een strak resultaat. Wij besteden veel aandacht aan voorbereiding, zoals schuren en gronden, voor een langdurige afwerking.", 
+                items: ["Binnen- & Buitenschilderwerk", "Lakwerk (kozijnen/deuren)", "Muur- & plafondsauswerk", "Kleuradvies op maat", "Duurzame verfproducten"] 
+            },
+            schoonmaken: { 
+                title: "Reinigingsdiensten", 
+                desc: "Heeft u net een bouw- of renovatieproject afgerond? Wij bieden professionele reinigingsdiensten voor particulieren en bedrijven. Wij verwijderen bouwresten, stof en vuil, zodat uw ruimte direct klaar is voor gebruik. Daarnaast verzorgen wij ook onderhoud van tuinen en gemeenschappelijke ruimtes.", 
+                items: ["Bouwschoonmaak (na renovatie)", "Tuinonderhoud & reiniging", "Trappenhal- & glasbewassing", "Bedrijfs- & kantooronderhoud", "Milieuvriendelijke middelen"] 
+            },
+            laminaatleggen: { 
+                title: "Vloeren & Laminaat", 
+                desc: "Op zoek naar een stijlvolle vloer? Wij zijn gespecialiseerd in het plaatsen van laminaat, visgraat en PVC vloeren. Wij zorgen voor een perfecte voorbereiding van de ondergrond en een nauwkeurige plaatsing voor een strak eindresultaat. Of u nu kiest voor modern of klassiek, wij bieden de juiste oplossing.", 
+                items: ["Laminaat & PVC", "Visgraat motieven", "Ondervloer installatie", "Plintafwerking", "Egalisatie van de vloer"] 
+            }
         };
 
         function openDetails(id) {
             const data = servicesData[id];
             document.getElementById('modal-content').innerHTML = `
                 <h2 class="text-3xl font-black mb-2 uppercase italic text-brand-orange">${data.title}</h2>
-                <p class="mb-6 opacity-80">${data.desc}</p>
-                <ul class="space-y-2 mb-6">
-                    ${data.items.map(i => `<li class="font-bold"><i class="fas fa-check text-brand-orange mr-2"></i> ${i}</li>`).join('')}
+                <div class="w-12 h-1 bg-brand-orange mb-6"></div>
+                <p class="mb-6 leading-relaxed opacity-80">${data.desc}</p>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
+                    ${data.items.map(i => `<li class="flex items-center gap-3 font-bold text-sm"><i class="fas fa-check text-brand-orange"></i> ${i}</li>`).join('')}
                 </ul>
-                <a href="https://wa.me/32483404778" class="block bg-brand-orange text-white py-3 rounded-lg text-center font-bold">WhatsApp Offerte</a>
+                <a href="https://wa.me/32483404778" class="block bg-brand-orange text-white py-4 rounded-xl font-bold text-center uppercase tracking-widest hover:bg-orange-600 transition">Offerte via WhatsApp</a>
             `;
             document.getElementById('detail-layer').style.display = 'flex';
             document.body.style.overflow = 'hidden';
