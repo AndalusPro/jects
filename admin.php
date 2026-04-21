@@ -1,4 +1,23 @@
 <?php
+if (isset($_POST['save_changes'])) {
+    // تجهيز البيانات الجديدة من الفورم
+    $newData = [
+        "hero_title" => $_POST['hero_title'],
+        "phone_number" => $_POST['phone_number']
+    ];
+    
+    // حفظها في ملف JSON
+    file_put_contents('data.json', json_encode($newData, JSON_PRETTY_PRINT));
+    echo "تم تحديث الموقع بنجاح!";
+}
+?>
+
+<form method="POST">
+    <input type="text" name="hero_title" value="<?php echo $data['hero_title']; ?>">
+    <input type="text" name="phone_number" value="<?php echo $data['phone_number']; ?>">
+    <button type="submit" name="save_changes">تحديث الموقع</button>
+</form>
+<?php
 session_start();
 // نظام حماية بسيط
 $password = "Andalus2026"; 
