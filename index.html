@@ -39,6 +39,26 @@
             transition: background-color var(--transition-speed), color var(--transition-speed);
         }
 
+        /* إصلاح مشكلة بروز النصوص في الهواتف */
+        .hero-title {
+            font-size: 3.5rem; /* حجم افتراضي للموبايل */
+            line-height: 1;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        @media (min-width: 768px) {
+            .hero-title {
+                font-size: 6rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero-title {
+                font-size: 7.5rem;
+            }
+        }
+
         .text-brand-orange { color: var(--brand-orange); }
         .bg-brand-orange { background-color: var(--brand-orange); }
 
@@ -50,15 +70,11 @@
             border-top: 3px solid var(--brand-orange);
         }
 
-        .nav-link { color: var(--text-main); transition: 0.3s; }
-        .nav-link:hover { color: var(--brand-orange) !important; }
-
         .theme-toggle-btn {
             width: 40px; height: 40px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             transition: all 0.3s ease; background: var(--brand-orange-soft); color: var(--brand-orange);
         }
-        .theme-toggle-btn:hover { background: var(--brand-orange); color: white; transform: rotate(15deg); }
 
         .hero-gradient {
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920');
@@ -79,8 +95,6 @@
             background: linear-gradient(transparent, rgba(0,0,0,0.9));
             padding: 50px 30px 30px; color: white;
         }
-        .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: 0.3s; }
-        .dot.active { background: var(--brand-orange); width: 24px; border-radius: 10px; }
 
         .service-card {
             background: var(--card-bg);
@@ -105,6 +119,9 @@
         .reveal { opacity: 0; transform: translateY(20px); transition: 0.6s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .container-custom { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: 0.3s; }
+        .dot.active { background: var(--brand-orange); width: 24px; border-radius: 10px; }
     </style>
 </head>
 <body oncontextmenu="return false;" class="dark-theme">
@@ -130,8 +147,8 @@
             </a>
             <div class="hidden md:flex items-center gap-6">
                 <div class="flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest mr-4">
-                    <a href="https://andalus-projects.com/overons.html" class="nav-link">Over Ons</a>
-                    <a href="#services" class="nav-link">Diensten</a>
+                    <a href="https://andalus-projects.com/overons.html" class="nav-link font-bold hover:text-brand-orange transition-colors">Over Ons</a>
+                    <a href="#services" class="nav-link font-bold hover:text-brand-orange transition-colors">Diensten</a>
                 </div>
                 <button onclick="toggleTheme()" class="theme-toggle-btn"><i class="fas fa-sun theme-icon"></i></button>
                 <a href="#contact" class="bg-brand-orange px-6 py-2 rounded-full text-white font-bold text-[11px] uppercase tracking-widest hover:scale-105 transition shadow-lg shadow-orange-500/20">Contact</a>
@@ -142,14 +159,14 @@
 
     <section id="home" class="hero-gradient">
         <div class="container-custom">
-            <div class="max-w-2xl">
+            <div class="max-w-4xl">
                 <div class="inline-block border-l-4 border-brand-orange px-4 py-1 mb-6">
                     <span class="text-white text-xs font-bold uppercase tracking-[0.3em]">Est. 2004 | Premium Renovatie</span>
                 </div>
-                <h1 class="text-6xl md:text-8xl font-black text-white leading-none mb-6 italic uppercase">
+                <h1 class="hero-title font-black text-white leading-[0.9] mb-6 italic uppercase">
                     PROFESSIONELE BOUW EN <br><span class="text-brand-orange"> RENOVATIEDIENSTEN</span>
                 </h1>
-                <p class="text-gray-300 text-lg md:text-xl mb-10 font-light leading-relaxed">
+                <p class="text-gray-300 text-lg md:text-xl mb-10 font-light leading-relaxed max-w-xl">
                     Geef uw woning een nieuw leven met ons vakmanschap.
                 </p>
                 <div class="flex flex-wrap gap-4">
@@ -172,27 +189,9 @@
 
             <div class="slider-container reveal">
                 <div class="slider-wrapper" id="main-slider">
-                    <div class="slide">
-                        <img src="https://andalus-projects.com/badkamerrenovatie.jpg" alt="Badkamer">
-                        <div class="slide-overlay">
-                            <h3 class="text-2xl font-black uppercase italic">Badkamer Transformaties</h3>
-                            <p class="text-sm opacity-70">Luxe sanitair en moderne afwerking.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                        <img src="https://andalus-projects.com/tegelwerk.jpg" alt="Tegelwerk">
-                        <div class="slide-overlay">
-                            <h3 class="text-2xl font-black uppercase italic">Tegelwerk</h3>
-                            <p class="text-sm opacity-70">Nauwkeurige plaatsing van natuursteen en keramiek.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                        <img src="https://andalus-projects.com/stucwerk.jpg" alt="Stucwerk">
-                        <div class="slide-overlay">
-                            <h3 class="text-2xl font-black uppercase italic">Stucwerk</h3>
-                            <p class="text-sm opacity-70">De perfecte gladde basis voor uw interieur.</p>
-                        </div>
-                    </div>
+                    <div class="slide"><img src="https://andalus-projects.com/badkamerrenovatie.jpg"><div class="slide-overlay"><h3 class="text-2xl font-black uppercase italic">Badkamer Transformaties</h3></div></div>
+                    <div class="slide"><img src="https://andalus-projects.com/tegelwerk.jpg"><div class="slide-overlay"><h3 class="text-2xl font-black uppercase italic">Tegelwerk</h3></div></div>
+                    <div class="slide"><img src="https://andalus-projects.com/stucwerk.jpg"><div class="slide-overlay"><h3 class="text-2xl font-black uppercase italic">Stucwerk</h3></div></div>
                 </div>
                 <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-10" id="dots-container"></div>
                 <button onclick="moveSlide(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 hover:bg-brand-orange text-white rounded-full transition"><i class="fas fa-chevron-left"></i></button>
@@ -201,46 +200,28 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div onclick="openDetails('badkamer')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
-                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/badkamerrenovatie.jpg" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110"></div>
-                    <div class="p-6 flex justify-between items-center">
-                        <h3 class="font-bold uppercase text-sm tracking-widest">Badkamer Renovatie</h3>
-                        <i class="fas fa-arrow-right text-brand-orange"></i>
-                    </div>
+                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/badkamerrenovatie.jpg" class="w-full h-full object-cover"></div>
+                    <div class="p-6 flex justify-between items-center"><h3 class="font-bold uppercase text-sm tracking-widest">Badkamer Renovatie</h3><i class="fas fa-arrow-right text-brand-orange"></i></div>
                 </div>
                 <div onclick="openDetails('tegelwerk')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
-                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/tegelwerk.jpg" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110"></div>
-                    <div class="p-6 flex justify-between items-center">
-                        <h3 class="font-bold uppercase text-sm tracking-widest">Tegelwerk</h3>
-                        <i class="fas fa-arrow-right text-brand-orange"></i>
-                    </div>
+                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/tegelwerk.jpg" class="w-full h-full object-cover"></div>
+                    <div class="p-6 flex justify-between items-center"><h3 class="font-bold uppercase text-sm tracking-widest">Tegelwerk</h3><i class="fas fa-arrow-right text-brand-orange"></i></div>
                 </div>
                 <div onclick="openDetails('stucwerk')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
-                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/stucwerk.jpg" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110"></div>
-                    <div class="p-6 flex justify-between items-center">
-                        <h3 class="font-bold uppercase text-sm tracking-widest">Stucwerk</h3>
-                        <i class="fas fa-arrow-right text-brand-orange"></i>
-                    </div>
+                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/stucwerk.jpg" class="w-full h-full object-cover"></div>
+                    <div class="p-6 flex justify-between items-center"><h3 class="font-bold uppercase text-sm tracking-widest">Stucwerk</h3><i class="fas fa-arrow-right text-brand-orange"></i></div>
                 </div>
                 <div onclick="openDetails('schilderwerk')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
-                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/schilderwerk.jpg" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110"></div>
-                    <div class="p-6 flex justify-between items-center">
-                        <h3 class="font-bold uppercase text-sm tracking-widest">Schilderwerk</h3>
-                        <i class="fas fa-arrow-right text-brand-orange"></i>
-                    </div>
+                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/schilderwerk.jpg" class="w-full h-full object-cover"></div>
+                    <div class="p-6 flex justify-between items-center"><h3 class="font-bold uppercase text-sm tracking-widest">Schilderwerk</h3><i class="fas fa-arrow-right text-brand-orange"></i></div>
                 </div>
                 <div onclick="openDetails('schoonmaken')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
-                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/schoonmaken.jpg" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110"></div>
-                    <div class="p-6 flex justify-between items-center">
-                        <h3 class="font-bold uppercase text-sm tracking-widest">Schoonmaken</h3>
-                        <i class="fas fa-arrow-right text-brand-orange"></i>
-                    </div>
+                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/schoonmaken.jpg" class="w-full h-full object-cover"></div>
+                    <div class="p-6 flex justify-between items-center"><h3 class="font-bold uppercase text-sm tracking-widest">Schoonmaken</h3><i class="fas fa-arrow-right text-brand-orange"></i></div>
                 </div>
                 <div onclick="openDetails('laminaatleggen')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
-                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/laminaatleggen.jpg" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110"></div>
-                    <div class="p-6 flex justify-between items-center">
-                        <h3 class="font-bold uppercase text-sm tracking-widest">Vloeren & Laminaat</h3>
-                        <i class="fas fa-arrow-right text-brand-orange"></i>
-                    </div>
+                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/laminaatleggen.jpg" class="w-full h-full object-cover"></div>
+                    <div class="p-6 flex justify-between items-center"><h3 class="font-bold uppercase text-sm tracking-widest">Vloeren & Laminaat</h3><i class="fas fa-arrow-right text-brand-orange"></i></div>
                 </div>
             </div>
         </div>
@@ -259,9 +240,7 @@
     <footer class="py-12 border-t border-brand-orange-soft text-center">
         <img src="https://andalus-projects.com/Logo.png" id="footer-logo" class="h-8 mx-auto mb-4 grayscale opacity-50">
         <p class="text-gray-400 font-bold uppercase tracking-widest text-[10px] mb-2">&copy; 2026 Andalus Projects</p>
-        <a href="https://www.instagram.com/3d.bunz" target="_blank" class="text-[9px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors duration-300">
-            <span class="font-black">Bunz Vision</span>
-        </a>
+        <a href="https://www.instagram.com/3d.bunz" target="_blank" class="text-[9px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors duration-300"><span class="font-black">Bunz Vision</span></a>
     </footer>
 
     <div id="detail-layer" onclick="closeDetails()">
@@ -298,11 +277,7 @@
             updateSlider();
         }
 
-        function jumpToSlide(i) {
-            slideIdx = i;
-            updateSlider();
-        }
-
+        function jumpToSlide(i) { slideIdx = i; updateSlider(); }
         setInterval(() => moveSlide(1), 5000);
 
         function toggleTheme() {
@@ -310,19 +285,14 @@
             const icons = document.querySelectorAll('.theme-icon');
             const mainLogo = document.getElementById('main-logo');
             const footerLogo = document.getElementById('footer-logo');
-
             body.classList.toggle('dark-theme');
             const isDark = body.classList.contains('dark-theme');
-            const lightLogoUrl = "https://andalus-projects.com/darklogo.png";
-            const darkLogoUrl = "https://andalus-projects.com/Logo.png";
-
+            mainLogo.src = isDark ? "https://andalus-projects.com/Logo.png" : "https://andalus-projects.com/darklogo.png";
+            footerLogo.src = mainLogo.src;
             icons.forEach(icon => {
-                if (isDark) { icon.classList.replace('fa-moon', 'fa-sun'); } 
-                else { icon.classList.replace('fa-sun', 'fa-moon'); }
+                if (isDark) icon.classList.replace('fa-moon', 'fa-sun');
+                else icon.classList.replace('fa-sun', 'fa-moon');
             });
-
-            mainLogo.src = isDark ? darkLogoUrl : lightLogoUrl;
-            footerLogo.src = isDark ? darkLogoUrl : lightLogoUrl;
         }
 
         function toggleMenu() {
@@ -332,36 +302,12 @@
         }
 
         const servicesData = {
-            badkamer: { 
-                title: "Badkamerrenovatie", 
-                desc: "Wilt u uw badkamer volledig vernieuwen? Wij bieden professionele badkamerrenovaties van A tot Z, volledig afgestemd op uw wensen en budget. Van sloopwerk en leidingen tot tegelwerk, stucwerk en afwerking – wij zorgen voor een complete en zorgeloze renovatie. Met oog voor detail en gebruik van hoogwaardige materialen creëren wij een moderne, functionele en stijlvolle badkamer.", 
-                items: ["Volledige renovatie (van A tot Z)", "Tegelwerk & waterdichting", "Installatie van sanitair", "Moderne & luxe afwerking", "Leidingwerk & elektriciteit"] 
-            },
-            tegelwerk: { 
-                title: "Professionele Tegelwerken", 
-                desc: "Bent u op zoek naar een ervaren vakman voor het plaatsen van tegels? Wij bieden hoogwaardige tegelwerken voor badkamers, keukens, vloeren en terrassen. Met oog voor detail en gebruik van duurzame materialen zorgen wij voor een perfect afgewerkt resultaat. Of het nu gaat om renovatie of nieuwbouw, wij garanderen vakmanschap en een strakke afwerking.", 
-                items: ["Natuursteen & Keramiek", "Wand- en vloertegels", "Terrasaanleg", "Nauwkeurige voegafwerking", "Grote tegelformaten specialist"] 
-            },
-            stucwerk: { 
-                title: "Stuc- en Pleisterwerk", 
-                desc: "Op zoek naar perfect afgewerkte muren en plafonds? Wij bieden professioneel stucwerk voor zowel nieuwbouw als renovatieprojecten. Met vakmanschap en oog voor detail zorgen wij voor gladde, strakke oppervlakken die klaar zijn voor schilderwerk. Wij werken met hoogwaardige materialen en garanderen een duurzaam resultaat.", 
-                items: ["Glad pleisterwerk", "Sierpleister", "Reparatie van muren/plafonds", "Spackspuitwerk", "Strakke hoekafwerking"] 
-            },
-            schilderwerk: { 
-                title: "Schilder- en Decoratiewerk", 
-                desc: "Wilt u uw woning een frisse uitstraling geven? Wij bieden professioneel schilderwerk voor binnen en buiten. Met hoogwaardige verf en nauwkeurig vakmanschap zorgen wij voor een strak resultaat. Wij besteden veel aandacht aan voorbereiding, zoals schuren en gronden, voor een langdurige afwerking.", 
-                items: ["Binnen- & Buitenschilderwerk", "Lakwerk (kozijnen/deuren)", "Muur- & plafondsauswerk", "Kleuradvies op maat", "Duurzame verfproducten"] 
-            },
-            schoonmaken: { 
-                title: "Reinigingsdiensten", 
-                desc: "Heeft u net een bouw- of renovatieproject afgerond? Wij bieden professionele reinigingsdiensten voor particulieren en bedrijven. Wij verwijderen bouwresten, stof en vuil, zodat uw ruimte direct klaar is voor gebruik. Daarnaast verzorgen wij ook onderhoud van tuinen en gemeenschappelijke ruimtes.", 
-                items: ["Bouwschoonmaak (na renovatie)", "Tuinonderhoud & reiniging", "Trappenhal- & glasbewassing", "Bedrijfs- & kantooronderhoud", "Milieuvriendelijke middelen"] 
-            },
-            laminaatleggen: { 
-                title: "Vloeren & Laminaat", 
-                desc: "Op zoek naar een stijlvolle vloer? Wij zijn gespecialiseerd in het plaatsen van laminaat, visgraat en PVC vloeren. Wij zorgen voor een perfecte voorbereiding van de ondergrond en een nauwkeurige plaatsing voor een strak eindresultaat. Of u nu kiest voor modern of klassiek, wij bieden de juiste oplossing.", 
-                items: ["Laminaat & PVC", "Visgraat motieven", "Ondervloer installatie", "Plintafwerking", "Egalisatie van de vloer"] 
-            }
+            badkamer: { title: "Badkamerrenovatie", desc: "Wilt u uw badkamer volledig vernieuwen? Wij bieden professionele badkamerrenovaties van A tot Z. Van sloopwerk tot luxe afwerking.", items: ["Volledige renovatie", "Tegelwerk & waterdichting", "Sanitair installatie", "Luxe afwerking"] },
+            tegelwerk: { title: "Professionele Tegelwerken", desc: "Hoogwaardige tegelwerken voor badkamers, keukens و vloeren. Wij garanderen een strak resultaat.", items: ["Natuursteen & Keramiek", "Wand- en vloertegels", "Terrasaanleg", "Grote formaten"] },
+            stucwerk: { title: "Stuc- en Pleisterwerk", desc: "Perfect afgewerkte muren و plafonds. Gladde oppervlakken klaar voor schilderwerk.", items: ["Glad pleisterwerk", "Sierpleister", "Reparatie muren", "Strakke hoeken"] },
+            schilderwerk: { title: "Schilder- en Decoratiewerk", desc: "Professioneel schilderwerk voor binnen و buiten. Wij gebruiken alleen hoogwaardige verf.", items: ["Binnen- & Buitenschilderwerk", "Lakwerk kozijnen", "Muur- & plafondsauswerk", "Kleuradvies"] },
+            schoonmaken: { title: "Reinigingsdiensten", desc: "Grondige reiniging na bouw of renovatie. Wij maken uw ruimte direct klaar voor gebruik.", items: ["Bouwschoonmaak", "Tuinonderhoud", "Trappenhallen", "Kantoorschoonmaak"] },
+            laminaatleggen: { title: "Vloeren & Laminaat", desc: "Specialist in het leggen van laminaat, visgraat و PVC vloeren met perfecte afwerking.", items: ["Laminaat & PVC", "Visgraat motieven", "Plintafwerking", "Vloer egalisatie"] }
         };
 
         function openDetails(id) {
@@ -373,7 +319,7 @@
                 <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
                     ${data.items.map(i => `<li class="flex items-center gap-3 font-bold text-sm"><i class="fas fa-check text-brand-orange"></i> ${i}</li>`).join('')}
                 </ul>
-                <a href="https://wa.me/32483404778" class="block bg-brand-orange text-white py-4 rounded-xl font-bold text-center uppercase tracking-widest hover:bg-orange-600 transition">Offerte via WhatsApp</a>
+                <a href="https://wa.me/32483404778" class="block bg-brand-orange text-white py-4 rounded-xl font-bold text-center uppercase tracking-widest">Offerte via WhatsApp</a>
             `;
             document.getElementById('detail-layer').style.display = 'flex';
             document.body.style.overflow = 'hidden';
