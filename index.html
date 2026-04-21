@@ -1,68 +1,198 @@
 <!DOCTYPE html>
-<html lang="nl" dir="ltr">
+<html lang="nl" dir="ltr" style="user-select: none; -webkit-user-select: none; -ms-user-select: none; overflow-x: hidden;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Andalus Projects | Meesters in Renovatie</title>
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
-    <link rel="stylesheet" href="style.css">
-</head>
-<body oncontextmenu="return false;" class="dark-theme"> 
+    <style>
+        :root { 
+            --brand-orange: #f37321;
+            --brand-orange-soft: rgba(243, 115, 33, 0.1);
+            --bg-body: #1a1a1a; 
+            --text-main: #f3f4f6; 
+            --main-font: 'Myriad Pro', 'Myriad', 'Segoe UI', sans-serif;
+        }
 
-    <nav class="fixed top-0 w-full z-50 glass-header transition-all">
-        <div class="container-custom py-4 flex justify-between items-center">
-            <a href="#" class="flex items-center gap-2 group">
-                <img src="https://andalus-projects.com/Logo.png" id="main-logo" alt="Logo" class="h-9 transition-transform group-hover:scale-110">
-                <span class="font-black text-xl tracking-tighter uppercase italic">ANDALUS <span class="text-brand-orange">PROJECTS</span></span>
-            </a>
-            <div class="hidden md:flex items-center gap-6">
-                <div class="flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest mr-4">
-                    <a href="https://andalus-projects.com/overons.html" class="nav-link">Over Ons</a>
-                    <a href="#services" class="nav-link">Diensten</a>
-                </div>
-                <button onclick="toggleTheme()" class="theme-toggle-btn"><i class="fas fa-sun theme-icon"></i></button>
-                <a href="#contact" class="bg-brand-orange px-6 py-2 rounded-full text-white font-bold text-[11px] uppercase tracking-widest hover:scale-105 transition shadow-lg shadow-orange-500/20">Contact</a>
+        /* --- STRICTOR PAGE LOCKING --- */
+        * {
+            user-select: none !important;
+            -webkit-user-select: none !important;
+            -webkit-touch-callout: none !important;
+            -webkit-tap-highlight-color: transparent;
+            outline: none !important;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: var(--main-font);
+            margin: 0; padding: 0;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+        }
+
+        .container-custom { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 25px; }
+
+        /* --- MODERN SMALL HERO --- */
+        .hero-title {
+            font-size: 2.8rem !important; 
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-style: italic;
+        }
+
+        .hero-sub {
+            font-size: 0.85rem !important;
+            letter-spacing: 0.05em;
+            opacity: 0.7;
+            max-width: 400px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 1.8rem !important; }
+            .hero-sub { font-size: 0.75rem !important; }
+        }
+
+        .glass-header {
+            background: rgba(26, 26, 26, 0.85) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--brand-orange-soft);
+            border-top: 3px solid var(--brand-orange);
+            z-index: 100;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920');
+            background-size: cover; background-position: center;
+            height: 100vh; display: flex; align-items: center;
+        }
+
+        /* --- SLIDER LOCK --- */
+        .slider-container {
+            position: relative; width: 100%; height: 400px;
+            overflow: hidden; border-radius: 1rem; margin-top: 50px;
+        }
+        .slider-wrapper { display: flex; transition: transform 0.6s ease-in-out; height: 100%; }
+        .slide { min-width: 100%; height: 100%; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+
+        .service-card { 
+            background: #242424; border-radius: 12px; overflow: hidden; 
+            transition: 0.3s; cursor: pointer; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .service-card:hover { border-color: var(--brand-orange); transform: translateY(-5px); }
+
+        #detail-layer {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+            z-index: 9999; display: none; align-items: center; justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+        .modal-container { width: 90%; max-width: 500px; background: #242424; padding: 2rem; border-radius: 1rem; position: relative; }
+
+        .btn-modern { font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 24px; border-radius: 4px; display: inline-block; }
+    </style>
+</head>
+<body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;"> 
+
+    <nav class="fixed top-0 w-full glass-header">
+        <div class="container-custom py-3 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <img src="https://andalus-projects.com/Logo.png" alt="Logo" class="h-7">
+                <span class="font-bold text-sm tracking-tight uppercase">ANDALUS <span class="text-brand-orange">PROJECTS</span></span>
+            </div>
+            <div class="hidden md:flex items-center gap-6 text-[9px] font-bold uppercase tracking-[0.2em]">
+                <a href="#services" class="hover:text-brand-orange transition">Diensten</a>
+                <a href="tel:+32483404778" class="bg-brand-orange text-white px-4 py-2 rounded">Bellen</a>
             </div>
         </div>
     </nav>
 
     <section id="home" class="hero-gradient">
         <div class="container-custom">
-            <div class="max-w-2xl reveal">
-                <h1 class="text-6xl md:text-8xl font-black text-white italic uppercase">
-                   PROFESSIONELE BOUW EN <br><span class="text-brand-orange">RENOVATIE</span>
-                </h1>
-                <div class="mt-10 flex gap-4">
-                    <a href="#services" class="bg-brand-orange text-white px-10 py-4 rounded-xl font-bold">ONTDEK DIENSTEN</a>
+            <div class="max-w-xl">
+                <h1 class="hero-title text-white mb-4">Vakmanschap in <br>Bouw & <span class="text-brand-orange">Renovatie</span></h1>
+                <p class="hero-sub text-gray-400 mb-8">Gespecialiseerde renovatiediensten voor woningen en commerciële projecten in heel België.</p>
+                <div class="flex gap-4">
+                    <a href="#services" class="btn-modern bg-brand-orange text-white">Onze Diensten</a>
+                    <a href="https://wa.me/32483404778" class="btn-modern border border-white/20 text-white">WhatsApp</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="services" class="py-24">
-        <div class="container-custom grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div onclick="openDetails('badkamer')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
-                <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/badkamerrenovatie.jpg" class="w-full h-full object-cover"></div>
-                <div class="p-6 flex justify-between items-center">
-                    <h3 class="font-bold uppercase text-sm">Badkamer Renovatie</h3>
-                    <i class="fas fa-arrow-right text-brand-orange"></i>
+    <section id="services" class="py-20 bg-[#1a1a1a]">
+        <div class="container-custom">
+            <div class="slider-container">
+                <div class="slider-wrapper" id="main-slider">
+                    <div class="slide"><img src="https://andalus-projects.com/badkamerrenovatie.jpg"></div>
+                    <div class="slide"><img src="https://andalus-projects.com/tegelwerk.jpg"></div>
+                    <div class="slide"><img src="https://andalus-projects.com/stucwerk.jpg"></div>
                 </div>
             </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                <div onclick="openDetails('badkamer')" class="service-card p-4">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-brand-orange">Badkamer Renovatie</h3>
+                </div>
+                <div onclick="openDetails('tegelwerk')" class="service-card p-4">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-brand-orange">Tegelwerk</h3>
+                </div>
+                <div onclick="openDetails('stucwerk')" class="service-card p-4">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-brand-orange">Stucwerk</h3>
+                </div>
             </div>
+        </div>
     </section>
+
+    <footer class="py-10 text-center border-t border-white/5 bg-[#141414]">
+        <p class="text-gray-600 font-bold uppercase tracking-[0.3em] text-[8px]">&copy; 2026 Andalus Projects | Bunz Vision</p>
+    </footer>
 
     <div id="detail-layer" onclick="closeDetails()">
         <div class="modal-container" onclick="event.stopPropagation()">
-            <button onclick="closeDetails()" class="absolute top-4 right-4"><i class="fas fa-times text-2xl"></i></button>
-            <div id="modal-content"></div>
+            <div id="modal-content" class="text-sm text-gray-300"></div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // SLIDER LOGIC
+        let idx = 0;
+        const slides = document.querySelectorAll('.slide');
+        function move() {
+            idx = (idx + 1) % slides.length;
+            document.getElementById('main-slider').style.transform = `translateX(-${idx * 100}%)`;
+        }
+        setInterval(move, 4000);
+
+        // MODAL LOGIC
+        const data = {
+            badkamer: "Volledige badkamerrenovatie van A tot Z. Sanitair, tegels en afwerking.",
+            tegelwerk: "Hoogwaardige plaatsing van keramiek en natuursteen voor vloer en wand.",
+            stucwerk: "Glad pleisterwerk voor een strakke, moderne uitstraling van uw muren."
+        };
+        function openDetails(id) {
+            document.getElementById('modal-content').innerText = data[id];
+            document.getElementById('detail-layer').style.display = 'flex';
+        }
+        function closeDetails() {
+            document.getElementById('detail-layer').style.display = 'none';
+        }
+
+        // SECURITY LOCKS
+        document.onkeydown = (e) => {
+            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) return false;
+        };
+    </script>
+</body>
+</html>
 </body>
 </html>
