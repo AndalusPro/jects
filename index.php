@@ -1,12 +1,4 @@
-<?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-?>
-<?php
-// جلب البيانات من ملف الـ JSON
-$jsonData = file_get_contents('data.json');
-$data = json_decode($jsonData, true);
-?>
+
 <!DOCTYPE html>
 <html lang="nl" dir="ltr">
 <head>
