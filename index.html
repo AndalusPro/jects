@@ -39,24 +39,14 @@
             transition: background-color var(--transition-speed), color var(--transition-speed);
         }
 
-        /* إصلاح مشكلة بروز النصوص في الهواتف */
         .hero-title {
-            font-size: 3.5rem; /* حجم افتراضي للموبايل */
-            line-height: 1;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        @media (min-width: 768px) {
-            .hero-title {
-                font-size: 6rem;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .hero-title {
-                font-size: 7.5rem;
-            }
+            font-weight: 900;
+            text-transform: uppercase;
+            font-style: italic;
+            color: white;
+            font-size: clamp(2.2rem, 8vw, 7.5rem); 
+            line-height: 1.1;
+            letter-spacing: -1px;
         }
 
         .text-brand-orange { color: var(--brand-orange); }
@@ -104,7 +94,7 @@
         }
         .service-card:hover { transform: translateY(-10px); border-bottom-color: var(--brand-orange); box-shadow: 0 20px 30px rgba(0,0,0,0.2); }
 
-        #detail-layer {
+        #detail-layer, #admin-layer {
             position: fixed; inset: 0; background: rgba(0,0,0,0.8);
             z-index: 9999; display: none; align-items: center; justify-content: center;
             backdrop-filter: blur(8px);
@@ -122,6 +112,10 @@
         
         .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: 0.3s; }
         .dot.active { background: var(--brand-orange); width: 24px; border-radius: 10px; }
+
+        /* Admin Styles */
+        .admin-input { width: 100%; padding: 10px; margin-bottom: 15px; background: rgba(0,0,0,0.05); border: 1px solid var(--brand-orange-soft); border-radius: 8px; color: var(--text-main); }
+        body.dark-theme .admin-input { background: rgba(255,255,255,0.05); }
     </style>
 </head>
 <body oncontextmenu="return false;" class="dark-theme">
@@ -147,8 +141,8 @@
             </a>
             <div class="hidden md:flex items-center gap-6">
                 <div class="flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest mr-4">
-                    <a href="https://andalus-projects.com/overons.html" class="nav-link font-bold hover:text-brand-orange transition-colors">Over Ons</a>
-                    <a href="#services" class="nav-link font-bold hover:text-brand-orange transition-colors">Diensten</a>
+                    <a href="https://andalus-projects.com/overons.html" class="nav-link font-bold">Over Ons</a>
+                    <a href="#services" class="nav-link font-bold">Diensten</a>
                 </div>
                 <button onclick="toggleTheme()" class="theme-toggle-btn"><i class="fas fa-sun theme-icon"></i></button>
                 <a href="#contact" class="bg-brand-orange px-6 py-2 rounded-full text-white font-bold text-[11px] uppercase tracking-widest hover:scale-105 transition shadow-lg shadow-orange-500/20">Contact</a>
@@ -163,7 +157,7 @@
                 <div class="inline-block border-l-4 border-brand-orange px-4 py-1 mb-6">
                     <span class="text-white text-xs font-bold uppercase tracking-[0.3em]">Est. 2004 | Premium Renovatie</span>
                 </div>
-                <h1 class="hero-title font-black text-white leading-[0.9] mb-6 italic uppercase">
+                <h1 class="hero-title">
                     PROFESSIONELE BOUW EN <br><span class="text-brand-orange"> RENOVATIEDIENSTEN</span>
                 </h1>
                 <p class="text-gray-300 text-lg md:text-xl mb-10 font-light leading-relaxed max-w-xl">
@@ -198,32 +192,8 @@
                 <button onclick="moveSlide(1)" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 hover:bg-brand-orange text-white rounded-full transition"><i class="fas fa-chevron-right"></i></button>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div onclick="openDetails('badkamer')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
-                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/badkamerrenovatie.jpg" class="w-full h-full object-cover"></div>
-                    <div class="p-6 flex justify-between items-center"><h3 class="font-bold uppercase text-sm tracking-widest">Badkamer Renovatie</h3><i class="fas fa-arrow-right text-brand-orange"></i></div>
+            <div id="services-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 </div>
-                <div onclick="openDetails('tegelwerk')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
-                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/tegelwerk.jpg" class="w-full h-full object-cover"></div>
-                    <div class="p-6 flex justify-between items-center"><h3 class="font-bold uppercase text-sm tracking-widest">Tegelwerk</h3><i class="fas fa-arrow-right text-brand-orange"></i></div>
-                </div>
-                <div onclick="openDetails('stucwerk')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
-                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/stucwerk.jpg" class="w-full h-full object-cover"></div>
-                    <div class="p-6 flex justify-between items-center"><h3 class="font-bold uppercase text-sm tracking-widest">Stucwerk</h3><i class="fas fa-arrow-right text-brand-orange"></i></div>
-                </div>
-                <div onclick="openDetails('schilderwerk')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
-                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/schilderwerk.jpg" class="w-full h-full object-cover"></div>
-                    <div class="p-6 flex justify-between items-center"><h3 class="font-bold uppercase text-sm tracking-widest">Schilderwerk</h3><i class="fas fa-arrow-right text-brand-orange"></i></div>
-                </div>
-                <div onclick="openDetails('schoonmaken')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
-                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/schoonmaken.jpg" class="w-full h-full object-cover"></div>
-                    <div class="p-6 flex justify-between items-center"><h3 class="font-bold uppercase text-sm tracking-widest">Schoonmaken</h3><i class="fas fa-arrow-right text-brand-orange"></i></div>
-                </div>
-                <div onclick="openDetails('laminaatleggen')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
-                    <div class="h-48 overflow-hidden"><img src="https://andalus-projects.com/laminaatleggen.jpg" class="w-full h-full object-cover"></div>
-                    <div class="p-6 flex justify-between items-center"><h3 class="font-bold uppercase text-sm tracking-widest">Vloeren & Laminaat</h3><i class="fas fa-arrow-right text-brand-orange"></i></div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -240,7 +210,9 @@
     <footer class="py-12 border-t border-brand-orange-soft text-center">
         <img src="https://andalus-projects.com/Logo.png" id="footer-logo" class="h-8 mx-auto mb-4 grayscale opacity-50">
         <p class="text-gray-400 font-bold uppercase tracking-widest text-[10px] mb-2">&copy; 2026 Andalus Projects</p>
-        <a href="https://www.instagram.com/3d.bunz" target="_blank" class="text-[9px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors duration-300"><span class="font-black">Bunz Vision</span></a>
+        <button onclick="initAdmin()" class="text-[9px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors duration-300">
+            <span class="font-black">Andalus Projects</span>
+        </button>
     </footer>
 
     <div id="detail-layer" onclick="closeDetails()">
@@ -250,94 +222,72 @@
         </div>
     </div>
 
+    <div id="admin-layer">
+        <div class="modal-container">
+            <button onclick="closeAdmin()" class="absolute top-4 right-4 text-gray-400 hover:text-brand-orange transition"><i class="fas fa-times text-2xl"></i></button>
+            <div id="admin-auth">
+                <h2 class="text-2xl font-bold mb-4">Admin Login</h2>
+                <input type="password" id="admin-pass" class="admin-input" placeholder="Password">
+                <button onclick="checkAdminPass()" class="w-full bg-brand-orange text-white py-3 rounded-lg font-bold">Login</button>
+            </div>
+            <div id="admin-content" class="hidden">
+                <h2 class="text-2xl font-bold mb-4">Edit Services</h2>
+                <div id="admin-services-list" class="space-y-4"></div>
+                <hr class="my-6 opacity-20">
+                <h2 class="text-2xl font-bold mb-4">Change Password</h2>
+                <input type="password" id="new-admin-pass" class="admin-input" placeholder="New Password">
+                <button onclick="changeAdminPass()" class="w-full bg-gray-500 text-white py-2 rounded-lg font-bold mb-4">Update Password</button>
+                <button onclick="saveAdminChanges()" class="w-full bg-brand-orange text-white py-4 rounded-lg font-bold text-xl shadow-lg">Save All Changes</button>
+            </div>
+        </div>
+    </div>
+
     <a href="https://wa.me/32483404778" target="_blank" class="fixed bottom-8 right-8 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center text-white text-2xl shadow-2xl z-[9999] hover:scale-110 transition">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <script>
-        let slideIdx = 0;
-        const sliderWrapper = document.getElementById('main-slider');
-        const slides = document.querySelectorAll('.slide');
-        const dotsBox = document.getElementById('dots-container');
-
-        slides.forEach((_, i) => {
-            const dot = document.createElement('div');
-            dot.className = `dot ${i === 0 ? 'active' : ''}`;
-            dot.onclick = () => jumpToSlide(i);
-            dotsBox.appendChild(dot);
-        });
-
-        function updateSlider() {
-            sliderWrapper.style.transform = `translateX(-${slideIdx * 100}%)`;
-            document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === slideIdx));
-        }
-
-        function moveSlide(n) {
-            slideIdx = (slideIdx + n + slides.length) % slides.length;
-            updateSlider();
-        }
-
-        function jumpToSlide(i) { slideIdx = i; updateSlider(); }
-        setInterval(() => moveSlide(1), 5000);
-
-        function toggleTheme() {
-            const body = document.body;
-            const icons = document.querySelectorAll('.theme-icon');
-            const mainLogo = document.getElementById('main-logo');
-            const footerLogo = document.getElementById('footer-logo');
-            body.classList.toggle('dark-theme');
-            const isDark = body.classList.contains('dark-theme');
-            mainLogo.src = isDark ? "https://andalus-projects.com/Logo.png" : "https://andalus-projects.com/darklogo.png";
-            footerLogo.src = mainLogo.src;
-            icons.forEach(icon => {
-                if (isDark) icon.classList.replace('fa-moon', 'fa-sun');
-                else icon.classList.replace('fa-sun', 'fa-moon');
-            });
-        }
-
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-            menu.classList.toggle('flex');
-        }
-
-        const servicesData = {
-            badkamer: { title: "Badkamerrenovatie", desc: "Wilt u uw badkamer volledig vernieuwen? Wij bieden professionele badkamerrenovaties van A tot Z. Van sloopwerk tot luxe afwerking.", items: ["Volledige renovatie", "Tegelwerk & waterdichting", "Sanitair installatie", "Luxe afwerking"] },
-            tegelwerk: { title: "Professionele Tegelwerken", desc: "Hoogwaardige tegelwerken voor badkamers, keukens و vloeren. Wij garanderen een strak resultaat.", items: ["Natuursteen & Keramiek", "Wand- en vloertegels", "Terrasaanleg", "Grote formaten"] },
-            stucwerk: { title: "Stuc- en Pleisterwerk", desc: "Perfect afgewerkte muren و plafonds. Gladde oppervlakken klaar voor schilderwerk.", items: ["Glad pleisterwerk", "Sierpleister", "Reparatie muren", "Strakke hoeken"] },
-            schilderwerk: { title: "Schilder- en Decoratiewerk", desc: "Professioneel schilderwerk voor binnen و buiten. Wij gebruiken alleen hoogwaardige verf.", items: ["Binnen- & Buitenschilderwerk", "Lakwerk kozijnen", "Muur- & plafondsauswerk", "Kleuradvies"] },
-            schoonmaken: { title: "Reinigingsdiensten", desc: "Grondige reiniging na bouw of renovatie. Wij maken uw ruimte direct klaar voor gebruik.", items: ["Bouwschoonmaak", "Tuinonderhoud", "Trappenhallen", "Kantoorschoonmaak"] },
-            laminaatleggen: { title: "Vloeren & Laminaat", desc: "Specialist in het leggen van laminaat, visgraat و PVC vloeren met perfecte afwerking.", items: ["Laminaat & PVC", "Visgraat motieven", "Plintafwerking", "Vloer egalisatie"] }
+        // Data & Management
+        let servicesData = JSON.parse(localStorage.getItem('andalus_services')) || {
+            badkamer: { title: "Badkamerrenovatie", desc: "Wilt u uw badkamer volledig vernieuwen? Wij bieden professionele badkamerrenovaties van A tot Z. Van sloopwerk tot luxe afwerking.", items: ["Volledige renovatie", "Tegelwerk & waterdichting", "Sanitair installatie", "Luxe afwerking"], img: "https://andalus-projects.com/badkamerrenovatie.jpg" },
+            tegelwerk: { title: "Professionele Tegelwerken", desc: "Hoogwaardige tegelwerken voor badkamers, keukens en vloeren. Wij garanderen een strak resultaat.", items: ["Natuursteen & Keramiek", "Wand- en vloertegels", "Terrasaanleg", "Grote formaten"], img: "https://andalus-projects.com/tegelwerk.jpg" },
+            stucwerk: { title: "Stuc- en Pleisterwerk", desc: "Perfect afgewerkte muren en plafonds. Gladde oppervlakken klaar voor schilderwerk.", items: ["Glad pleisterwerk", "Sierpleister", "Reparatie muren", "Strakke hoeken"], img: "https://andalus-projects.com/stucwerk.jpg" },
+            schilderwerk: { title: "Schilder- en Decoratiewerk", desc: "Professioneel schilderwerk voor binnen en buiten. Wij gebruiken alleen hoogwaardige verf.", items: ["Binnen- & Buitenschilderwerk", "Lakwerk kozijnen", "Muur- & plafondsauswerk", "Kleuradvies"], img: "https://andalus-projects.com/schilderwerk.jpg" },
+            schoonmaken: { title: "Reinigingsdiensten", desc: "Grondige reiniging na bouw of renovatie. Wij maken uw ruimte direct klaar voor gebruik.", items: ["Bouwschoonmaak", "Tuinonderhoud", "Trappenhallen", "Kantoorschoonmaak"], img: "https://andalus-projects.com/schoonmaken.jpg" },
+            laminaatleggen: { title: "Vloeren & Laminaat", desc: "Specialist in het leggen van laminaat, visgraat og PVC vloeren met perfecte afwerking.", items: ["Laminaat & PVC", "Visgraat motieven", "Plintafwerking", "Vloer egalisatie"], img: "https://andalus-projects.com/laminaatleggen.jpg" }
         };
 
-        function openDetails(id) {
-            const data = servicesData[id];
-            document.getElementById('modal-content').innerHTML = `
-                <h2 class="text-3xl font-black mb-2 uppercase italic text-brand-orange">${data.title}</h2>
-                <div class="w-12 h-1 bg-brand-orange mb-6"></div>
-                <p class="mb-6 leading-relaxed opacity-80">${data.desc}</p>
-                <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
-                    ${data.items.map(i => `<li class="flex items-center gap-3 font-bold text-sm"><i class="fas fa-check text-brand-orange"></i> ${i}</li>`).join('')}
-                </ul>
-                <a href="https://wa.me/32483404778" class="block bg-brand-orange text-white py-4 rounded-xl font-bold text-center uppercase tracking-widest">Offerte via WhatsApp</a>
-            `;
-            document.getElementById('detail-layer').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeDetails() {
-            document.getElementById('detail-layer').style.display = 'none';
-            document.body.style.overflowY = 'auto';
-        }
-
-        function reveal() {
-            document.querySelectorAll(".reveal").forEach(el => {
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight - 50) el.classList.add("active");
+        function renderServices() {
+            const grid = document.getElementById('services-grid');
+            grid.innerHTML = '';
+            Object.keys(servicesData).forEach(key => {
+                const s = servicesData[key];
+                grid.innerHTML += `
+                    <div onclick="openDetails('${key}')" class="service-card rounded-2xl overflow-hidden cursor-pointer reveal">
+                        <div class="h-48 overflow-hidden"><img src="${s.img}" class="w-full h-full object-cover"></div>
+                        <div class="p-6 flex justify-between items-center">
+                            <h3 class="font-bold uppercase text-sm tracking-widest">${s.title}</h3>
+                            <i class="fas fa-arrow-right text-brand-orange"></i>
+                        </div>
+                    </div>
+                `;
             });
+            reveal();
         }
-        window.addEventListener("scroll", reveal);
-        window.addEventListener('load', reveal);
-    </script>
-</body>
-</html>
+
+        // Admin Functions
+        function initAdmin() {
+            document.getElementById('admin-layer').style.display = 'flex';
+            document.getElementById('admin-auth').classList.remove('hidden');
+            document.getElementById('admin-content').classList.add('hidden');
+        }
+
+        function checkAdminPass() {
+            const pass = document.getElementById('admin-pass').value;
+            const savedPass = localStorage.getItem('andalus_admin_pass') || '1234';
+            if (pass === savedPass) {
+                document.getElementById('admin-auth').classList.add('hidden');
+                document.getElementById('admin-content').classList.remove('hidden');
+                loadAdminEditor();
+            } else {
+                alert('
