@@ -101,3 +101,29 @@ function reveal() {
 
 window.addEventListener("scroll", reveal);
 window.addEventListener('load', reveal);
+// وظيفة لمنع التمرير الأفقي العرضي الناتجة عن الأنيميشن
+window.addEventListener('resize', () => {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
+
+// تحسين إغلاق القائمة عند النقر على الروابط لضمان عدم حدوث تعليق في الشاشة
+function toggleMenu() {
+    const menu = document.getElementById('mobile-menu');
+    if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        menu.classList.add('flex');
+        document.body.style.overflow = 'hidden'; // منع التمرير عند فتح القائمة
+    } else {
+        menu.classList.add('hidden');
+        menu.classList.remove('flex');
+        document.body.style.overflow = 'auto'; // إعادة التمرير عند الإغلاق
+    }
+}
+
+// تأكد من أن الصور لا تسبب إزاحة عند التحميل
+document.querySelectorAll('img').forEach(img => {
+    img.addEventListener('load', () => {
+        reveal(); // إعادة حساب أماكن العناصر بعد تحميل الصور
+    });
+});
