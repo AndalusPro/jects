@@ -1,3 +1,8 @@
+<?php
+// جلب البيانات من ملف الـ JSON
+$jsonData = file_get_contents('data.json');
+$data = json_decode($jsonData, true);
+?>
 <!DOCTYPE html>
 <html lang="nl" dir="ltr">
 <head>
