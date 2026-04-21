@@ -1,77 +1,61 @@
-/* يجعل التمرير يتوقف قبل العنوان بمسافة مناسبة */
-section {
-    scroll-margin-top: 100px;
-}
-.service-card {
-    background: var(--card-bg);
-    border: 1px solid rgba(243, 115, 33, 0.1); /* إضافة حدود خفيفة بلون البراند */
-    backdrop-filter: blur(5px);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.service-card:hover {
-    border-color: var(--brand-orange);
-    box-shadow: 0 15px 30px rgba(243, 115, 33, 0.15);
-}
-/* تخصيص شكل السكرول بار */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--bg-body);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--brand-orange);
-    border-radius: 10px;
-    border: 3px solid var(--bg-body);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #d65d1a;
-}
-body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-}
-
-/* إضافة تأثير بسيط للنصوص البرتقالية */
-.text-brand-orange {
-    text-shadow: 0 0 1px rgba(243, 115, 33, 0.2);
-}
-/* الحالة الابتدائية للعنصر (مخفي ومنزاح للأسفل) */
-.reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease-out;
-}
-
-/* الحالة عند التفعيل (يظهر ويعود لمكانه) */
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-<script>
+// 1. Reveal Animation on Scroll
 function reveal() {
-    // نحدد كل العناصر التي تحمل كلاس reveal
     const reveals = document.querySelectorAll(".reveal");
-
-    for (let i = 0; i < reveals.length; i++) {
+    reveals.forEach(el => {
         const windowHeight = window.innerHeight;
-        const elementTop = reveals[i].getBoundingClientRect().top;
-        const elementVisible = 150; // المسافة التي يظهر بعدها العنصر
-
+        const elementTop = el.getBoundingClientRect().top;
+        const elementVisible = 150;
         if (elementTop < windowHeight - elementVisible) {
-            reveals[i].classList.add("active");
+            el.classList.add("active");
         }
-    }
+    });
 }
 
-// تفعيل الوظيفة عند التمرير
 window.addEventListener("scroll", reveal);
-
-// تفعيلها مرة واحدة عند تحميل الصفحة لإظهار العناصر الموجودة في الأعلى
 window.addEventListener("load", reveal);
-</script>
+
+// 2. Theme Toggle (Light/Dark)
+function toggleTheme() {
+    const body = document.body;
+    body.classList.toggle('dark-theme');
+    
+    const isDark = body.classList.contains('dark-theme');
+    const mainLogo = document.getElementById('main-logo');
+    
+    // Update Logo based on theme
+    mainLogo.src = isDark ? 
+        "https://andalus-projects.com/Logo.png" : 
+        "https://andalus-projects.com/darklogo.png";
+}
+
+// 3. Modal System
+const servicesData = {
+    badkamer: { 
+        title: "Badkamerrenovatie", 
+        desc: "Complete renovatie van A tot Z...", 
+        items: ["Inloopdouches", "Sanitair", "Tegelwerk"] 
+    }
+    // Add other services data here...
+};
+
+function openDetails(id) {
+    const data = servicesData[id];
+    const modalContent = document.getElementById('modal-content');
+    
+    modalContent.innerHTML = `
+        <h2 class="text-3xl font-black text-brand-orange uppercase italic">${data.title}</h2>
+        <p class="my-4 opacity-80">${data.desc}</p>
+        <ul class="space-y-2 mb-6">
+            ${data.items.map(i => `<li class="font-bold"><i class="fas fa-check text-brand-orange mr-2"></i>${i}</li>`).join('')}
+        </ul>
+        <a href="https://wa.me/32483404778" class="block bg-brand-orange text-white py-4 rounded-xl text-center font-bold">CONTACT VIA WHATSAPP</a>
+    `;
+    
+    document.getElementById('detail-layer').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeDetails() {
+    document.getElementById('detail-layer').style.display = 'none';
+    document.body.style.overflowY = 'auto';
+}
