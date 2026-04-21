@@ -4,7 +4,6 @@ const sliderWrapper = document.getElementById('main-slider');
 const slides = document.querySelectorAll('.slide');
 const dotsBox = document.getElementById('dots-container');
 
-// Create Dots
 slides.forEach((_, i) => {
     const dot = document.createElement('div');
     dot.className = `dot ${i === 0 ? 'active' : ''}`;
@@ -13,10 +12,8 @@ slides.forEach((_, i) => {
 });
 
 function updateSlider() {
-    if (sliderWrapper) {
-        sliderWrapper.style.transform = `translateX(-${slideIdx * 100}%)`;
-        document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === slideIdx));
-    }
+    sliderWrapper.style.transform = `translateX(-${slideIdx * 100}%)`;
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === slideIdx));
 }
 
 function moveSlide(n) {
@@ -32,7 +29,7 @@ function jumpToSlide(i) {
 // Auto play slider
 setInterval(() => moveSlide(1), 5000);
 
-/* --- Site Logic --- */
+/* --- Theme Toggle --- */
 function toggleTheme() {
     const body = document.body;
     const icons = document.querySelectorAll('.theme-icon');
@@ -41,6 +38,8 @@ function toggleTheme() {
 
     body.classList.toggle('dark-theme');
     const isDark = body.classList.contains('dark-theme');
+    
+    // Fixed Logo URLs based on theme
     const lightLogoUrl = "https://andalus-projects.com/darklogo.png";
     const darkLogoUrl = "https://andalus-projects.com/Logo.png";
 
@@ -52,64 +51,37 @@ function toggleTheme() {
         }
     });
 
-    if (mainLogo) mainLogo.src = isDark ? darkLogoUrl : lightLogoUrl;
-    if (footerLogo) footerLogo.src = isDark ? darkLogoUrl : lightLogoUrl;
+    mainLogo.src = isDark ? darkLogoUrl : lightLogoUrl;
+    footerLogo.src = isDark ? darkLogoUrl : lightLogoUrl;
 }
 
+/* --- UI Controls --- */
 function toggleMenu() {
     const menu = document.getElementById('mobile-menu');
     menu.classList.toggle('hidden');
     menu.classList.toggle('flex');
 }
 
-/* --- Service Modal Data --- */
 const servicesData = {
-    badkamer: { 
-        title: "Badkamerrenovatie", 
-        desc: "Wilt u uw badkamer volledig vernieuwen? Wij bieden professionele badkamerrenovaties van A tot Z, volledig afgestemd op uw wensen en budget. Van sloopwerk en leidingen tot tegelwerk, stucwerk en afwerking – wij zorgen for een complete en zorgeloze renovatie.", 
-        items: ["Inloopdouches", "Luxe badkamermeubels", "Leidingwerk"] 
-    },
-    tegelwerk: { 
-        title: "Professionele Tegelwerken", 
-        desc: "Bent u op zoek naar een ervaren vakman voor het plaatsen van tegels? Wij bieden hoogwaardige tegelwerken voor badkamers, keukens, vloeren en terrassen.", 
-        items: ["Vakkundige plaatsing", "Hoogwaardige materialen", "Snelle uitvoering", "Scherpe prijzen"] 
-    },
-    stucwerk: { 
-        title: "Professioneel Stucwerk", 
-        desc: "Op zoek naar perfect afgewerkte muren en plafonds? Wij bieden professioneel stucwerk voor zowel nieuwbouw als renovatieprojecten.", 
-        items: ["Glad pleisterwerk", "Renovatie en nieuwbouw", "Snelle uitvoering", "Betaalbare prijzen"] 
-    },
-    schilderwerk: { 
-        title: "Professioneel Schilderwerk", 
-        desc: "Wilt u uw woning of project een frisse en verzorgde uitstraling geven? Wij bieden professioneel schilderwerk voor zowel binnen- als buitentoepassingen.", 
-        items: ["Binnen- en buitenschilderwerk", "Strakke afwerking", "Hoogwaardige materialen", "Betrouwbare service"] 
-    },
-    schoonmaken: { 
-        title: "Professionele Reinigingsdiensten", 
-        desc: "Heeft u net een bouw- of renovatieproject afgerond? Wij zorgen voor het verwijderen van bouwresten, stof en vuil.", 
-        items: ["Eindschoonmaak na bouw", "Tuinreiniging", "Reiniging van gebouwen", "Betrouwbaar en flexibel"] 
-    },
-    laminaatleggen: { 
-        title: "Professionele Vloerplaatsing", 
-        desc: "Op zoek naar een stijlvolle en duurzame vloer? Wij zijn gespecialiseerd in het plaatsen van laminaat, visgraat en PVC vloeren.", 
-        items: ["Professionele plaatsing", "Hoogwaardige materialen", "Nauwkeurige afwerking", "Advies op maat"] 
-    }
+    badkamer: { title: "Badkamerrenovatie", desc: "Wilt u uw badkamer volledig vernieuwen? Wij bieden professionele badkamerrenovaties van A tot Z, volledig afgestemd op uw wensen en budget. Van sloopwerk en leidingen tot tegelwerk, stucwerk en afwerking.", items: ["Inloopdouches", "Luxe badkamermeubels", "Leidingwerk"] },
+    tegelwerk: { title: "Professionele Tegelwerken", desc: "Kwaliteit en Precisie. Wij bieden hoogwaardige tegelwerken voor badkamers, keukens, vloeren en terrassen met oog voor detail.", items: ["Vakkundige plaatsing", "Hoogwaardige materialen", "Nauwkeurige uitvoering"] },
+    stucwerk: { title: "Professioneel Stucwerk", desc: "Op zoek naar perfect afgewerkte muren en plafonds? Wij bieden professioneel stucwerk voor zowel nieuwbouw als renovatieprojecten.", items: ["Glad pleisterwerk", "Renovatie en nieuwbouw", "Betaalbare prijzen"] },
+    schilderwerk: { title: "Professioneel Schilderwerk", desc: "Wilt u uw woning een frisse uitstraling geven? Wij bieden professioneel schilderwerk voor binnen- en buitentoepassingen.", items: ["Binnen- en buitenwerk", "Strakke afwerking", "Topkwaliteit verf"] },
+    schoonmaken: { title: "Reinigingsdiensten", desc: "Eindschoonmaak na bouw of renovatie. Wij verwijderen alle bouwresten, stof en vuil zodat uw ruimte direct klaar is voor gebruik.", items: ["Bouwschoonmaak", "Tuinonderhoud", "Gebouwenreiniging"] },
+    laminaatleggen: { title: "Vloerplaatsing", desc: "Gespecialiseerd in het plaatsen van laminaat, visgraat en PVC vloeren voor woningen en commerciële ruimtes.", items: ["Laminaat & PVC", "Visgraat patronen", "Ondervloer preparatie"] }
 };
 
 function openDetails(id) {
     const data = servicesData[id];
-    const modalContent = document.getElementById('modal-content');
-    if (modalContent) {
-        modalContent.innerHTML = `
-            <h2 class="text-3xl font-black mb-2 uppercase italic text-brand-orange">${data.title}</h2>
-            <div class="w-12 h-1 bg-brand-orange mb-6"></div>
-            <p class="mb-6 leading-relaxed opacity-80">${data.desc}</p>
-            <ul class="space-y-3 mb-8">
-                ${data.items.map(i => `<li class="flex items-center gap-3 font-bold text-sm"><i class="fas fa-check text-brand-orange"></i> ${i}</li>`).join('')}
-            </ul>
-            <a href="https://wa.me/32483404778" class="block bg-brand-orange text-white py-4 rounded-xl font-bold text-center uppercase tracking-widest">Offerte via WhatsApp</a>
-        `;
-    }
+    document.getElementById('modal-content').innerHTML = `
+        <h2 class="text-3xl font-black mb-2 uppercase italic text-brand-orange">${data.title}</h2>
+        <div class="w-12 h-1 bg-brand-orange mb-6"></div>
+        <p class="mb-6 leading-relaxed opacity-80">${data.desc}</p>
+        <ul class="space-y-3 mb-8">
+            ${data.items.map(i => `<li class="flex items-center gap-3 font-bold text-sm"><i class="fas fa-check text-brand-orange"></i> ${i}</li>`).join('')}
+        </ul>
+        <a href="https://wa.me/32483404778" class="block bg-brand-orange text-white py-4 rounded-xl font-bold text-center uppercase tracking-widest hover:bg-orange-600 transition">Offerte via WhatsApp</a>
+    `;
     document.getElementById('detail-layer').style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
@@ -119,7 +91,7 @@ function closeDetails() {
     document.body.style.overflowY = 'auto';
 }
 
-/* --- Reveal Animation --- */
+/* --- Scroll Reveal --- */
 function reveal() {
     document.querySelectorAll(".reveal").forEach(el => {
         const rect = el.getBoundingClientRect();
