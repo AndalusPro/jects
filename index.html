@@ -1,25 +1,23 @@
-<title>Andalus Projects | Premium Renovation & Construction Services</title>
-<meta name="title" content="Andalus Projects | Premium Renovation & Construction Services">
-<meta name="description" content="Professional renovation, construction, and interior design services by Andalus Projects. Quality craftsmanship in every build. Get a free quote today.">
-
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://andalus-projects.com/">
-<meta property="og:title" content="Andalus Projects | Modern Renovation Specialists">
-<meta property="og:description" content="From concept to completion, we bring your vision to life with expert construction and design.">
-<meta property="og:image" content="https://andalus-projects.com/assets/logo-preview.jpg">
-
-<meta name="keywords" content="home renovation, construction company, interior design, office remodeling, Andalus Projects">
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
-
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
 <!DOCTYPE html>
 <html lang="nl" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Andalus Projects | Meesters in Renovatie</title>
+    <title>Andalus Projects | Premium Renovation & Construction Services</title>
+    <meta name="title" content="Andalus Projects | Premium Renovation & Construction Services">
+    <meta name="description" content="Professional renovation, construction, and interior design services by Andalus Projects. Quality craftsmanship in every build. Get a free quote today.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://andalus-projects.com/">
+    <meta property="og:title" content="Andalus Projects | Modern Renovation Specialists">
+    <meta property="og:description" content="From concept to completion, we bring your vision to life with expert construction and design.">
+    <meta property="og:image" content="https://andalus-projects.com/assets/logo-preview.jpg">
+
+    <meta name="keywords" content="home renovation, construction company, interior design, office remodeling, Andalus Projects">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -55,24 +53,19 @@
             transition: background-color var(--transition-speed), color var(--transition-speed);
         }
 
-        /* إصلاح مشكلة بروز النصوص في الهواتف */
         .hero-title {
-            font-size: 3.5rem; /* حجم افتراضي للموبايل */
+            font-size: 3.5rem;
             line-height: 1;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
 
         @media (min-width: 768px) {
-            .hero-title {
-                font-size: 6rem;
-            }
+            .hero-title { font-size: 6rem; }
         }
 
         @media (min-width: 1024px) {
-            .hero-title {
-                font-size: 7.5rem;
-            }
+            .hero-title { font-size: 7.5rem; }
         }
 
         .text-brand-orange { color: var(--brand-orange); }
@@ -138,6 +131,23 @@
         
         .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: 0.3s; }
         .dot.active { background: var(--brand-orange); width: 24px; border-radius: 10px; }
+        
+        /* Map Styles */
+        .map-responsive {
+            overflow:hidden;
+            padding-bottom:400px;
+            position:relative;
+            height:0;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .map-responsive iframe {
+            left:0;
+            top:0;
+            height:100%;
+            width:100%;
+            position:absolute;
+        }
     </style>
 </head>
 <body oncontextmenu="return false;" class="dark-theme">
@@ -180,7 +190,7 @@
                     <span class="text-white text-xs font-bold uppercase tracking-[0.3em]">Est. 2004 | Premium Renovatie</span>
                 </div>
                 <h1 class="hero-title font-black text-white leading-[0.9] mb-6 italic uppercase">
-                    PROFESSIONELE BOUW EN <br><span class="text-brand-orange"> RENOVATIEDIENSTEN</span>
+                    PROFESSIO­NELE BOUW EN <br><span class="text-brand-orange"> RENOVATIE­DIENSTEN</span>
                 </h1>
                 <p class="text-gray-300 text-lg md:text-xl mb-10 font-light leading-relaxed max-w-xl">
                     Geef uw woning een nieuw leven met ons vakmanschap.
@@ -244,17 +254,33 @@
     </section>
 
     <section id="contact" class="py-20 bg-brand-orange text-white">
-        <div class="container-custom flex flex-col md:flex-row items-center justify-between gap-10">
-            <div class="text-center md:text-left">
-                <h2 class="text-4xl md:text-6xl font-black uppercase italic mb-4">Start uw project</h2>
-                <p class="font-light opacity-90 text-lg">Neem vandaag nog contact op voor een vrijblijvende offerte.</p>
+        <div class="container-custom">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-10 mb-16">
+                <div class="text-center md:text-left">
+                    <h2 class="text-4xl md:text-6xl font-black uppercase italic mb-4">Start uw project</h2>
+                    <p class="font-light opacity-90 text-lg mb-2">Neem vandaag nog contact op voor een vrijblijvende offerte.</p>
+                    <div class="flex flex-col gap-2 opacity-90 font-bold uppercase tracking-wider text-sm">
+                        <span class="flex items-center gap-3 justify-center md:justify-start"><i class="fas fa-envelope"></i> Andalusprojects1@gmail.com</span>
+                        <span class="flex items-center gap-3 justify-center md:justify-start"><i class="fas fa-location-dot"></i> Antwerpen 2100 Deurne</span>
+                    </div>
+                </div>
+                <a href="tel:+32483404778" class="bg-white text-brand-orange px-12 py-6 rounded-2xl font-black text-2xl md:text-4xl shadow-2xl hover:scale-105 transition-transform">+32 483 404 778</a>
             </div>
-            <a href="tel:+32483404778" class="bg-white text-brand-orange px-12 py-6 rounded-2xl font-black text-2xl md:text-4xl shadow-2xl hover:scale-105 transition-transform">+32 483 404 778</a>
+            
+            <div class="reveal">
+                <div class="map-responsive">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2499.123456789!2d4.456789!3d51.218901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3f769019b160b%3A0x256e499424d896b8!2s2100%20Deurne%2C%20Belgium!5e0!3m2!1sen!2sbe!4v1714682791234!5m2!1sen!2sbe" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
         </div>
     </section>
 
     <footer class="py-12 border-t border-brand-orange-soft text-center">
         <img src="https://andalus-projects.com/Logo.png" id="footer-logo" class="h-8 mx-auto mb-4 grayscale opacity-50">
+        <div class="mb-4 text-gray-400 text-xs font-bold uppercase">
+            <p>Antwerpen 2100 Deurne</p>
+            <p>Andalusprojects1@gmail.com</p>
+        </div>
         <p class="text-gray-400 font-bold uppercase tracking-widest text-[10px] mb-2">&copy; 2026 Andalus Projects</p>
         <a href="https://www.instagram.com/3d.bunz" target="_blank" class="text-[9px] uppercase tracking-[0.3em] text-gray-500 hover:text-brand-orange transition-colors duration-300"><span class="font-black">Bunz Vision</span></a>
     </footer>
